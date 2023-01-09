@@ -49,12 +49,12 @@ class User extends BaseEntity implements UserInterface, PasswordProtectedInterfa
         return $this;
     }
 
-        /**
+     /**
      * @return int 
      */
-    public function getId(): int
+    public function getMail(): string
     {
-        return $this->id;
+        return $this->mail;
     }
 
     /**
@@ -67,19 +67,19 @@ class User extends BaseEntity implements UserInterface, PasswordProtectedInterfa
         return $this;
     }
 
-    /**
-     * @return int 
+     /**
+     * @param string $role
      */
-    public function getMail(): string
+    public function getRole(): int
     {
-        return $this->mail;
+        return $this->role;
     }
 
     /**
      * @param int $role
      * @return User
      */
-    public function setRoles(int $role): User
+    public function setRole(int $role): User
     {
         $this->role = $role;
         return $this;
