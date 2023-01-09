@@ -1,5 +1,6 @@
+
 CREATE TABLE IF NOT EXISTS User (
-   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   mail VARCHAR(255) NOT NULL,
@@ -7,7 +8,7 @@ CREATE TABLE IF NOT EXISTS User (
 );
 
 CREATE TABLE IF NOT EXISTS Tenant (
-   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   total_amount INT NOT NULL,
   user_id INT NOT NULL,
   created_at timestamp NOT NULL,
