@@ -1,63 +1,47 @@
-DROP TABLE IF EXISTS User;
 
 CREATE TABLE IF NOT EXISTS User (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   mail VARCHAR(255) NOT NULL,
   role INT NOT NULL
 );
-DROP TABLE IF EXISTS Tenant;
 
 CREATE TABLE IF NOT EXISTS Tenant (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   total_amount INT NOT NULL,
   user_id INT NOT NULL,
-  created_at timestamp NOT NULL
+  created_at timestamp NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES User(id)
 );
 
-DROP TABLE IF EXISTS Costs;
+CREATE TABLE IF NOT EXISTS CostType (
+   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  code VARCHAR(255) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  created_at timestamp NOT NULL
+);
 
 CREATE TABLE IF NOT EXISTS Costs (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   amount INT NOT NULL,
   costs_type_id INT NOT NULL,
-  created_at timestamp NOT NULL
+  created_at timestamp NOT NULL,
+  FOREIGN KEY (costs_type_id) REFERENCES CostType(id) ON DELETE CASCADE
 );
-
-DROP TABLE IF EXISTS CostType;
-
-CREATE TABLE IF NOT EXISTS CostsType (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  code VARCHAR(255) NOT NULL,
-  description TEXT NOT NULL,
-  created_at timestamp NOT NULL
-);
-
-DROP TABLE IF EXISTS CostTenant;
 
 CREATE TABLE IF NOT EXISTS CostTenant (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  costs_type_id INT NOT NULL, 
+   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  costs_type_id INT NOT NULL,
   tenant_id INT NOT NULL,
-  created_at timestamp NOT NULL
+  created_at timestamp NOT NULL,
+  FOREIGN KEY (costs_type_id) REFERENCES CostType(id) ON DELETE CASCADE,
+  FOREIGN KEY (tenant_id) REFERENCES Tenant(id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS Invits;
-
 CREATE TABLE IF NOT EXISTS Invits (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   token VARCHAR(255) NOT NULL,
   mail VARCHAR(255) NOT NULL,
   created_at timestamp NOT NULL
 );
-
-ALTER TABLE `Tenant`
-ADD CONSTRAINT FK_Tenant FOREIGN KEY (user_id) REFERENCES User(id);
-
-ALTER TABLE `CostTenant`
-ADD CONSTRAINT FK_CostTenantId FOREIGN KEY (costs_type_id) REFERENCES CostType(id),
-ADD CONSTRAINT FK_CostTenant FOREIGN KEY (tenant_id) REFERENCES Tenant(id);
-
-ALTER TABLE `Costs`
-ADD CONSTRAINT FK_Costs FOREIGN KEY (costs_type_id) REFERENCES CostType(id);
