@@ -15,8 +15,6 @@ class AuthController extends AbstractController
     #[Route('/login', name: "login", methods: ["POST"])]
     public function login()
     {
-        $userManager = (new UserManager(new PDOFactory()))
-            ->getById("toto");
         if(!empty($_POST)) {
             $formUsername = $_POST['username'];
             $formPwd = $_POST['password'];
@@ -24,31 +22,22 @@ class AuthController extends AbstractController
             $userManager = (new UserManager(new PDOFactory()))
                 ->getByUsername($formUsername);
 
-            // var_dump($userManager->passwordMatch($formPwd));die;
-
-            $jwt = JWTHelper::buildJWT($userManager);
-            //unset($_COOKIE['token']);
-            setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
-            return $this->renderJSON([
-                'login' => 'verify',
-                // "token" => $jwt,
-                "cookie" => json_encode($_COOKIE)
-            ]);
+            // $userManager->getHashedPassword();
+            var_dump($userManager->getHashedPassword());
+            if(password_verify($formPwd, $userManager->getHashedPassword()))
+            {
+                var_dump('ok');
+                return $this->renderJSON([
+                    'login' => 'verify',
+                    // "token" => $jwt,
+                    "cookie" => json_encode($_COOKIE),
+                    "user" => [(array)$userManager]
+                ]);
+            }
+        
         }
     }
     
-    #[Route('/login', name: "showlogin", methods: ["GET"])]
-    public function showLogin()
-    {
-        return $this->render("register&login/formLogin.php");
-
-    }
-
-    #[Route('/register', name: "showRegister", methods: ["GET"])]
-    public function showRegister(): string
-    {
-        return $this->render("register&login/formRegister.php");
-    }
 
     #[Route('/register', name: "register", methods: ["POST"])]
     public function register(): void

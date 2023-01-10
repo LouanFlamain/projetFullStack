@@ -48,26 +48,6 @@ class UserManager extends BaseManager
         return null;
     }
 
-    public function getByUsername(string $username): ?User
-    {
-        $query = $this->pdo->prepare('SELECT * FROM User WHERE username = :username');
-
-        $query->bindValue(
-            "username", $username, \PDO::PARAM_STR
-        );
-
-        $query->execute();
-
-        $data = $query->fetch(\PDO::FETCH_ASSOC);
-
-        if ($data){
-            
-            return new User($data);
-        }
-
-        return null;
-    }
-
     public function insertUser(User $user)
     {
         $query = $this->pdo->prepare('INSERT INTO User (password, username, role)
