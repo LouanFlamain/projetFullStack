@@ -7,8 +7,9 @@ export default function Register() {
   };
   return (
     <div className="pt-4">
-      <div className="w-50 mx-auto">
-        <form className="card p-5" onSubmit={submit}>
+      <div className="w-50 mx-auto card">
+        <h4 className="card-header">Register</h4>
+        <form className="card-body p-5" onSubmit={submit} method="POST">
           <div>
             <label for="inputPassword5" className="form-label">
               User
@@ -46,12 +47,12 @@ export default function Register() {
             />
           </div>
           <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
-            Register
+            Valider
           </button>
+          <p className="mt-3">
+            Déjà inscrit ? <Link to="/login">cliquez ici</Link>
+          </p>
         </form>
-        <p>
-          Déjà inscrit ? <Link to="/login">cliquez ici</Link>
-        </p>
       </div>
     </div>
   );
