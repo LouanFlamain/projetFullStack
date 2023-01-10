@@ -16,6 +16,8 @@ class AuthController extends AbstractController
     public function login()
     {
         if(!empty($_POST)) {
+            $verify = false;
+
             $formUsername = $_POST['username'];
             $formPwd = $_POST['password'];
 
@@ -23,14 +25,22 @@ class AuthController extends AbstractController
                 ->getByUsername($formUsername);
 
             // $userManager->getHashedPassword();
-            var_dump($userManager->getHashedPassword());
+            // var_dump($userManager->getHashedPassword());
             if(password_verify($formPwd, $userManager->getHashedPassword()))
             {
-                var_dump('ok');
+                $verify = true;
+
+                $jwt = JWTHelper::buildJWT($userManager);
+                $decoded = JWTHelper::decodeJWT($jwt);
+
+                setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
+
+                echo($_COOKIE['token']);
+
                 return $this->renderJSON([
                     'login' => 'verify',
-                    // "token" => $jwt,
-                    "cookie" => json_encode($_COOKIE),
+                    "token" => $jwt,
+                    "decoded" => $decoded,
                     "user" => [(array)$userManager]
                 ]);
             }
