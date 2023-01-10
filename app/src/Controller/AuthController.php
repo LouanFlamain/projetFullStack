@@ -34,7 +34,7 @@ class AuthController extends AbstractController
 
             return $this->renderJSON([
                 'login' => 'verify',
-                "token" => $jwt,
+                // "token" => $jwt,
                 "cookie" => json_encode($_COOKIE)
             ]);
         }

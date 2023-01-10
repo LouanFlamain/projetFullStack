@@ -50,7 +50,7 @@ abstract class BaseEntity
 
     public function hasMany($data)
     {
-        $this->relationship = (new $data(new PDOFactory()))->getById(...$this->getId());
+        $this->relationship = (new $data(new PDOFactory()))->getById($this->getId());
         return $this;
     }
 

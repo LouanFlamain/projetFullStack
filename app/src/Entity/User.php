@@ -68,14 +68,23 @@ class User extends BaseEntity implements PasswordProtectedInterface
     }
 
     /**
-     * @param int $role
+     * @return int 
+     */
+    public function getRole(): int
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param int $roles
      * @return User
      */
-    public function setRoles(int $role): User
+    public function setRole(int $roles): User
     {
-        $this->role = $role;
+        $this->role = $roles;
         return $this;
     }
+
 
     public function getHashedPassword(): string
     {
