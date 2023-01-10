@@ -17,16 +17,17 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "1221:80"
+      - "5656:80"
     volumes:
       - ./app:/var/www/html
 
-  database:
+  db:
     image: mariadb:10.8
     restart: always
     volumes:
-      - db-data:/var/lib/mysql
+      - ./database/dump.sql:/docker-entrypoint-initdb.d/dump.sql
     environment:
+      MYSQL_DATABASE: react
       MYSQL_ROOT_PASSWORD: password
 
   adminer:
