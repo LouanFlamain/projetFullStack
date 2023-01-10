@@ -11,7 +11,7 @@ export default function Register() {
         <form className="card p-5" onSubmit={submit}>
           <div>
             <label for="inputPassword5" className="form-label">
-              User
+              User Name
             </label>
             <input
               type="text"
@@ -19,6 +19,30 @@ export default function Register() {
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="username"
+            />
+          </div>
+          <div>
+            <label for="inputPassword5" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              id="inputPassword5"
+              className="form-control"
+              aria-describedby="passwordHelpBlock"
+              name="email"
+            />
+          </div>
+          <div>
+            <label for="inputPassword5" className="form-label">
+              Clé d'identification
+            </label>
+            <input
+              type="text"
+              id="inputPassword5"
+              className="form-control"
+              aria-describedby="passwordHelpBlock"
+              name="tokken"
             />
           </div>
           <div>
