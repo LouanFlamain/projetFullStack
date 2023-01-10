@@ -31,6 +31,12 @@ foreach ($dirs as $dir) {
 
     $controllers[] = "App\\Controller\\" . pathinfo($controllerDir . DIRECTORY_SEPARATOR . $dir)['filename'];
 }
+//var_dump($_POST);
+if(!empty($_POST)){
+    foreach ($_POST as $key => $post){
+        $_POST[$key] = htmlspecialchars($post);
+    }
+}
 
 $routesObj = [];
 

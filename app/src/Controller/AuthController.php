@@ -17,10 +17,6 @@ class AuthController extends AbstractController
     {
         $userManager = (new UserManager(new PDOFactory()))
             ->getById("toto");
-        //var_dump($userManager->Tenant()->getRelationship());
-        $test = $userManager->Tenant();
-        //var_dump($_COOKIE);die;
-        unset($_COOKIE['token']);
         if(!empty($_POST)) {
             $formUsername = $_POST['username'];
             $formPwd = $_POST['password'];
@@ -30,8 +26,9 @@ class AuthController extends AbstractController
 
             // var_dump($userManager->passwordMatch($formPwd));die;
 
-
-
+            $jwt = JWTHelper::buildJWT($userManager);
+            //unset($_COOKIE['token']);
+            setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
             return $this->renderJSON([
                 'login' => 'verify',
                 // "token" => $jwt,
