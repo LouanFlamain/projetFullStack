@@ -17,8 +17,8 @@ class AuthController extends AbstractController
     {
         $userManager = (new UserManager(new PDOFactory()))
             ->getById("toto");
-        var_dump($userManager->Tenant());
-        die;
+        //var_dump($userManager->Tenant()->getRelationship());
+        $test = $userManager->Tenant();
         //var_dump($_COOKIE);die;
         unset($_COOKIE['token']);
         if(!empty($_POST)) {
