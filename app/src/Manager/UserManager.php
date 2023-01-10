@@ -19,10 +19,24 @@ class UserManager extends BaseManager
         return $users;
     }
 
+    public function getByUsername($user): ?User
+    {
+        $query = $this->pdo->prepare("SELECT * FROM User WHERE username = :username");
+        $query->bindValue("username", $user, \PDO::PARAM_STR);
+        $query->execute();
+        $data = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if ($data) {
+            return new User($data);
+        }
+
+        return null;
+    }
+
     public function getById($id)
     {
-        $query = $this->pdo->prepare("SELECT * FROM User WHERE id = 1");
-//        $query->bindValue("id", $user, \PDO::PARAM_INT);
+        $query = $this->pdo->prepare("SELECT * FROM User WHERE id = :id");
+        $query->bindValue("id", $id, \PDO::PARAM_INT);
         $query->execute();
         $data = $query->fetch(\PDO::FETCH_ASSOC);
 
