@@ -1,5 +1,7 @@
 # projetFullStack
 
+Bonjour,
+
 Je mets les consignes que j'ai notées pour le projet :
 Projet de la semaine
 • Full-stack PHP (MVC) + React + Docker
