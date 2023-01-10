@@ -7,35 +7,35 @@ CREATE TABLE IF NOT EXISTS User (
   role INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Tenant (
+CREATE TABLE IF NOT EXISTS Rental (
   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  total_amount INT NOT NULL,
+  amount INT NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  devise VARCHAR(5) NOT NULL,
+  description TEXT NOT NULL,
   user_id INT NOT NULL,
   created_at timestamp NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES User(id)
+  FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS CostType (
-   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  code VARCHAR(255) NOT NULL,
-  description VARCHAR(255) NOT NULL,
-  created_at timestamp NOT NULL
+CREATE TABLE IF NOT EXISTS Tenant (
+  id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  balance INT NOT NULL,
+  user_id INT NOT NULL,
+  rental_id INT NOT NULL,
+  created_at timestamp NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
+  FOREIGN KEY (rental_id) REFERENCES Rental(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Costs (
    id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  amount INT NOT NULL,
-  costs_type_id INT NOT NULL,
-  created_at timestamp NOT NULL,
-  FOREIGN KEY (costs_type_id) REFERENCES CostType(id) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS CostTenant (
-   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  costs_type_id INT NOT NULL,
+  credit INT NULL,
+  debit INT NULL,
+  cost_type VARCHAR(50) NOT NULL,
+  reference VARCHAR(15) NOT NULL,
   tenant_id INT NOT NULL,
   created_at timestamp NOT NULL,
-  FOREIGN KEY (costs_type_id) REFERENCES CostType(id) ON DELETE CASCADE,
   FOREIGN KEY (tenant_id) REFERENCES Tenant(id) ON DELETE CASCADE
 );
 
