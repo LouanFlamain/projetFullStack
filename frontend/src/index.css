@@ -3,3 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+.header-btn:hover {
+  background-color: #d1d1d1;
+  cursor: pointer;
+}
