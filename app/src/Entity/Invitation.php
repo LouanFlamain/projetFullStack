@@ -2,15 +2,13 @@
 
 namespace App\Entity;
 
-use DateTime;
-
-class Tenant extends BaseEntity
+class Invitation
 {
     private ?int $id;
-    private int $total_amount;
-    private string $user_id;
+    private string $token;
+    private string $mail;
     private ?DateTime $created_at;
-
+    
     /**
      * @return int|null
      */
@@ -22,43 +20,43 @@ class Tenant extends BaseEntity
     /**
      * @param int|null $id
      */
-    public function setId(?int $id): Tenant
+    public function setId(?int $id): Invitation
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getTotal_Amount(): int
+    public function getToken(): string
     {
-        return $this->total_amount;
+        return $this->token;
     }
 
     /**
-     * @param int $total_amount
+     * @param string $token
      */
-    public function setTotal_Amount(int $total_amount): Tenant
+    public function setToken(string $token): Invitation
     {
-        $this->total_amount = $total_amount;
+        $this->token = $token;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getUser_Id(): string
+    public function getMail(): string
     {
-        return $this->user_id;
+        return $this->mail;
     }
 
     /**
-     * @param string $user_id
+     * @param string $mail
      */
-    public function setUser_Id(string $user_id): Tenant
+    public function setMail(string $mail): Invitation
     {
-        $this->user_id = $user_id;
+        $this->mail = $mail;
         return $this;
     }
 
@@ -73,14 +71,9 @@ class Tenant extends BaseEntity
     /**
      * @param DateTime|string|null $created_at
      */
-    public function setCreated_At(DateTime|string|null $created_at = 'now'): Tenant
+    public function setCreated_At(DateTime|string|null $created_at = 'now'): Invitation
     {
         $this->created_at = new DateTime($created_at);
         return $this;
-    }
-
-    public function Cost()
-    {
-        return $this->hasMany(CostManager::class);
     }
 }
