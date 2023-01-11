@@ -6,13 +6,13 @@ export default function Register() {
     event.preventDefault();
   };
   return (
-    <div className="pt-4">
+    <div className="p-4">
       <div className="w-50 mx-auto card">
-        <h4 className="card-header">Register</h4>
+        <h4 className="card-header">S'inscrire</h4>
         <form className="card-body p-5" onSubmit={submit} method="POST">
-          <div>
+          <div className="p-2">
             <label for="inputPassword5" className="form-label">
-              User
+              Prénom
             </label>
             <input
               type="text"
@@ -22,9 +22,33 @@ export default function Register() {
               name="username"
             />
           </div>
-          <div>
+          <div className="p-2">
             <label for="inputPassword5" className="form-label">
-              Password
+              email
+            </label>
+            <input
+              type="email"
+              id="inputPassword5"
+              className="form-control"
+              aria-describedby="passwordHelpBlock"
+              name="username"
+            />
+          </div>
+          <div className="p-2">
+            <label for="inputPassword5" className="form-label">
+              Clé d'identification-tokken-tokken
+            </label>
+            <input
+              type="textrr"
+              id="inputPassword5"
+              className="form-control"
+              aria-describedby="passwordHelpBlock"
+              name="username"
+            />
+          </div>
+          <div className="p-2">
+            <label for="inputPassword5" className="form-label">
+              Créer un mot de passe
             </label>
             <input
               type="password"
@@ -34,9 +58,9 @@ export default function Register() {
               aria-describedby="passwordHelpBlock"
             />
           </div>
-          <div>
+          <div className="p-2">
             <label for="inputPassword5" className="form-label">
-              Retype-Password
+              Retaper votre mot de passe
             </label>
             <input
               type="password"
