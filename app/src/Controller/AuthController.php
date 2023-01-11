@@ -53,6 +53,8 @@ class AuthController extends AbstractController
     {
         $user = (new User($_POST))->passwordHash($_POST['password']);
 
+        var_dump($user);
+
         if($user->getUsername() && $user->getHashedPassword()){
             $userManager = new UserManager(new PDOFactory());
             $userManager->insertUser($user);
