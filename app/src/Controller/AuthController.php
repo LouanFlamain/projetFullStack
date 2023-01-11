@@ -12,7 +12,7 @@ use App\Route\Route;
 
 class AuthController extends AbstractController
 {
-    #[Route('/login', name: "login", methods: ["POST"])]
+    /* #[Route('/login', name: "login", methods: ["POST"])]
     public function login()
     {
         $userManager = (new UserManager(new PDOFactory()))
@@ -24,25 +24,16 @@ class AuthController extends AbstractController
             $userManager = (new UserManager(new PDOFactory()))
                 ->getByUsername($formUsername);
 
-            // var_dump($userManager->passwordMatch($formPwd));die;
 
-            $jwt = JWTHelper::buildJWT($userManager);
-            //unset($_COOKIE['token']);
-            setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
-            return $this->renderJSON([
-                'login' => 'verify',
-                "token" => $jwt,
-                "cookie" => json_encode($_COOKIE)
-            ]);
         }
-    }
+    } */
     
-    #[Route('/login', name: "showlogin", methods: ["GET"])]
+   /* #[Route('/login', name: "showlogin", methods: ["GET"])]
     public function showLogin()
     {
         return $this->render("register&login/formLogin.php");
 
-    }
+    }*/
 
     #[Route('/register', name: "showRegister", methods: ["GET"])]
     public function showRegister(): string

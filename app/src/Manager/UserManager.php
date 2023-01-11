@@ -46,4 +46,21 @@ class UserManager extends BaseManager
 
         return null;
     }
+    public function insertUser(User $user)
+    {
+        $query = $this->pdo->prepare( "INSERT INTO User (username, email, password, role)
+        VALUES (':username', ':email', ':password' , ':role')");
+        $query->bindValue(":username", $user, \PDO::PARAM_STR);
+        $query->bindValue(":email", $user->getemail, \PDO::PARAM_STR);
+        $query->bindValue(":password", $user->getpassword, \PDO::PARAM_STR);
+        $query->bindValue(":role", $user->getrole, \PDO::PARAM_STR);
+        $query->execute();
+        $data = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if ($data) {
+            return new User($data);
+        }
+
+        return null;
+    }
 }
