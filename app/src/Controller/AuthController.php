@@ -9,10 +9,9 @@ use App\Helpers\Utilitaire;
 use App\Manager\UserManager;
 use App\Route\Route;
 
-
 class AuthController extends AbstractController
 {
-    /* #[Route('/login', name: "login", methods: ["POST"])]
+    #[Route('/login', name: "login", methods: ["POST"])]
     public function login()
     {
         if(!empty($_POST)) {
@@ -24,7 +23,6 @@ class AuthController extends AbstractController
             $userManager = (new UserManager(new PDOFactory()))
                 ->getByUsername($formUsername);
 
-<<<<<<< HEAD
             // $userManager->getHashedPassword();
             // var_dump($userManager->getHashedPassword());
             if(password_verify($formPwd, $userManager->getHashedPassword()))
@@ -46,31 +44,16 @@ class AuthController extends AbstractController
                 ]);
             }
         
-=======
-
->>>>>>> jugurta
         }
-    } */
+    }
     
-<<<<<<< HEAD
-=======
-   /* #[Route('/login', name: "showlogin", methods: ["GET"])]
-    public function showLogin()
-    {
-        return $this->render("register&login/formLogin.php");
-
-    }*/
-
->>>>>>> jugurta
 
     #[Route('/register', name: "register", methods: ["POST"])]
     public function register(): void
     {
-        /** @var App\Entity\User $user */
+        $user = (new User($_POST))->passwordHash($_POST['password']);
 
-        $user = (new User($_POST))->setAccess('User')->passwordHash($_POST['password']);
-
-        if($user->getUsername() && $user->getPassword()){
+        if($user->getUsername() && $user->getHashedPassword()){
             $userManager = new UserManager(new PDOFactory());
             $userManager->insertUser($user);
 
@@ -80,6 +63,5 @@ class AuthController extends AbstractController
             echo json_encode(["register" => false]);
         }
     }
-
 
 }
