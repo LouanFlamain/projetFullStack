@@ -69,7 +69,4 @@ foreach ($routesObj as $route) {
     exit();
 }
 
-Utilitaire::redirect('posts');
-
-
 die;
