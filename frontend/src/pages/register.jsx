@@ -7,9 +7,10 @@ export default function Register() {
   };
   return (
     <div className="p-4">
-      <div className="w-50 mx-auto">
-        <form className="card p-5" onSubmit={submit}>
-          <div className="mt-3">
+      <div className="w-50 mx-auto card">
+        <h4 className="card-header">S'inscrire</h4>
+        <form className="card-body p-5" onSubmit={submit} method="POST">
+          <div className="p-2">
             <label for="inputPassword5" className="form-label">
               Prénom
             </label>
@@ -21,33 +22,33 @@ export default function Register() {
               name="username"
             />
           </div>
-          <div className="mt-3">
+          <div className="p-2">
             <label for="inputPassword5" className="form-label">
-              Email
+              email
             </label>
             <input
               type="email"
               id="inputPassword5"
               className="form-control"
               aria-describedby="passwordHelpBlock"
-              name="email"
+              name="username"
             />
           </div>
-          <div className="mt-3">
+          <div className="p-2">
             <label for="inputPassword5" className="form-label">
-              Clé d'identification
+              Clé d'identification-tokken
             </label>
             <input
-              type="text"
+              type="textr"
               id="inputPassword5"
               className="form-control"
               aria-describedby="passwordHelpBlock"
-              name="tokken"
+              name="username"
             />
           </div>
-          <div className="mt-3">
+          <div className="p-2">
             <label for="inputPassword5" className="form-label">
-              Créez votre mot de passe
+              Créer un mot de passe
             </label>
             <input
               type="password"
@@ -57,9 +58,9 @@ export default function Register() {
               aria-describedby="passwordHelpBlock"
             />
           </div>
-          <div className="mt-3">
+          <div className="p-2">
             <label for="inputPassword5" className="form-label">
-              Retapez votre mot de passe
+              Retaper votre mot de passe
             </label>
             <input
               type="password"
@@ -70,12 +71,12 @@ export default function Register() {
             />
           </div>
           <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
-            S'inscrire
+            Valider
           </button>
+          <p className="mt-3">
+            Déjà inscrit ? <Link to="/login">cliquez ici</Link>
+          </p>
         </form>
-        <p className="mt-3">
-          vous êtes déjà inscrit ? <Link to="/login">cliquez ici</Link>
-        </p>
       </div>
     </div>
   );
