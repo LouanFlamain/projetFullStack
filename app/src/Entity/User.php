@@ -60,7 +60,7 @@ class User extends BaseEntity implements PasswordProtectedInterface
     }
 
     /**
-     * @return int 
+     * @return string 
      */
     public function getMail(): string
     {
