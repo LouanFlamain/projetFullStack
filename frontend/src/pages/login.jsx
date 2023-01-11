@@ -12,7 +12,7 @@ export default function Login() {
         <form className="card-body p-5" onSubmit={submit} method="POST">
           <div>
             <label for="inputPassword5" className="form-label">
-              User
+              Prénom
             </label>
             <input
               type="text"
@@ -24,7 +24,7 @@ export default function Login() {
           </div>
           <div>
             <label for="inputPassword5" className="form-label">
-              Password
+              Tapez votre mot de passe
             </label>
             <input
               type="password"
@@ -34,9 +34,11 @@ export default function Login() {
               name="password"
             />
           </div>
-          <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
-            Login
-          </button>
+          <Link to="/createTenant">
+            <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
+              Login
+            </button>
+          </Link>
           <p className="mt-3">
             Pas encore inscrit ? <Link to="/register">cliquez ici</Link>
           </p>
