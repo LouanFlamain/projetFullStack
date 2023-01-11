@@ -35,11 +35,6 @@ class AuthController extends AbstractController
 
     }*/
 
-    #[Route('/register', name: "showRegister", methods: ["GET"])]
-    public function showRegister(): string
-    {
-        return $this->render("register&login/formRegister.php");
-    }
 
     #[Route('/register', name: "register", methods: ["POST"])]
     public function register(): void
@@ -59,12 +54,5 @@ class AuthController extends AbstractController
         }
     }
 
-    #[Route('/register', name: "showRegister", methods: ["GET"])]
-    public function shoowRegister(): string
-    {
-        return $this->render("register&login/formRegister.php", [
-            "trucs" => "je suis une ",
-            "machin" => 42,
-        ]);
-    }
+
 }
