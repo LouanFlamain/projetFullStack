@@ -6,12 +6,12 @@ export default function Register() {
     event.preventDefault();
   };
   return (
-    <div className="pt-4">
+    <div className="p-4">
       <div className="w-50 mx-auto">
         <form className="card p-5" onSubmit={submit}>
-          <div>
+          <div class="mt-3">
             <label for="inputPassword5" className="form-label">
-              User Name
+              Prénom
             </label>
             <input
               type="text"
@@ -21,7 +21,7 @@ export default function Register() {
               name="username"
             />
           </div>
-          <div>
+          <div class="mt-3">
             <label for="inputPassword5" className="form-label">
               Email
             </label>
@@ -33,7 +33,7 @@ export default function Register() {
               name="email"
             />
           </div>
-          <div>
+          <div class="mt-3">
             <label for="inputPassword5" className="form-label">
               Clé d'identification
             </label>
@@ -45,9 +45,9 @@ export default function Register() {
               name="tokken"
             />
           </div>
-          <div>
+          <div class="mt-3">
             <label for="inputPassword5" className="form-label">
-              Password
+              Créez votre mot de passe
             </label>
             <input
               type="password"
@@ -57,9 +57,9 @@ export default function Register() {
               aria-describedby="passwordHelpBlock"
             />
           </div>
-          <div>
+          <div class="mt-3">
             <label for="inputPassword5" className="form-label">
-              Retype-Password
+              Retapez votre mot de passe
             </label>
             <input
               type="password"
@@ -70,11 +70,11 @@ export default function Register() {
             />
           </div>
           <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
-            Register
+            S'inscrire
           </button>
         </form>
-        <p>
-          Déjà inscrit ? <Link to="/login">cliquez ici</Link>
+        <p class="mt-3">
+          vous êtes déjà inscrit ? <Link to="/login">cliquez ici</Link>
         </p>
       </div>
     </div>
