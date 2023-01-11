@@ -31,4 +31,5 @@ class TenantManager extends BaseManager
         $query->bindValue('user_id', $data->getUser_id(), \PDO::PARAM_INT);
         $query->execute();
     }
+
 }

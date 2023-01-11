@@ -31,4 +31,11 @@ class CostManager extends BaseManager
         $query->bindValue('user_id', $data->getCostsTypeId(), \PDO::PARAM_INT);
         $query->execute();
     }
+
+    public function deleteCost(Cost $reference): void
+    {
+        $query = $this->pdo->prepare("DELETE FROM `Cost` WHERE `reference` = :reference");
+        $query->bindValue('reference', $reference, \PDO::PARAM_STR);
+        $query->execute();
+    }
 }
