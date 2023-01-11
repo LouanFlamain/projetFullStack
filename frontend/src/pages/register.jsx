@@ -36,7 +36,7 @@ export default function Register() {
           </div>
           <div className="p-2">
             <label for="inputPassword5" className="form-label">
-              Clé d'identification-tokken-tokken
+              Clé d'identification-token
             </label>
             <input
               type="textrr"
@@ -70,9 +70,11 @@ export default function Register() {
               aria-describedby="passwordHelpBlock"
             />
           </div>
-          <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
-            Valider
-          </button>
+          <Link to="/depense">
+            <button type="input" className="btn btn-primary w-50 mr-100 mt-5">
+              Valider 
+            </button>
+          </Link>
           <p className="mt-3">
             Déjà inscrit ? <Link to="/login">cliquez ici</Link>
           </p>
