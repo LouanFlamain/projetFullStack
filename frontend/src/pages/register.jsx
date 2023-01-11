@@ -9,7 +9,7 @@ export default function Register() {
     <div className="p-4">
       <div className="w-50 mx-auto">
         <form className="card p-5" onSubmit={submit}>
-          <div class="mt-3">
+          <div className="mt-3">
             <label for="inputPassword5" className="form-label">
               Prénom
             </label>
@@ -21,7 +21,7 @@ export default function Register() {
               name="username"
             />
           </div>
-          <div class="mt-3">
+          <div className="mt-3">
             <label for="inputPassword5" className="form-label">
               Email
             </label>
@@ -33,7 +33,7 @@ export default function Register() {
               name="email"
             />
           </div>
-          <div class="mt-3">
+          <div className="mt-3">
             <label for="inputPassword5" className="form-label">
               Clé d'identification
             </label>
@@ -45,7 +45,7 @@ export default function Register() {
               name="tokken"
             />
           </div>
-          <div class="mt-3">
+          <div className="mt-3">
             <label for="inputPassword5" className="form-label">
               Créez votre mot de passe
             </label>
@@ -57,7 +57,7 @@ export default function Register() {
               aria-describedby="passwordHelpBlock"
             />
           </div>
-          <div class="mt-3">
+          <div className="mt-3">
             <label for="inputPassword5" className="form-label">
               Retapez votre mot de passe
             </label>
@@ -73,7 +73,7 @@ export default function Register() {
             S'inscrire
           </button>
         </form>
-        <p class="mt-3">
+        <p className="mt-3">
           vous êtes déjà inscrit ? <Link to="/login">cliquez ici</Link>
         </p>
       </div>
