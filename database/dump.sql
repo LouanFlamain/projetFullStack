@@ -7,17 +7,6 @@ CREATE TABLE IF NOT EXISTS User (
   role VARCHAR(10) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Rental (
-  id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  amount INT NOT NULL,
-  title VARCHAR(255) NOT NULL,
-  devise VARCHAR(5) NOT NULL,
-  description TEXT NOT NULL,
-  user_id INT NOT NULL,
-  rental_id INT NOT NULL,
-  created_at timestamp NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
-);
 
 CREATE TABLE IF NOT EXISTS Rental (
   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
