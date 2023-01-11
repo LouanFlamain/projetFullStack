@@ -34,7 +34,7 @@ export default function Login() {
               name="password"
             />
           </div>
-          <Link to="/createTenant">
+          <Link to="/createRental">
             <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
               Login
             </button>
