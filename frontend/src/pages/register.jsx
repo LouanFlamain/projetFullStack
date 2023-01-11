@@ -11,11 +11,6 @@ export default function Register() {
         <h4 className="card-header">S'inscrire</h4>
         <form className="card-body p-5" onSubmit={submit} method="POST">
           <div className="p-2">
-    <div className="p-4">
-      <div className="w-50 mx-auto card">
-        <h4 className="card-header">S'inscrire</h4>
-        <form className="card-body p-5" onSubmit={submit} method="POST">
-          <div className="p-2">
             <label for="inputPassword5" className="form-label">
               Prénom
             </label>
@@ -28,9 +23,7 @@ export default function Register() {
             />
           </div>
           <div className="p-2">
-          <div className="p-2">
             <label for="inputPassword5" className="form-label">
-              email
               email
             </label>
             <input
@@ -39,10 +32,8 @@ export default function Register() {
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="username"
-              name="username"
             />
           </div>
-          <div className="p-2">
           <div className="p-2">
             <label for="inputPassword5" className="form-label">
               Clé d'identification-tokken-tokken
@@ -53,10 +44,8 @@ export default function Register() {
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="username"
-              name="username"
             />
           </div>
-          <div className="p-2">
           <div className="p-2">
             <label for="inputPassword5" className="form-label">
               Créer un mot de passe
