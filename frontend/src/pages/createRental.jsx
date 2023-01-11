@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Config() {
+export default function CreateRental() {
   return (
     <>
     <div className="p-3">

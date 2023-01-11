@@ -8,6 +8,7 @@ import Depense from "./pages/depense";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import CreateTenant from "./pages/createTenant";
+import CreateRental from "./pages/createRental";
 
 function App() {
   let test = true;
@@ -23,6 +24,7 @@ function App() {
             <Route path="/config" element={<Config />} />
             <Route path="/depense" element={<Depense />} />
             <Route path="/equilibre" element={<Equilibre />} />
+            <Route path="/Createrental" element={<CreateRental />} />
           </Routes>
         </div>
       </BrowserRouter>
