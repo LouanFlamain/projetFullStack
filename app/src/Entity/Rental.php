@@ -17,9 +17,9 @@ class Rental extends BaseEntity
     
     /**
      * Get the value of id
-     * @return int
+     * @return int|null
      */ 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -40,7 +40,7 @@ class Rental extends BaseEntity
      * Get the value of title
      * @return string $title
      */ 
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -61,7 +61,7 @@ class Rental extends BaseEntity
      * Get the value of amount
      * @return  int $amount
      */ 
-    public function getAmount()
+    public function getAmount(): int
     {
         return $this->amount;
     }
@@ -82,7 +82,7 @@ class Rental extends BaseEntity
      * Get the value of devise
      * @return string $devise
      */ 
-    public function getDevise()
+    public function getDevise(): string
     {
         return $this->devise;
     }
@@ -104,7 +104,7 @@ class Rental extends BaseEntity
      * Get the value of description
      * @return string $description
      */ 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -126,7 +126,7 @@ class Rental extends BaseEntity
      * Get the value of user_id
      * @return int $user_id
      */ 
-    public function getUser_id()
+    public function getUser_id(): int
     {
         return $this->user_id;
     }
@@ -145,9 +145,9 @@ class Rental extends BaseEntity
 
     /**
      * Get the value of created_at
-     * @return DateTime $created_at
+     * @return DateTime|null $created_at
      */ 
-    public function getCreated_at()
+    public function getCreated_at(): ?DateTime
     {
         return $this->created_at;
     }
@@ -157,7 +157,7 @@ class Rental extends BaseEntity
      * @param DateTimea
      * @return  Rental
      */ 
-    public function setCreated_at($created_at)
+    public function setCreated_at($created_at): Rental
     {
         $this->created_at = $created_at;
 
