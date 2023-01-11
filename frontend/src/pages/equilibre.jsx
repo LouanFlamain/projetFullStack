@@ -35,6 +35,23 @@ export default function Equilibre() {
           <input type="text" name="currency" placeholder="EUR"/> <p>(EUR,USD,CHF,...)</p>
 
         </div>
+        
+        <div>
+
+        <label for="description">Description:</label>
+
+        <textarea name="description"/>
+
+        </div>
+        <div>
+
+          <label for="rent">Montant du loyer:</label>
+
+          <input type="text" name="rent"/>
+        </div>
+        
+     
+
 
       </form>
 
