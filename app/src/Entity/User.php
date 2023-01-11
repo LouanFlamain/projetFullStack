@@ -81,7 +81,7 @@ class User extends BaseEntity implements PasswordProtectedInterface
      */
     public function setRole(string $roles): User
     {
-        $this->role = $roles;
+        $this->role = "User";
         return $this;
     }
 
