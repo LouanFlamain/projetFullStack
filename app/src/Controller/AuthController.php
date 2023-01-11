@@ -12,7 +12,7 @@ use App\Route\Route;
 
 class AuthController extends AbstractController
 {
-    #[Route('/login', name: "login", methods: ["POST"])]
+    /* #[Route('/login', name: "login", methods: ["POST"])]
     public function login()
     {
         if(!empty($_POST)) {
@@ -24,6 +24,7 @@ class AuthController extends AbstractController
             $userManager = (new UserManager(new PDOFactory()))
                 ->getByUsername($formUsername);
 
+<<<<<<< HEAD
             // $userManager->getHashedPassword();
             // var_dump($userManager->getHashedPassword());
             if(password_verify($formPwd, $userManager->getHashedPassword()))
@@ -45,9 +46,22 @@ class AuthController extends AbstractController
                 ]);
             }
         
+=======
+
+>>>>>>> jugurta
         }
-    }
+    } */
     
+<<<<<<< HEAD
+=======
+   /* #[Route('/login', name: "showlogin", methods: ["GET"])]
+    public function showLogin()
+    {
+        return $this->render("register&login/formLogin.php");
+
+    }*/
+
+>>>>>>> jugurta
 
     #[Route('/register', name: "register", methods: ["POST"])]
     public function register(): void
@@ -67,12 +81,5 @@ class AuthController extends AbstractController
         }
     }
 
-    #[Route('/register', name: "showRegister", methods: ["GET"])]
-    public function shoowRegister(): string
-    {
-        return $this->render("register&login/formRegister.php", [
-            "trucs" => "je suis une ",
-            "machin" => 42,
-        ]);
-    }
+
 }
