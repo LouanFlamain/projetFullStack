@@ -3,15 +3,14 @@ import React from "react";
 export default function Equilibre() {
   return (
     <>
-    <div><p>ceci est la page cocococo</p></div>
-    <div>
+    <div className="p-3">
 
-      <p>Creer des comptes (Etape 1 sur 2)</p>
+      <p className="h2 text-primary">Creer des comptes (Etape 1 sur 2)</p>
       <div>
 
         <span>
 
-          <p>
+          <p className="bg-primary text-white p-3 pb-5">
             Choisissez un titre explicite et donnez plus d'informations dans la description
           </p>
           
@@ -20,34 +19,50 @@ export default function Equilibre() {
       </div>
       <form method="POST">
 
-        <div>
+        <div className="p-4">
+          <div className="form-group row p-2">
 
-          <label for="title">Titre:</label>
+            <label for="title" className="col-sm-2 col-form-label col-form-label-sm">Titre:</label>
+            
 
-          <input type="text" name="title"/>
+            <div className="col-sm-10 ">
 
-        </div>
+              <input type="text" className="form-control form-control-sm" id="title"/>
 
-        <div>
+            </div>
 
-          <label for="currency">Devise:</label>
-
-          <input type="text" name="currency" placeholder="EUR"/> <p>(EUR,USD,CHF,...)</p>
-
-        </div>
+          </div>
         
-        <div>
 
-        <label for="description">Description:</label>
+          <div className="form-group row p-2">
 
-        <textarea name="description"/>
+            <label for="description" className="col-sm-2 col-form-label col-form-label-sm">Description:</label>
+            
 
-        </div>
-        <div>
+            <div className="col-sm-10 ">
 
-          <label for="rent">Montant du loyer:</label>
+            <input type="text" className="form-control form-control-sm p-5" id="description"/>
 
-          <input type="text" name="rent"/>
+            </div>
+
+          </div>
+
+
+
+
+
+          <div className="form-group row p-2">
+
+            <label for="rent" className="col-sm-2 col-form-label col-form-label-sm">Montant du loyer:</label>
+            
+
+            <div className="col-sm-10">
+
+              <input type="text" className="form-control form-control-sm " id="rent"/>
+
+            </div>
+
+          </div>
         </div>
         
      
@@ -55,8 +70,35 @@ export default function Equilibre() {
 
       </form>
 
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+      <div>
+
+        <span>
+
+          <p className="bg-primary  p-3 pb-5">
+            <a className="text-white" href="#">Continuer</a>
+          </p>
+          
+        </span>
+
+      </div>
+
     
     </div>
+    
     </>
     );
   }
