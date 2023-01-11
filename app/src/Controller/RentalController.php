@@ -13,7 +13,14 @@ class RentalController extends AbstractController
     #[Route('/rental', name:'rental', methods:['POST'])]
     public function createRental()
     {
+
         $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
+
+        var_dump($user_id);
+
+        $_POST['user_id'] = $user_id;
+
+        var_dump($_POST);
 
         $rental = new Rental($_POST);
         $rentalManager = (new RentalManager(new PDOFactory()))
