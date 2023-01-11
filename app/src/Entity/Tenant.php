@@ -7,10 +7,11 @@ use DateTime;
 class Tenant extends BaseEntity
 {
     private ?int $id;
-    private int $total_amount;
+    private int $balance;
     private string $user_id;
+    private string $rental_id;
     private ?DateTime $created_at;
-
+    
     /**
      * @return int|null
      */
@@ -27,24 +28,39 @@ class Tenant extends BaseEntity
         $this->id = $id;
         return $this;
     }
-
+    
     /**
      * @return int
      */
-    public function getTotal_Amount(): int
+    public function getBalance()
     {
-        return $this->total_amount;
+        return $this->balance;
     }
 
     /**
-     * @param int $total_amount
+     * @param int $balance
      */
-    public function setTotal_Amount(int $total_amount): Tenant
+    public function setBalance($balance)
     {
-        $this->total_amount = $total_amount;
-        return $this;
+        $this->balance = $balance;
     }
 
+    /**
+     * @return string
+     */
+    public function getRentalId()
+    {
+        return $this->rental_id;
+    }
+
+    /**
+     * @param string $rental_id
+     */
+    public function setRentalId($rental_id)
+    {
+        $this->rental_id = $rental_id;
+    }
+    
     /**
      * @return string
      */
@@ -72,6 +88,8 @@ class Tenant extends BaseEntity
 
     /**
      * @param DateTime|string|null $created_at
+     * @return Tenant
+     * @throws \Exception
      */
     public function setCreated_At(DateTime|string|null $created_at = 'now'): Tenant
     {

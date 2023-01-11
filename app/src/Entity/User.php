@@ -11,7 +11,7 @@ class User extends BaseEntity implements PasswordProtectedInterface
     private string $username;
     private string $password;
     private string $mail;
-    private int $role;
+    private string $role;
 
     /**
      * @return int 
@@ -60,7 +60,7 @@ class User extends BaseEntity implements PasswordProtectedInterface
     }
 
     /**
-     * @return int 
+     * @return string 
      */
     public function getMail(): string
     {
@@ -68,14 +68,23 @@ class User extends BaseEntity implements PasswordProtectedInterface
     }
 
     /**
-     * @param int $role
+     * @return string 
+     */
+    public function getRole(): string
+    {
+        return $this->role;
+    }
+
+    /**
+     * @param string $roles
      * @return User
      */
-    public function setRoles(int $role): User
+    public function setRole(string $roles): User
     {
-        $this->role = $role;
+        $this->role = "User";
         return $this;
     }
+
 
     public function getHashedPassword(): string
     {
@@ -89,7 +98,7 @@ class User extends BaseEntity implements PasswordProtectedInterface
 
     public function setPassword(string $password): User
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $password;
 
         return $this;
     }
@@ -97,5 +106,11 @@ class User extends BaseEntity implements PasswordProtectedInterface
     public function Tenant()
     {
         return $this->belongTo(TenantManager::class);
+    }
+
+    public function passwordHash(string $password): User
+    {
+        $this->password = password_hash($password,  PASSWORD_DEFAULT );
+        return $this;
     }
 }
