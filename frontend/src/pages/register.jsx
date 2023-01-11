@@ -71,12 +71,15 @@ export default function Register() {
             />
           </div>
           <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
-            Valider
+            Register
           </button>
           <p className="mt-3">
             Déjà inscrit ? <Link to="/login">cliquez ici</Link>
           </p>
         </form>
+        <p>
+          Déjà inscrit ? <Link to="/login">cliquez ici</Link>
+        </p>
       </div>
     </div>
   );
