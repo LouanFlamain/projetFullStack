@@ -21,7 +21,7 @@ class TenantManager extends BaseManager
             $tab[$key] = new Tenant($data);
         }
     
-        return (object)$tab;
+        return $tab;
     }
 
     public function insertById(Tenant $data): void

@@ -3,9 +3,10 @@ CREATE TABLE IF NOT EXISTS User (
   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
-  mail VARCHAR(255) NOT NULL,
-  role INT NOT NULL
+  mail VARCHAR(255) NOT NULL UNIQUE,
+  role VARCHAR(10) NOT NULL
 );
+
 
 CREATE TABLE IF NOT EXISTS Rental (
   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -21,7 +22,7 @@ CREATE TABLE IF NOT EXISTS Rental (
 CREATE TABLE IF NOT EXISTS Tenant (
   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   balance INT NOT NULL,
-  user_id INT NOT NULL,
+  user_id INT NOT NULL UNIQUE,
   rental_id INT NOT NULL,
   created_at timestamp NOT NULL,
   FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
@@ -33,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Costs (
   credit INT NULL,
   debit INT NULL,
   cost_type VARCHAR(50) NOT NULL,
-  reference VARCHAR(15) NOT NULL,
+  reference VARCHAR(15) NOT NULL UNIQUE,
   tenant_id INT NOT NULL,
   created_at timestamp NOT NULL,
   FOREIGN KEY (tenant_id) REFERENCES Tenant(id) ON DELETE CASCADE
@@ -41,7 +42,9 @@ CREATE TABLE IF NOT EXISTS Costs (
 
 CREATE TABLE IF NOT EXISTS Invitation (
    id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  token VARCHAR(255) NOT NULL,
-  mail VARCHAR(255) NOT NULL,
-  created_at timestamp NOT NULL
+  token VARCHAR(255) NOT NULL UNIQUE,
+  mail VARCHAR(255) NOT NULL UNIQUE,
+  rental_id INT NOT NULL,
+  created_at timestamp NOT NULL,
+  FOREIGN KEY (rental_id) REFERENCES Rental(id) ON DELETE CASCADE
 );
