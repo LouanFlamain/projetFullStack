@@ -31,4 +31,17 @@ class TenantManager extends BaseManager
         $query->bindValue('user_id', $data->getUser_id(), \PDO::PARAM_INT);
         $query->execute();
     }
+
+    public function addTenant(Tenant $data)
+    {
+        $query = $this->pdo->prepare("INSERT INTO Tenant (balance, user_id, rental_id)
+         VALUES (:balance, :user_id, :rental_id)");
+
+        $query->bindValue('balance', $data->getBalance(), \PDO::PARAM_INT);
+        $query->bindValue('user_id', $data->getUser_id(), \PDO::PARAM_INT);
+        $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_INT);
+
+        $query->execute(); 
+    }
+
 }
