@@ -17,9 +17,9 @@ export default function Config() {
         </span>
 
       </div>
-      <form method="GET" action="createTenant">
+      <form>
 
-        <div className="p-4">
+        <div className="p-5">
           <div className="form-group row p-2">
 
             <label for="title" className="col-sm-2 col-form-label col-form-label-sm">Titre:</label>
@@ -51,20 +51,22 @@ export default function Config() {
 
 
 
-          <div className="form-group row p-2">
-
-            <label for="rent" className="col-sm-2 col-form-label col-form-label-sm">Montant du loyer:</label>
-            
-
-            <div className="col-sm-10">
-
-              <input type="text" className="form-control form-control-sm " id="rent"/>
-
-            </div>
-
-          </div>
+         
         </div>
       
+      <ul className="list-group pb-4 d-inline">
+        
+        <span className="d-flex p-1"><li className="list-group-item d-inline">Hassan</li>  
+        <button> Supprimer </button></span>
+        <span className="d-flex p-1"><li className="list-group-item d-inline">Hassan</li>  
+        <button> Supprimer </button></span>
+        <span className="d-flex p-1"><li className="list-group-item d-inline">Hassan</li>  
+        <button> Supprimer </button></span>
+        
+        
+
+        
+      </ul>
 
       <div>
 
@@ -77,6 +79,7 @@ export default function Config() {
       </span>
 
       </div>
+
       </form>
 
 
@@ -87,7 +90,7 @@ export default function Config() {
 
       
 
-
+      
 
 
 
