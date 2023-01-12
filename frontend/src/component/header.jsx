@@ -42,7 +42,7 @@ export default function Header() {
       </div>
       <div className="d-flex align-content-center">
         <button type="button" className="btn btn-link">
-          Disconnect
+          Se déconnecter
         </button>
       </div>
     </div>
