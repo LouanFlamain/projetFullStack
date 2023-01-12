@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
-class Coast
+class Cost extends BaseEntity
 {
- private ?int $id;
- private int $credit;
- private int $debit;
- private string $cost_type;
+    private ?int $id;
+    private int $credit;
+    private int $debit;
+    private string $cost_type;
+    private string $reference;
+    private int $tenant_id;
 
- private string $reference;
-
-    /**
+    /*
      * @return int|null
      */
     public function getId(): ?int
@@ -19,15 +19,19 @@ class Coast
         return $this->id;
     }
 
-    /**
+    /*
      * @param int|null $id
+     * @return 
      */
-    public function setId(?int $id): void
+    public function setId(?int $id): Cost
     {
         $this->id = $id;
+
+        return $this;
+
     }
 
-    /**
+    /*
      * @return int
      */
     public function getCredit(): int
@@ -35,15 +39,18 @@ class Coast
         return $this->credit;
     }
 
-    /**
+    /*
      * @param int $credit
      */
-    public function setCredit(int $credit): void
+    public function setCredit(int $credit): Cost
     {
         $this->credit = $credit;
+
+        return $this;
+
     }
 
-    /**
+    /*
      * @return int
      */
     public function getDebit(): int
@@ -51,31 +58,37 @@ class Coast
         return $this->debit;
     }
 
-    /**
+    /*
      * @param int $debit
      */
-    public function setDebit(int $debit): void
+    public function setDebit(int $debit): Cost
     {
         $this->debit = $debit;
+
+        return $this;
+
     }
 
-    /**
+    /*
      * @return string
      */
-    public function getCostType(): string
+    public function getCost_type(): string
     {
         return $this->cost_type;
     }
 
-    /**
+    /*
      * @param string $cost_type
      */
-    public function setCostType(string $cost_type): void
+    public function setCost_type(string $cost_type): Cost
     {
         $this->cost_type = $cost_type;
+
+        return $this;
+
     }
 
-    /**
+    /*
      * @return string
      */
     public function getReference(): string
@@ -83,33 +96,35 @@ class Coast
         return $this->reference;
     }
 
-    /**
+    /*
      * @param string $reference
      */
-    public function setReference(string $reference): void
+    public function setReference(string $reference): Cost
     {
         $this->reference = $reference;
+
+        return $this;
     }
 
-    /**
+    /*
      * @return int
      */
-    public function getTenantId(): int
+    public function getTenant_id(): int
     {
         return $this->tenant_id;
     }
 
-    /**
+    /*
      * @param int $tenant_id
      */
-    public function setTenantId(int $tenant_id): void
+    public function setTenant_id(int $tenant_id): Cost
     {
         $this->tenant_id = $tenant_id;
+
+        return $this;
+
     }
 
- private int $tenant_id;
-
-
-
-
 }
+
+
