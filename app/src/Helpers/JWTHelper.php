@@ -27,4 +27,15 @@ class JWTHelper
             return null;
         }
     }
+    public static function CreateMailToken ($invitation): string
+    {
+        $payload = [
+            "mail" => $invitation['mail'],
+            "exp" => (new \DateTime("+ 20 minutes"))->getTimestamp(),
+
+        ];
+        return JWT::encode($payload, "je_suis_presque_impossible_a_casser_:3", "HS256");
+
+    }
+
 }

@@ -11,6 +11,12 @@ services:
       - ./frontend:/project
     command: sh -c 'npm install && npm run start'
 
+  fake_server:
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 8025:8025
+
   backend:
     build:
       context: ./phpConf
