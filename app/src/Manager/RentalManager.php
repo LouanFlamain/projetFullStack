@@ -19,16 +19,19 @@ class RentalManager extends BaseManager
         $query->execute();
     }
 
-    public function updateRental(Rental $rental)
+    public function updateRental(Rental $data, $id    )
     {
         $query = $this->pdo->prepare("UPDATE Rental 
         SET amount = :amount, title = :title, devise = :devise, description = :description
         WHERE id = :id");
-        $query->bindValue("amount", $rental->getAmount(), \PDO::PARAM_INT);
-        $query->bindValue("title", $rental->getTitle(), \PDO::PARAM_STR);
-        $query->bindValue("devise", $rental->getDevise(), \PDO::PARAM_STR);
-        $query->bindValue("description", $rental->getDescription(), \PDO::PARAM_STR);
-        $query->bindValue("id", $rental->getId(), \PDO::PARAM_INT);
+
+        $query->bindValue("amount", $data->getAmount(), \PDO::PARAM_INT);
+        $query->bindValue("title", $data->getTitle(), \PDO::PARAM_STR);
+        $query->bindValue("devise", $data->getDevise(), \PDO::PARAM_STR);
+        $query->bindValue("description", $data->getDescription(), \PDO::PARAM_STR);
+        $query->bindValue("id", $id, \PDO::PARAM_INT);
+
+        $query->execute();
     }
 
     public function deleteRental(int $id)
