@@ -3,17 +3,15 @@
 use App\Helpers\Utilitaire;
 use App\Route\Route;
 
-//header("Access-Control-Allow-Origin: http://localhost:3000");
-//header("Access-Control-Allow-Credentials: true");
-//header("Access-Control-Allow-Headers: authorization, content-type");
-//header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: authorization, content-type");
+header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") die;
 
 //$json = file_get_contents("php://input");
 //var_dump($json);
-
-
 
 require_once 'vendor/autoload.php';
 
