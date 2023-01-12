@@ -48,7 +48,7 @@ class Tenant extends BaseEntity
     /**
      * @return string
      */
-    public function getRentalId()
+    public function getRental_id()
     {
         return $this->rental_id;
     }
@@ -56,7 +56,7 @@ class Tenant extends BaseEntity
     /**
      * @param string $rental_id
      */
-    public function setRentalId($rental_id)
+    public function setRental_id($rental_id)
     {
         $this->rental_id = $rental_id;
     }
@@ -64,7 +64,7 @@ class Tenant extends BaseEntity
     /**
      * @return string
      */
-    public function getUser_Id(): string
+    public function getUser_id(): string
     {
         return $this->user_id;
     }
@@ -72,7 +72,7 @@ class Tenant extends BaseEntity
     /**
      * @param string $user_id
      */
-    public function setUser_Id(string $user_id): Tenant
+    public function setUser_id(string $user_id): Tenant
     {
         $this->user_id = $user_id;
         return $this;
@@ -81,7 +81,7 @@ class Tenant extends BaseEntity
     /**
      * @return string
      */
-    public function getCreated_At(): string
+    public function getCreated_at(): string
     {
         return $this->created_at->format('Y-m-d H:i:s');
     }
@@ -91,7 +91,7 @@ class Tenant extends BaseEntity
      * @return Tenant
      * @throws \Exception
      */
-    public function setCreated_At(DateTime|string|null $created_at = 'now'): Tenant
+    public function setCreated_at(DateTime|string|null $created_at = 'now'): Tenant
     {
         $this->created_at = new DateTime($created_at);
         return $this;
