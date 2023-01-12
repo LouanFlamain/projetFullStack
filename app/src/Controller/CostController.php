@@ -12,9 +12,12 @@ class CostController extends AbstractController
     #[Route('/costs', name:'costs', methods: ["POST"])]
     public function setCost()
     {
-        if(!empty($_POST))
+        $json = file_get_contents('php://input');
+        $data = (array)json_decode($json);
+
+        if(!empty($data))
         {
-            $cost = (new Cost($_POST));
+            $cost = (new Cost($data));
 
             $costManager = (new CostManager(new PDOFactory()));
             // ->getById($cost);

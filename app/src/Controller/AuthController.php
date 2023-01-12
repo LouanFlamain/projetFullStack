@@ -19,7 +19,6 @@ class AuthController extends AbstractController
         $json = file_get_contents('php://input');
         $data = (array)json_decode($json);
 
-        
         $userManager = (new UserManager(new PDOFactory()))
         ->getByUsername($data['username']);
         
@@ -47,7 +46,7 @@ class AuthController extends AbstractController
             ]);
 
             $responseJson = json_encode($responseData);
-            echo ($responseJson);
+            echo $responseJson;
         }
     
     }
@@ -56,9 +55,10 @@ class AuthController extends AbstractController
     #[Route('/register', name: "register", methods: ["POST"])]
     public function register(): void
     {
-        $user = (new User($_POST))->passwordHash($_POST['password']);
+        $json = file_get_contents('php://input');
+        $data = (array)json_decode($json);
 
-        var_dump($user);
+        $user = (new User($data))->passwordHash($data['password']);
 
         if($user->getUsername() && $user->getHashedPassword()){
             $userManager = new UserManager(new PDOFactory());

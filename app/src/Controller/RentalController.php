@@ -13,16 +13,16 @@ class RentalController extends AbstractController
     #[Route('/rental', name:'rental', methods:['POST'])]
     public function createRental()
     {
+        $json = file_get_contents('php://input');
+        $data = (array)json_decode($json);
 
         $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
 
-        var_dump($user_id);
+        $data['user_id'] = $user_id;
 
-        $_POST['user_id'] = $user_id;
+        var_dump($data);
 
-        var_dump($_POST);
-
-        $rental = new Rental($_POST);
+        $rental = new Rental($data);
         $rentalManager = (new RentalManager(new PDOFactory()))
         ->insertRental($rental);
 
@@ -33,8 +33,11 @@ class RentalController extends AbstractController
     public function updateExistingRental($id)
     {
         // @todo
-        $rental = new Rental($_POST);
-
+        $json = file_get_contents('php://input');
+        $data = (array)json_decode($json);
+        
+        $rental = new Rental($data);
+        
         $rentalManager = new RentalManager(new PDOFactory());
         $rentalUpdate = $rentalManager->getOneRental($id);
 
