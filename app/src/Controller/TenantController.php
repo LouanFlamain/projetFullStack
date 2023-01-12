@@ -29,7 +29,7 @@ class TenantController extends AbstractController
     }
 
     #[Route('/tenant/update/{id}', name:'tenantUpdate', methods:['PATCH'])]
-    public function updateExistingTenant()
+    public function updateExistingTenant($id)
     {
         $json = file_get_contents('php://input');
         $data = (array)json_decode($json);
@@ -37,8 +37,18 @@ class TenantController extends AbstractController
         $tenant = new Tenant($data);
 
         $tenantManager = new TenantManager(new PDOFactory());
-        $tenantUpdate = $tenantManager->getById($data);
+        $tenantUpdate = $tenantManager->getById($id);
 
-        $tenantManager->updateTenant($id);
+        $tenantManager->updateTenant($tenant, $id);
+    }
+    #[Route('/tenant/delete/{id}', name:'tenantDelete', methods:['DELETE'])]
+    public function deleteExistingTenant($id)
+    {
+        echo'ok';
+
+        $tenantManager = new TenantManager(new PDOFactory());
+        $tenantDelete= $tenantManager->getById($id);
+
+        $tenantManager->deleteTenant($id);
     }
 }

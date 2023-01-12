@@ -32,16 +32,15 @@ class RentalController extends AbstractController
     #[Route('/rental/update/{id}', name:'updateRental', methods:['PATCH'])]
     public function updateExistingRental($id)
     {
-        // @todo
         $json = file_get_contents('php://input');
         $data = (array)json_decode($json);
         
         $rental = new Rental($data);
+
+        var_dump($rental);
         
         $rentalManager = new RentalManager(new PDOFactory());
         $rentalUpdate = $rentalManager->getOneRental($id);
-
-        var_dump($rental);die;
 
         $rentalManager->updateRental($rental, $id);
     }

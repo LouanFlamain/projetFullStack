@@ -81,4 +81,19 @@ class CostManager extends BaseManager
 
         $data = $query->fetch(\PDO::FETCH_ASSOC);
     }
+
+    public function updateCost(Cost $data, $id)
+    {
+        $query = $this->pdo->prepare("UPDATE Costs 
+        SET credit = :credit, debit = :debit, cost_type = :cost_type, reference = :reference
+        WHERE id = :id");
+
+        $query->bindValue("credit", $data->getCredit(), \PDO::PARAM_INT);
+        $query->bindValue("debit", $data->getDebit(), \PDO::PARAM_INT);
+        $query->bindValue("cost_type", $data->getCost_type(), \PDO::PARAM_STR);
+        $query->bindValue("reference", $data->getReference(), \PDO::PARAM_STR);
+        $query->bindValue("id", $id, \PDO::PARAM_INT);
+
+        $query->execute();
+    }
 }
