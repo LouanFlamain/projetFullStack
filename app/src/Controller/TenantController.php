@@ -13,15 +13,20 @@ class TenantController extends AbstractController
     #[Route('/tenant', name:'tenant', methods: ['POST'])]
     public function addTenant()
     {
+        $json = file_get_contents('php://input');
+        $data = (array)json_decode($json);
+
         $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
 
-        $_POST['user_id'] = $user_id;
-
-        $tenant = new Tenant($_POST);
+        // $data['user_id'] = $user_id;
+        
+        $tenant = new Tenant($data);
 
         var_dump($tenant);
 
         $tenantManager = (new TenantManager(new PDOFactory()))
         ->addTenant($tenant);
     }
+
+
 }
