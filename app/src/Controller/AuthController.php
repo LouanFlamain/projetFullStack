@@ -58,16 +58,20 @@ class AuthController extends AbstractController
         $json = file_get_contents('php://input');
         $data = (array)json_decode($json);
 
-        $user = (new User($data))->passwordHash($data['password']);
-
-        if($user->getUsername() && $user->getHashedPassword()){
-            $userManager = new UserManager(new PDOFactory());
-            $userManager->insertUser($user);
-
-            echo json_encode(["register" => true]);
-            
+        if (isset($data['username']) && isset($data['password']))
+        {
+            $user = (new User($data))->passwordHash($data['password']);
+    
+            if($user->getUsername() != null && $user->getHashedPassword() != null){
+                $userManager = new UserManager(new PDOFactory());
+                $userManager->insertUser($user);
+    
+                echo json_encode(["register" => true]);
+                
+            }
         }
-        else{
+        else
+        {
             echo json_encode(["register" => false]);
         }
     }
