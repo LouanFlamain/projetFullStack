@@ -23,8 +23,6 @@ class AuthController extends AbstractController
             $userManager = (new UserManager(new PDOFactory()))
                 ->getByUsername($formUsername);
 
-            // $userManager->getHashedPassword();
-            // var_dump($userManager->getHashedPassword());
             if(password_verify($formPwd, $userManager->getHashedPassword()))
             {
                 $verify = true;
@@ -34,13 +32,15 @@ class AuthController extends AbstractController
 
                 setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
 
-                echo($_COOKIE['token']);
-
                 return $this->renderJSON([
                     'login' => 'verify',
                     "token" => $jwt,
                     "decoded" => $decoded,
-                    "user" => [(array)$userManager]
+                    "user" => [
+                        'username' => $userManager->getUsername(),
+                        'mail' => $userManager->getMail(),
+                        'role' => $userManager->getRole()
+                    ]
                 ]);
             }
         
@@ -54,10 +54,6 @@ class AuthController extends AbstractController
         /** @var App\Entity\User $user */
 
         $user = (new User($_POST))->passwordHash($_POST['password']);
-
-        var_dump($user);
-        // die;
-        
 
         if($user->getUsername() && $user->getHashedPassword()){
             $userManager = new UserManager(new PDOFactory());
