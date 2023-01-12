@@ -36,6 +36,15 @@ services:
       MYSQL_DATABASE: react
       MYSQL_ROOT_PASSWORD: password
 
+  newredis:
+    container_name: newredis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    volumes:
+      - ./redis/data:/data
+
   adminer:
     image: adminer
     restart: always

@@ -51,8 +51,6 @@ class RentalController extends AbstractController
         $rentalManager = new RentalManager(new PDOFactory());
         $rental = $rentalManager->getOneRental($id);
 
-        // var_dump($rentalManager);die;
-
         $rentalManager->deleteRental($id);
     }
 }

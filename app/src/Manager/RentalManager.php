@@ -46,7 +46,21 @@ class RentalManager extends BaseManager
         $query = $this->pdo->prepare("SELECT * FROM Rental WHERE id = :id");
         $query->bindValue('id', $id, \PDO::PARAM_INT);
         $query->execute();
+        $stm = $query->fetch(\PDO::FETCH_ASSOC);
+        return new Rental($stm);
 
-        $data = $query->fetch(\PDO::FETCH_ASSOC);
+    }
+        
+    public function getById($data): null|Rental
+    {
+        $query = $this->pdo->prepare("SELECT * FROM Rental WHERE user_id = :id");
+        $query->bindValue("id", $data, \PDO::PARAM_INT);
+        $query->execute();
+        $stm = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if ($stm) {
+            return new Rental($stm);
+        }
+        return null;
     }
 }

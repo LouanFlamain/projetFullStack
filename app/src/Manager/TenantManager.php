@@ -8,17 +8,17 @@ class TenantManager extends BaseManager
 {
     public function getById($data)
     {
-        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE user_id = $data");
+        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE rental_id = $data");
         $query->execute();
         $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (! is_iterable($stm)) {
-            return new Tenant($stm);
+        if (count($stm) === 1) {
+            return new Tenant($stm[0]);
         }
 
         $tab = [];
         foreach ($stm as $key => $data){
-            $tab[$key] = new Tenant($data);
+            $tab[$key] = (object) new Tenant($data);
         }
     
         return $tab;

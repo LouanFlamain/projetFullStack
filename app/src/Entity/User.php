@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Interfaces\PasswordProtectedInterface;
 use App\Manager\TenantManager;
+use App\Manager\RentalManager;
 
 class User extends BaseEntity implements PasswordProtectedInterface
 {
@@ -107,14 +108,20 @@ class User extends BaseEntity implements PasswordProtectedInterface
         return $this;
     }
 
-    public function Tenant()
-    {
-        return $this->belongTo(TenantManager::class);
-    }
-
     public function passwordHash(string $password): User
     {
         $this->password = password_hash($password,  PASSWORD_DEFAULT );
         return $this;
+    }
+
+//    public function Tenant()
+//    {
+//        return $this->hasMany(TenantManager::class, 'user_id');
+//    }
+
+
+    public function Rental()
+    {
+        return $this->hasMany(RentalManager::class, 'id');
     }
 }

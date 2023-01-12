@@ -12,22 +12,13 @@ use App\Route\Route;
 class AuthController extends AbstractController
 {
     #[Route('/login', name: "login", methods: ["POST"])]
-    public function login()
-    {
-        $verify = false;
-
-        $json = file_get_contents('php://input');
-        $data = (array)json_decode($json);
-
+    public function login($data)
+    {  
         $userManager = (new UserManager(new PDOFactory()))
         ->getByUsername($data['username']);
         
-        // $userManager->getHashedPassword();
-        // var_dump($userManager->getHashedPassword());
         if(password_verify($data['password'], $userManager->getHashedPassword()))
         {
-            $verify = true;
-
             $jwt = JWTHelper::buildJWT($userManager);
             $decoded = JWTHelper::decodeJWT($jwt);
 
@@ -53,11 +44,8 @@ class AuthController extends AbstractController
     
 
     #[Route('/register', name: "register", methods: ["POST"])]
-    public function register(): void
+    public function register($data): void
     {
-        $json = file_get_contents('php://input');
-        $data = (array)json_decode($json);
-
         if (isset($data['username']) && isset($data['password']))
         {
             $user = (new User($data))->passwordHash($data['password']);
@@ -69,9 +57,7 @@ class AuthController extends AbstractController
                 echo json_encode(["register" => true]);
                 
             }
-        }
-        else
-        {
+        }else {
             echo json_encode(["register" => false]);
         }
     }

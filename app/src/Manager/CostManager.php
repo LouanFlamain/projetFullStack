@@ -12,8 +12,8 @@ class CostManager extends BaseManager
         $query->execute();
         $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (! is_iterable($stm)) {
-            return new Cost($stm);
+        if (count($stm) === 1) {
+            return new Cost($stm[0]);
         }
 
         $tab = [];
@@ -30,14 +30,30 @@ class CostManager extends BaseManager
         WHERE reference = :reference");
         $query->execute();
         $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
-
-        if (! is_iterable($stm)) {
-            return new Cost($stm);
+        if (count($stm) === 1) {
+            return new Cost($stm[0]);
         }
 
         $tab = [];
         foreach ($stm as $key => $data){
             $tab[$key] = new Cost($data);
+        }
+
+        return (object)$tab;
+    }
+
+    public function getByIdRelationship($data)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM Costs WHERE tenant_id = $data");
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+        if (count($stm) === 1) {
+            return new Cost($stm[0]);
+        }
+
+        $tab = [];
+        foreach ($stm as $key => $data){
+            $tab[$key] = new Coasts($data);
         }
 
         return (object)$tab;
