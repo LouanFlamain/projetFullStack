@@ -29,18 +29,21 @@ class RentalController extends AbstractController
         var_dump($rental);
     }
 
-    #[Route('/update/rental/{id}', name:'updateRental', methods:['PATCH'])]
+    #[Route('/rental/update/{id}', name:'updateRental', methods:['PATCH'])]
     public function updateExistingRental($id)
     {
         // @todo
-        $rental = (new Rental($_POST))
-            ->setUser_id($this->getId());
+        $rental = new Rental($_POST);
 
         $rentalManager = new RentalManager(new PDOFactory());
+        $rentalUpdate = $rentalManager->getOneRental($id);
+
+        var_dump($rental);die;
+
         $rentalManager->updateRental($rental, $id);
     }
 
-    #[Route('/delete/rental/{id}', name: 'deleteRental', methods:['GET'])]
+    #[Route('/rental/delete/{id}', name: 'deleteRental', methods:['GET'])]
     public function deleteExistingRental($id)
     {
         $rentalManager = new RentalManager(new PDOFactory());
