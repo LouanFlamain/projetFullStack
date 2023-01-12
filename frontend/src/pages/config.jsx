@@ -41,22 +41,6 @@ export default function CreateRental() {
 
           </div>
 
-
-
-
-
-          <div className="form-group row p-2">
-
-            <label for="rent" className="col-sm-2 col-form-label col-form-label-sm">Montant du loyer:</label>
-            
-
-            <div className="col-sm-10">
-
-              <input type="text" className="form-control form-control-sm " id="rent"/>
-
-            </div>
-
-          </div>
         </div>
 
       </form>
@@ -68,7 +52,6 @@ export default function CreateRental() {
           <button type="submit" className="btn text-white" href="CreateTenant">Continuer</button>
         </Link>
       </div>
-
    
 
 
@@ -79,7 +62,7 @@ export default function CreateRental() {
 
       
 
-
+      
 
 
 
