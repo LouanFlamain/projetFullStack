@@ -7,11 +7,10 @@ import balance from "../image/balance.png";
 export default function Header() {
   return (
     <div
-      className="d-flex justify-content-between"
+      className="d-flex p-3 justify-content-between"
       style={{
         backgroundColor: "#F7F7F7",
         height: "8vh",
-        border: "1px solid #D2D2D2",
       }}
       id="header"
     >
