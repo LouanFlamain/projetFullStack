@@ -44,4 +44,16 @@ class TenantManager extends BaseManager
         $query->execute(); 
     }
 
+    public function updateTenant(Tenant $data)
+    {
+        $query = $this->pdo->prepare("UPDATE Tenant 
+        SET balance = :balance
+        WHERE id = :id");
+
+        $query->bindValue('balance', $data->getBalance(), \PDO::PARAM_INT);
+        $query->bindValue('id', $data->getId(), \PDO::PARAM_INT);
+
+        $query->execute(); 
+    }
+
 }
