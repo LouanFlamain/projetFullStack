@@ -8,13 +8,13 @@
   cursor: pointer;
 }
 
-.create-tenant {
+.create-wrapper {
   height: 80vh;
   display: flex;
   flex-direction: column;
 }
 .create-tenant__content{
-  width: 90%;
+  width: 100%;
 }
 .create-tenant__info {
   gap: 1rem;
