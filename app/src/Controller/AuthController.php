@@ -17,6 +17,9 @@ class AuthController extends AbstractController
         if(!empty($_POST)) {
             $verify = false;
 
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+
             $formUsername = $_POST['username'];
             $formPwd = $_POST['password'];
 
@@ -34,13 +37,15 @@ class AuthController extends AbstractController
 
                 setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
 
-                echo($_COOKIE['token']);
-
                 return $this->renderJSON([
                     'login' => 'verify',
                     "token" => $jwt,
                     "decoded" => $decoded,
-                    "user" => [(array)$userManager]
+                    "user" => [
+                        'username' => $userManager->getUsername(),
+                        'mail' => $userManager->getMail(),
+                        'role' => $userManager->getRole()
+                    ]
                 ]);
             }
         
@@ -60,6 +65,7 @@ class AuthController extends AbstractController
             $userManager->insertUser($user);
 
             echo json_encode(["register" => true]);
+            
         }
         else{
             echo json_encode(["register" => false]);
