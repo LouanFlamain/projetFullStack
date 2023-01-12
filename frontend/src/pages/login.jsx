@@ -1,10 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 export default function Login() {
+  const [userLog, setUserLog] = useState();
+  const [passwordLog, setPasswordLog] = useState();
   const submit = (event) => {
+    const data = {
+      username: userLog,
+      password: passwordLog,
+    };
     event.preventDefault();
+    console.log(data);
+    axios(
+      {
+        method: "post",
+        url: "http://localhost:5656/login",
+        data: data,
+      },
+      { headers: {} }
+    )
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    setUserLog("");
+    setPasswordLog("");
   };
+
   return (
     <div className="pt-4">
       <div className="w-50 card mx-auto">
@@ -20,6 +46,10 @@ export default function Login() {
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="username"
+              value={userLog}
+              onChange={(e) => {
+                setUserLog(e.target.value);
+              }}
             />
           </div>
           <div>
@@ -32,6 +62,10 @@ export default function Login() {
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="password"
+              value={passwordLog}
+              onChange={(e) => {
+                setPasswordLog(e.target.value);
+              }}
             />
           </div>
           <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
