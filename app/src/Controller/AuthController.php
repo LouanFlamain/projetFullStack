@@ -14,42 +14,42 @@ class AuthController extends AbstractController
     #[Route('/login', name: "login", methods: ["POST"])]
     public function login()
     {
-        if(!empty($_POST)) {
-            $verify = false;
+        $verify = false;
 
-            $json = file_get_contents('php://input');
-            $data = json_decode($json);
+        $json = file_get_contents('php://input');
+        $data = (array)json_decode($json);
 
-            $formUsername = $_POST['username'];
-            $formPwd = $_POST['password'];
-
-            $userManager = (new UserManager(new PDOFactory()))
-                ->getByUsername($formUsername);
-
-            // $userManager->getHashedPassword();
-            // var_dump($userManager->getHashedPassword());
-            if(password_verify($formPwd, $userManager->getHashedPassword()))
-            {
-                $verify = true;
-
-                $jwt = JWTHelper::buildJWT($userManager);
-                $decoded = JWTHelper::decodeJWT($jwt);
-
-                setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
-
-                return $this->renderJSON([
-                    'login' => 'verify',
-                    "token" => $jwt,
-                    "decoded" => $decoded,
-                    "user" => [
-                        'username' => $userManager->getUsername(),
-                        'mail' => $userManager->getMail(),
-                        'role' => $userManager->getRole()
-                    ]
-                ]);
-            }
         
+        $userManager = (new UserManager(new PDOFactory()))
+        ->getByUsername($data['username']);
+        
+        // $userManager->getHashedPassword();
+        // var_dump($userManager->getHashedPassword());
+        if(password_verify($data['password'], $userManager->getHashedPassword()))
+        {
+            $verify = true;
+
+            $jwt = JWTHelper::buildJWT($userManager);
+            $decoded = JWTHelper::decodeJWT($jwt);
+
+            setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
+
+            $responseData = ([
+                'login' => 'verify',
+                "token" => $jwt,
+                "decoded" => $decoded,
+                "user" => [
+                    'username' => $userManager->getUsername(),
+                    'mail' => $userManager->getMail(),
+                    'role' => $userManager->getRole(),
+                    'password' => $userManager->getHashedPassword()
+                ]
+            ]);
+
+            $responseJson = json_encode($responseData);
+            echo ($responseJson);
         }
+    
     }
     
 
