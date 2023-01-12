@@ -23,7 +23,7 @@ export default function Register() {
     axios({
       method: "post",
       url: "http://localhost:5656/register",
-      data: data,
+      data: JSON.stringify(data),
     })
       .then(function (response) {
         console.log(response);

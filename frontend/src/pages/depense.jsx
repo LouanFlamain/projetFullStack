@@ -1,5 +1,11 @@
 import React from "react";
+import Header from "../component/header";
 
 export default function Depense() {
-  return <p>ceci est la page dépense</p>;
+  return (
+    <>
+      <Header />
+      <p>ceci est la page dépense</p>
+    </>
+  );
 }

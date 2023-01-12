@@ -13,16 +13,14 @@ export default function Login() {
     };
     event.preventDefault();
     console.log(data);
-    axios(
-      {
-        method: "post",
-        url: "http://localhost:5656/login",
-        data: data,
-      },
-      { headers: {} }
-    )
+    axios({
+      method: "post",
+      url: "http://localhost:5656/login",
+      data: JSON.stringify(data),
+    })
       .then(function (response) {
-        console.log(response);
+        console.log(response.data.token);
+        localStorage.setItem("token", response.data.token);
       })
       .catch(function (error) {
         console.log(error);
