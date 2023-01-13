@@ -30,8 +30,8 @@ foreach ($dirs as $dir) {
     $controllers[] = "App\\Controller\\" . pathinfo($controllerDir . DIRECTORY_SEPARATOR . $dir)['filename'];
 }
 //var_dump($_POST);
-if(!empty($_POST)){
-    foreach ($_POST as $key => $post){
+if (!empty($_POST)) {
+    foreach ($_POST as $key => $post) {
         $_POST[$key] = htmlspecialchars($post);
     }
 }
@@ -41,14 +41,14 @@ $routesObj = [];
 foreach ($controllers as $controller) {
     $reflection = new ReflectionClass($controller);
     foreach ($reflection->getMethods() as $method) {
-       foreach ($method->getAttributes() as $attribute) {
-           /** @var Route $route */
-           $route = $attribute->newInstance();
-           $route->setController($controller)
-               ->setAction($method->getName());
+        foreach ($method->getAttributes() as $attribute) {
+            /** @var Route $route */
+            $route = $attribute->newInstance();
+            $route->setController($controller)
+                ->setAction($method->getName());
 
-           $routesObj[] = $route;
-       }
+            $routesObj[] = $route;
+        }
     }
 }
 
@@ -63,8 +63,6 @@ foreach ($routesObj as $route) {
     $action = $route->getAction();
     $params = $route->mergeParams($url);
 
-    echo [new $controlerClassName(),$action](...$params);
+    echo [new $controlerClassName(), $action](...$params);
     exit();
 }
-
-die;
