@@ -108,9 +108,9 @@ class User extends BaseEntity implements PasswordProtectedInterface
         return $this;
     }
 
-    public function passwordHash(string $password): User
+    public function passwordHash(): User
     {
-        $this->password = password_hash($password,  PASSWORD_DEFAULT );
+        $this->password = password_hash($this->password,  PASSWORD_DEFAULT );
         return $this;
     }
 
