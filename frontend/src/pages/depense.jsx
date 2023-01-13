@@ -48,75 +48,60 @@ export default function Cost() {
   return (
     <>
       <Header />
-      <form className="card-body p-5">
-        <div className="form-group row p-2 w-25">
-          <label
-            for="what"
-            className="col-sm-2 col-form-label col-form-label-sm"
-          >
-            Quoi :
-          </label>
+      <form className="card-body p-5 card w-50 p-4">
+        <div>
+          <div className="d-flex">
+            <label
+              for="what"
+              className="col-sm-2 col-form-label col-form-label-sm"
+            >
+              Quoi :
+            </label>
 
-          <div className="col-sm-10">
             <input
               type="text"
               className="form-control form-control-sm" //
               id="what"
             />
-          </div>
 
-          <div className="col-md-6 row mb-3">
-            <div className="col-10">
-              <div clasNames="input-group-prepend"></div>
-              <select className="custom-select" id="">
-                <option selected>Dépense</option>
-                <option selected>Rentrée d'argent</option>
-                <option selected>Transfert d'argent</option>
-              </select>
-            </div>
+            <select className="custom-select" id="">
+              <option selected>Dépense</option>
+              <option>Rentrée d'argent</option>
+              <option>Transfert d'argent</option>
+            </select>
           </div>
 
           <Link to="/">(Plus d'info)</Link>
         </div>
 
         <div className="form-group row p-2">
-          <label
-            for="who paid"
-            className="col-sm-2 col-form-label col-form-label-sm"
-          >
-            Qui a payé :
-          </label>
-
-          <div className="col-md-6 row mb-3">
-            <div className="col-10">
-              <div clasNames="input-group-prepend"></div>
-              <select className="custom-select" id="">
-                <option selected>Deva</option>
-                <option selected>Jessica</option>
-                <option selected>Rayan</option>
-              </select>
-            </div>
+          <div className="d-flex">
+            <label
+              for="who paid"
+              className="col-sm-2 col-form-label col-form-label-sm"
+            >
+              Qui a payé :
+            </label>
+            <select className="custom-select" id="">
+              <option>Deva</option>
+              <option>Jessica</option>
+              <option>Rayan</option>
+            </select>
           </div>
 
-          <div>
-            <Link to="/">Ajouter un participant</Link>
-          </div>
-
-          <div className="form-group row p-2 w-25">
+          <div className="d-flex">
             <label for="date" className="col-sm-2 col-form-label-sm">
               Date (facultatif) :
             </label>
 
-            <div className="col-sm-10">
-              <input
-                type="date"
-                id="date"
-                className="form-control form-control-sm "
-              />
-            </div>
+            <input
+              type="date"
+              id="date"
+              className="form-control form-control-sm w-25"
+            />
           </div>
 
-          <div className="form-group row p-2 w-25">
+          <div className="d-flex">
             <label
               for="amount"
               className="col-sm-2 col-form-label col-form-label-sm"
@@ -124,13 +109,11 @@ export default function Cost() {
               Montant :
             </label>
 
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control form-control-sm "
-                id="amount"
-              />
-            </div>
+            <input
+              type="text"
+              className="form-control form-control-sm w-25"
+              id="amount"
+            />
           </div>
 
           <div>

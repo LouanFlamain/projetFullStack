@@ -50,6 +50,8 @@ export default function Header() {
           <p className="text-decoration-none text-black fs-5 my-auto">Config</p>
         </Link>
       </div>
+
+      <p className="my-auto">Utilisateur : {logged.user.username}</p>
       <div className="d-flex align-content-center">
         <button type="button" className="btn btn-link" onClick={disconnect}>
           Se déconnecter
