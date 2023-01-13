@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Rental;
 use App\Factory\PDOFactory;
 use App\Helpers\JWTHelper;
 use App\Manager\RentalManager;
@@ -17,6 +16,8 @@ class RentalController extends AbstractController
 
         $rentalManager = (new RentalManager(new PDOFactory()))
         ->insertRental($rental);
+
+        echo json_encode(["rental" => true]);
     }
 
     #[Route('/rental/update/{id}', name:'updateRental', methods:['PATCH'])]
@@ -26,6 +27,7 @@ class RentalController extends AbstractController
         $rentalUpdate = $rentalManager->getOneRental($id);
 
         $rentalManager->updateRental($rental, $id);
+        echo json_encode(["update rental" => true]);
     }
 
     #[Route('/rental/delete/{id}', name: 'deleteRental', methods:['GET'])]
@@ -35,5 +37,7 @@ class RentalController extends AbstractController
         $rental = $rentalManager->getOneRental($id);
 
         $rentalManager->deleteRental($id);
+        echo json_encode(["delete rental" => true]);
+
     }
 }
