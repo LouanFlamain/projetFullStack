@@ -2,7 +2,8 @@
 
 namespace App\Entity;
 
-use DateTime;
+use App\Manager\CostManager;
+
 
 class Tenant extends BaseEntity
 {
@@ -10,7 +11,7 @@ class Tenant extends BaseEntity
     private int $balance;
     private string $user_id;
     private string $rental_id;
-    private ?DateTime $created_at;
+    private ?\DateTime $created_at;
     
     /**
      * @return int|null
@@ -93,12 +94,12 @@ class Tenant extends BaseEntity
      */
     public function setCreated_at(DateTime|string|null $created_at = 'now'): Tenant
     {
-        $this->created_at = new DateTime($created_at);
+        $this->created_at = new \DateTime($created_at);
         return $this;
     }
 
     public function Cost()
     {
-        return $this->hasMany(CostManager::class);
+        return $this->hasMany(CostManager::class, 'id');
     }
 }

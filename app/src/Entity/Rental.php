@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Manager\TenantManager;
 use DateTime;
 
 class Rental extends BaseEntity
@@ -144,23 +145,25 @@ class Rental extends BaseEntity
     }
 
     /**
-     * Get the value of created_at
-     * @return DateTime|null $created_at
-     */ 
-    public function getCreated_at(): ?DateTime
+     * @return string
+     */
+    public function getCreated_At(): string
     {
-        return $this->created_at;
+        return $this->created_at->format('Y-m-d H:i:s');
     }
 
     /**
-     * Set the value of created_at
-     * @param DateTimea
-     * @return  Rental
-     */ 
-    public function setCreated_at($created_at): Rental
+     * @param \DateTime|string|null $created_at
+     * @return Rental
+     */
+    public function setCreated_At(DateTime|string|null $created_at = 'now'): Rental
     {
-        $this->created_at = $created_at;
-
+        $this->created_at = new \DateTime($created_at);
         return $this;
+    }
+
+    public function Tenant()
+    {
+        return $this->hasMany(TenantManager::class, 'user_id');
     }
 }

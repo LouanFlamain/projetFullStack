@@ -10,6 +10,8 @@ class Cost extends BaseEntity
     private string $cost_type;
     private string $reference;
     private int $tenant_id;
+    private ?\DateTime $created_at;
+
 
     /*
      * @return int|null
@@ -125,6 +127,23 @@ class Cost extends BaseEntity
 
     }
 
+    /**
+     * @return string
+     */
+    public function getCreated_At(): string
+    {
+        return $this->created_at->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * @param DateTime|string|null $created_at
+     * @return Cost
+     */
+    public function setCreated_At(DateTime|string|null $created_at = 'now'): Cost
+    {
+        $this->created_at = new \DateTime($created_at);
+        return $this;
+    }
 }
 
 

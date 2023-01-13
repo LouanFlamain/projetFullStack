@@ -2,11 +2,28 @@
 
 namespace App\Entity;
 
-class Invitation
+class Invitation extends BaseEntity
 {
     private ?int $id;
     private string $token;
     private string $mail;
+    private int $rental_id = 1;
+
+    /**
+     * @return string
+     */
+    public function getRental_Id(): string
+    {
+        return $this->rental_id;
+    }
+
+    /**
+     * @param string $rental_id
+     */
+    public function setRental_Id(string $rental_id): void
+    {
+        $this->rental_id = $rental_id;
+    }
     private ?DateTime $created_at;
     
     /**

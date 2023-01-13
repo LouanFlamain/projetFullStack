@@ -4,7 +4,7 @@ namespace App\Manager;
 
 use App\Entity\Invitation;
 
-class InvitationManager
+class InvitationManager extends BaseManager
 {
     public function getById($data): ?Invitation
     {
@@ -20,12 +20,12 @@ class InvitationManager
         return null;
     }
 
-    public function insert(Invitation $invits): void
+    public function CreateMailInvitation(Invitation $invitation): void
     {
-
-        $query = $this->pdo->prepare("INSERT INTO Invitation (token,mail) VALUES (:token, :mail)");
-        $query->bindValue('token', $invits->getToken(), \PDO::PARAM_STR);
-        $query->bindValue('mail', $invits->getMail(), \PDO::PARAM_STR);
+        $query = $this->pdo->prepare("INSERT INTO Invitation (token,mail, rental_id) VALUES (:token, :mail, :rental_id)");
+        $query->bindValue('token', $invitation->getToken(), \PDO::PARAM_STR);
+        $query->bindValue('mail', $invitation->getMail(), \PDO::PARAM_STR);
+        $query->bindValue('rental_id', $invitation->getRental_id(), \PDO::PARAM_STR);
         $query->execute();
     }
 }

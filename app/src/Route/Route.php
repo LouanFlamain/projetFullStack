@@ -136,11 +136,21 @@ class Route
         return $this;
     }
 
-    public function mergeParams(string $url)
+    public function mergeParams(string $url,array $json)
     {
         preg_match("#{$this->path}#", $url, $match);
         array_shift($match);
-        return array_combine($this->getParams(), $match);
+        $param = array_combine($this->getParams(), $match);
+
+        $json = (array)$json['data'];
+        $entity = $json['type'];
+        $data = (array)$json['attributes'];
+        $class = "App\\Entity\\$entity";
+
+        $instanceEntity = new $class($data);
+        $param[strtolower($entity)] = $instanceEntity;
+
+        return $param;
     }
 
     public function match(string $url): bool

@@ -10,8 +10,8 @@ header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") die;
 
-//$json = file_get_contents("php://input");
-//var_dump($json);
+$json = file_get_contents('php://input');
+$data = (array)json_decode($json);
 
 require_once 'vendor/autoload.php';
 
@@ -29,9 +29,10 @@ foreach ($dirs as $dir) {
 
     $controllers[] = "App\\Controller\\" . pathinfo($controllerDir . DIRECTORY_SEPARATOR . $dir)['filename'];
 }
-//var_dump($_POST);
-if (!empty($_POST)) {
-    foreach ($_POST as $key => $post) {
+
+
+if(!empty($_POST)){
+    foreach ($_POST as $key => $post){
         $_POST[$key] = htmlspecialchars($post);
     }
 }
@@ -61,8 +62,7 @@ foreach ($routesObj as $route) {
 
     $controlerClassName = $route->getController();
     $action = $route->getAction();
-    $params = $route->mergeParams($url);
-
-    echo [new $controlerClassName(), $action](...$params);
+    $params = $route->mergeParams($url, $data);
+    echo [new $controlerClassName(),$action](...$params);
     exit();
 }
