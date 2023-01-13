@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Interfaces\PasswordProtectedInterface;
-use App\Manager\TenantManager;
 use App\Manager\RentalManager;
 
 class User extends BaseEntity implements PasswordProtectedInterface

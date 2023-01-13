@@ -4,46 +4,45 @@ import axios from "axios";
 import { useState } from "react";
 
 export default function Register() {
-  const [nameReg, setNameReg] = useState("");
-  const [emailReg, setEmailReg] = useState("");
-  const [tokenReg, setTokenReg] = useState("");
-  const [passwordReg, setPasswordReg] = useState("");
-  const [verifPasswordReg, setVerifPasswordReg] = useState("");
+  const [nameReg, setNameReg] = useState();
+  const [emailReg, setEmailReg] = useState();
+  const [passwordReg, setPasswordReg] = useState();
+  const [verifPasswordReg, setVerifPasswordReg] = useState();
 
   const navigate = useNavigate();
   const submit = (event) => {
     event.preventDefault();
-    const data = {
-      data: {
-        type : "User",
-        attributes : {
-          username: nameReg,
-          password: passwordReg,
-          verifPassword: verifPasswordReg,
-          mail: emailReg,
-        }
-      }
-    };
-    event.preventDefault();
-    console.log(data);
-    axios({
-      method: "post",
-      url: "http://localhost:5656/register",
-      data: JSON.stringify(data),
-    })
-      .then(function (response) {
-        console.log(response);
-        navigate("/login");
+    if (passwordReg === verifPasswordReg) {
+      const data = {
+        data: {
+          type: "User",
+          attributes: {
+            username: nameReg,
+            password: passwordReg,
+            mail: emailReg,
+          },
+        },
+      };
+      console.log(data);
+      axios({
+        method: "post",
+        url: "http://localhost:5656/register",
+        data: JSON.stringify(data),
       })
-      .catch(function (error) {
-        console.log(error);
-        navigate("/register");
-      });
+        .then(function (response) {
+          navigate("/login");
+        })
+        .catch(function (error) {
+          console.log(error);
+          navigate("/register");
+        });
+    } else {
+      navigate("/register?error=mdp");
+    }
     setNameReg("");
     setEmailReg("");
     setPasswordReg("");
     setVerifPasswordReg("");
-    setTokenReg("");
   };
   return (
     <div className="p-4">
@@ -79,22 +78,6 @@ export default function Register() {
               value={emailReg}
               onChange={(e) => {
                 setEmailReg(e.target.value);
-              }}
-            />
-          </div>
-          <div className="p-2">
-            <label htmlFor="inputPassword3" className="form-label">
-              Clé d'identification-token
-            </label>
-            <input
-              type="textrr"
-              id="inputPassword3"
-              className="form-control"
-              aria-describedby="passwordHelpBlock"
-              name="token"
-              value={tokenReg}
-              onChange={(e) => {
-                setTokenReg(e.target.value);
               }}
             />
           </div>

@@ -5,10 +5,8 @@ namespace App\Entity;
 use App\Factory\PDOFactory;
 use App\Traits\Hydrator;
 use App\Manager\UserManager;
-use App\Manager\RentalManager;
 use App\Manager\TenantManager;
 use App\Manager\Invitation;
-use App\Manager\CostManager;
 
 abstract class BaseEntity
 {
