@@ -86,7 +86,7 @@ export default function Register() {
             />
           </div>
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword2" className="form-label">
               Créer un mot de passe
             </label>
             <input
