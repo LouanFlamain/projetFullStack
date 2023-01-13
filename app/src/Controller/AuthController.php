@@ -35,7 +35,7 @@ class AuthController extends AbstractController
                 ]
             ];
 
-            return $this->renderJson($responseData);
+            return $this->renderJSON($responseData);
         }
          return $this->renderJSON([
              "login" => false
