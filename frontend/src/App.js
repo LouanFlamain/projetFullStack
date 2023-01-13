@@ -9,6 +9,7 @@ import Register from "./pages/register";
 import CreateTenant from "./pages/createTenant";
 import CreateRental from "./pages/createRental";
 import NeedAuth from "./component/needAuth";
+import InputArray from "./pages/balance";
 
 function App() {
   const { setLogged, logged } = useContext(context);
@@ -41,7 +42,7 @@ function App() {
             path="/equilibre"
             element={
               <NeedAuth>
-                <Equilibre />
+                <InputArrqy />
               </NeedAuth>
             }
           />
@@ -49,6 +50,7 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
+
   );
 }
 
