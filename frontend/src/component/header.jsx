@@ -33,6 +33,13 @@ export default function Header() {
           <p className="text-black fs-5 my-auto">Équilibre</p>
         </Link>
         <Link
+          to="/balance"
+          className="d-flex justify-content-center align-items-center px-4 header-btn text-decoration-none"
+        >
+          <img width="28px" height="28px" src={money} />
+          <p className="text-black fs-5 my-auto">balance</p>
+        </Link>
+        <Link
           to="/config"
           className="d-flex justify-content-center align-items-center px-4 header-btn text-decoration-none"
         >

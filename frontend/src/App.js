@@ -8,6 +8,7 @@ import Depense from "./pages/depense";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import NeedAuth from "./component/needAuth";
+import InputArray from "./pages/balance";
 
 const initialState = {
   isVerify: false,
@@ -47,6 +48,12 @@ function App() {
                 </NeedAuth>
               }
             />
+            <Route  path="/balance" element={
+              
+              <InputArray/>
+            
+              
+            }/>
           </Routes>
         </div>
       </BrowserRouter>
