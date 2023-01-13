@@ -37,9 +37,8 @@ export default function Login() {
         if (response.data.login === true) {
           localStorage.setItem("token", response.data.token);
           setLogged(response.data);
-          console.log(logged);
           localStorage.setItem("data", logged);
-          navigate("/depense");
+          navigate("/config");
         }
       })
       .catch(function (error) {
@@ -56,7 +55,7 @@ export default function Login() {
         <form className="card-body p-5" onSubmit={submit} method="POST">
           <div>
             <label for="inputPassword5" className="form-label">
-              User
+              Prénom
             </label>
             <input
               type="text"
@@ -72,7 +71,7 @@ export default function Login() {
           </div>
           <div>
             <label for="inputPassword5" className="form-label">
-              Password
+              Tapez votre mot de passe
             </label>
             <input
               type="password"

@@ -81,7 +81,6 @@ export default function Register() {
               }}
             />
           </div>
-
           <div className="p-2">
             <label for="inputPassword5" className="form-label">
               Créer un mot de passe
@@ -114,7 +113,7 @@ export default function Register() {
               }}
             />
           </div>
-          <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
+          <button type="input" className="btn btn-primary w-50 mr-100 mt-5">
             Valider
           </button>
           <p className="mt-3">

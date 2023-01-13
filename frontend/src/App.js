@@ -6,6 +6,8 @@ import Equilibre from "./pages/equilibre";
 import Depense from "./pages/depense";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import CreateTenant from "./pages/createTenant";
+import CreateRental from "./pages/createRental";
 import NeedAuth from "./component/needAuth";
 
 function App() {
@@ -37,6 +39,22 @@ function App() {
             element={
               <NeedAuth>
                 <Equilibre />
+              </NeedAuth>
+            }
+          />
+          <Route
+            path="/createTenant"
+            element={
+              <NeedAuth>
+                <CreateTenant />
+              </NeedAuth>
+            }
+          />
+          <Route
+            path="/Createrental"
+            element={
+              <NeedAuth>
+                <CreateRental />
               </NeedAuth>
             }
           />

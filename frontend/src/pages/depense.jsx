@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
 import Header from "../component/header";
+import CreateCost from "../component/createCost";
 
 function AddParticipantModal(props) {
   const [show, setShow] = useState(false);
