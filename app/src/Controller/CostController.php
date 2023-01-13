@@ -10,13 +10,15 @@ use App\Route\Route;
 class CostController extends AbstractController
 {
     #[Route('/costs', name:'costs', methods:["POST"])]
-    public function setCost($costs)
+    public function setCost($cost)
     {
-        if(!empty($costs))
+        if(!empty($cost))
         {
             $costManager = (new CostManager(new PDOFactory()));
         
-            $costManager->insertCost($costs);
+            $costManager->insertCost($cost);
+
+            echo json_encode(["costs" => true]);
         }
     }
 
@@ -32,5 +34,7 @@ class CostController extends AbstractController
         $costManager = new CostManager(new PDOFactory());
 
         $costManager->updateCost($costs, $id);
+
+        echo json_encode(["update costs" => true]);
     }
 }

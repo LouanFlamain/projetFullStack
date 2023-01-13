@@ -69,17 +69,31 @@ class CostManager extends BaseManager
 
     public function insertCost(Cost $data)
     {
-        $query = $this->pdo->prepare("INSERT INTO Costs (credit, debit, cost_type, reference, tenant_id)
-        VALUES (:credit, :debit, :cost_type, :reference, :tenant_id)");
-
-        $query->bindValue('credit', $data->getCredit(), \PDO::PARAM_INT);
-        $query->bindValue('debit', $data->getDebit(), \PDO::PARAM_INT);
-        $query->bindValue('cost_type', $data->getCost_type(), \PDO::PARAM_STR);
-        $query->bindValue('reference', $data->getReference(), \PDO::PARAM_STR);
-        $query->bindValue('tenant_id', $data->getTenant_id(), \PDO::PARAM_INT);
-
-        $query->execute();
-
+        try 
+        {
+            $query = $this->pdo->prepare("INSERT INTO Costs (credit, debit, cost_type, reference, tenant_id)
+            VALUES (:credit, :debit, :cost_type, :reference, :tenant_id)");
+    
+            $query->bindValue('credit', $data->getCredit(), \PDO::PARAM_INT);
+            $query->bindValue('debit', $data->getDebit(), \PDO::PARAM_INT);
+            $query->bindValue('cost_type', $data->getCost_type(), \PDO::PARAM_STR);
+            $query->bindValue('reference', $data->getReference(), \PDO::PARAM_STR);
+            $query->bindValue('tenant_id', $data->getTenant_id(), \PDO::PARAM_INT);
+    
+            $query->execute();
+        }
+        catch(\PDOException $e)
+        {
+            if($e->getCode() == "23000")
+            {
+                $errorType = explode('key',$e->errorInfo[2])[1];
+                echo json_encode([
+                    "register" => false,
+                    "clef dupliquee" => $errorType
+                ]);
+                die;
+            }
+        }
     }
 
     public function deleteCost(Cost $reference): void
@@ -112,4 +126,5 @@ class CostManager extends BaseManager
 
         $query->execute();
     }
+   
 }
