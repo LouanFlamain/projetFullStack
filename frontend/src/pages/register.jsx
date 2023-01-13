@@ -14,14 +14,13 @@ export default function Register() {
   const submit = (event) => {
     event.preventDefault();
     const data = {
-      "data": {
-        "type" : "User",
-        "attributes" : {
+      data: {
+        type : "User",
+        attributes : {
           username: nameReg,
           password: passwordReg,
           verifPassword: verifPasswordReg,
           mail: emailReg,
-          token: tokenReg,
         }
       }
     };
