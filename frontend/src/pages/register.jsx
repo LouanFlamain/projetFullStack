@@ -12,10 +12,10 @@ export default function Register() {
 
   const submit = (event) => {
     const data = {
-      name: nameReg,
+      username: nameReg,
       password: passwordReg,
       verifPassword: verifPasswordReg,
-      email: emailReg,
+      mail: emailReg,
       token: tokenReg,
     };
     event.preventDefault();

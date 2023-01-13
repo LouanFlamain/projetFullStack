@@ -1,11 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import { useContext } from "react";
+import { context } from "../context/context";
 
 export default function Login() {
   const [userLog, setUserLog] = useState();
   const [passwordLog, setPasswordLog] = useState();
+  const { logged, setLogged } = useContext(context);
+
+  const navigate = useNavigate();
+
   const submit = (event) => {
     const data = {
       username: userLog,
@@ -19,8 +25,13 @@ export default function Login() {
       data: JSON.stringify(data),
     })
       .then(function (response) {
-        console.log(response.data.token);
-        localStorage.setItem("token", response.data.token);
+        console.log(response.data.login);
+        if (response.data.login === "verify") {
+          localStorage.setItem("token", response.data.token);
+          setLogged(true);
+          console.log(logged);
+          navigate("/config");
+        }
       })
       .catch(function (error) {
         console.log(error);
