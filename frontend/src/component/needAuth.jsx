@@ -7,7 +7,7 @@ export default function NeedAuth(props) {
   const { logged, setLogged } = useContext(context);
 
   let location = useLocation();
-  console.log(props.logged);
+  console.log(logged.login === "verify");
 
   if (logged) {
     return props.children;

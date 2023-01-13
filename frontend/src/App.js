@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Header from "./component/header";
-import { context, ContextProvider } from "./context/context";
+import { context } from "./context/context";
 import Config from "./pages/config";
 import Equilibre from "./pages/equilibre";
 import Depense from "./pages/depense";
@@ -28,7 +27,7 @@ function App() {
           <Route
             path="/depense"
             element={
-              <NeedAuth logged={logged}>
+              <NeedAuth>
                 <Depense />
               </NeedAuth>
             }
@@ -36,7 +35,7 @@ function App() {
           <Route
             path="/equilibre"
             element={
-              <NeedAuth logged={logged}>
+              <NeedAuth>
                 <Equilibre />
               </NeedAuth>
             }
