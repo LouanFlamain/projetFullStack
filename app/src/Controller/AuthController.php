@@ -34,7 +34,6 @@ class AuthController extends AbstractController
                     'role' => $userManager->getRole(),
                 ]
             ];
-
             return $this->renderJSON($responseData);
         }
          return $this->renderJSON([
