@@ -9,6 +9,7 @@ import Register from "./pages/register";
 import CreateTenant from "./pages/createTenant";
 import CreateRental from "./pages/createRental";
 import NeedAuth from "./component/needAuth";
+import Connect from "./component/connect";
 
 function App() {
   const { setLogged, logged } = useContext(context);
@@ -16,6 +17,15 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
+          <Route
+            path="/"
+            exact
+            element={
+              <Connect>
+                <Depense />
+              </Connect>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route

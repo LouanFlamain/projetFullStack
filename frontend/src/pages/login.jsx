@@ -37,7 +37,7 @@ export default function Login() {
         if (response.data.login === true) {
           localStorage.setItem("token", response.data.token);
           setLogged(response.data);
-          localStorage.setItem("data", logged);
+          localStorage.setItem("data", response.user);
           navigate("/config");
         }
       })

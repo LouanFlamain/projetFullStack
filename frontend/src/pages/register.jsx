@@ -30,7 +30,11 @@ export default function Register() {
         data: JSON.stringify(data),
       })
         .then(function (response) {
-          navigate("/login");
+          if (response.register) {
+            navigate("/login");
+          } else {
+            return;
+          }
         })
         .catch(function (error) {
           console.log(error);
