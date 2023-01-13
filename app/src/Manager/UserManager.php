@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\User;
+use Exception;
 
 class UserManager extends BaseManager
 {
@@ -49,14 +50,27 @@ class UserManager extends BaseManager
     }
     public function insertUser(User $user)
     {
-
-        $query = $this->pdo->prepare("INSERT INTO User (username, password, mail, role) VALUES (:username, :password, :mail, :role)");
-        $query->bindValue("username", $user->getUsername(), \PDO::PARAM_STR);
-        $query->bindValue("password", $user->getHashedPassword(), \PDO::PARAM_STR);
-        $query->bindValue("mail", $user->getMail(), \PDO::PARAM_STR);
-        $query->bindValue("role", $user->getRole(), \PDO::PARAM_STR);
-
-        $query->execute();
+        try
+        {
+            $query = $this->pdo->prepare("INSERT INTO User (username, password, mail, role) VALUES (:username, :password, :mail, :role)");
+            $query->bindValue("username", $user->getUsername(), \PDO::PARAM_STR);
+            $query->bindValue("password", $user->getHashedPassword(), \PDO::PARAM_STR);
+            $query->bindValue("mail", $user->getMail(), \PDO::PARAM_STR);
+            $query->bindValue("role", $user->getRole(), \PDO::PARAM_STR);
+    
+            $query->execute();
+        }
+        catch(\PDOException $e)
+        {
+            if($e->getCode() == "23000")
+            {
+                throw new \Exception("Email déjà utilisé");
+            }
+            else
+            {
+                throw $e;
+            }
+        }
     }
 
 }
