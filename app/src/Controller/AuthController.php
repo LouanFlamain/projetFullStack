@@ -36,11 +36,11 @@ class AuthController extends AbstractController
                     'role' => $userManager->getRole(),
                 ]
             ]);
-
-            $responseJson = json_encode($responseData);
-            echo $responseJson;
+            return $this->renderJSON($responseData);
         }
-    
+         return $this->renderJSON([
+             "login" => false
+        ]);
     }
     
 
