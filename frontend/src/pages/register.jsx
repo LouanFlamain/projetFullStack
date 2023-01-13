@@ -50,7 +50,7 @@ export default function Register() {
         <h4 className="card-header">S'inscrire</h4>
         <form className="card-body p-5" onSubmit={submit} method="POST">
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword5" className="form-label">
               Prénom
             </label>
             <input
@@ -66,12 +66,12 @@ export default function Register() {
             />
           </div>
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword4" className="form-label">
               email
             </label>
             <input
               type="email"
-              id="inputPassword5"
+              id="inputPassword4"
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="email"
@@ -81,14 +81,13 @@ export default function Register() {
               }}
             />
           </div>
-
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword2" className="form-label">
               Créer un mot de passe
             </label>
             <input
               type="password"
-              id="inputPassword5"
+              id="inputPassword2"
               name="password"
               className="form-control"
               aria-describedby="passwordHelpBlock"
@@ -99,12 +98,12 @@ export default function Register() {
             />
           </div>
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword1" className="form-label">
               Retaper votre mot de passe
             </label>
             <input
               type="password"
-              id="inputPassword5"
+              id="inputPassword1"
               name="verifPassword"
               className="form-control"
               aria-describedby="passwordHelpBlock"
@@ -114,9 +113,11 @@ export default function Register() {
               }}
             />
           </div>
-          <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
-            Valider
-          </button>
+
+            <button type="submit" className="btn btn-primary w-50 mr-100 mt-5">
+              Valider 
+            </button>
+
           <p className="mt-3">
             Déjà inscrit ? <Link to="/login">cliquez ici</Link>
           </p>

@@ -6,6 +6,8 @@ import Equilibre from "./pages/equilibre";
 import Depense from "./pages/depense";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import CreateTenant from "./pages/createTenant";
+import CreateRental from "./pages/createRental";
 import NeedAuth from "./component/needAuth";
 
 function App() {
@@ -15,6 +17,9 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/Createrental" element={<CreateRental />} />
+          <Route path="/createTenant" element={<CreateTenant />} />
+            
           <Route path="/register" element={<Register />} />
           <Route
             path="/config"
@@ -40,6 +45,7 @@ function App() {
               </NeedAuth>
             }
           />
+         
         </Routes>
       </div>
     </BrowserRouter>

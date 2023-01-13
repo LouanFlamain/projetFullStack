@@ -6,8 +6,8 @@ import { useContext } from "react";
 import { context } from "../context/context";
 
 export default function Login() {
-  const [userLog, setUserLog] = useState();
-  const [passwordLog, setPasswordLog] = useState();
+  const [userLog, setUserLog] = useState("");
+  const [passwordLog, setPasswordLog] = useState("");
   const { logged, setLogged } = useContext(context);
 
   const navigate = useNavigate();
@@ -55,8 +55,8 @@ export default function Login() {
         <h4 className="card-header">Login</h4>
         <form className="card-body p-5" onSubmit={submit} method="POST">
           <div>
-            <label for="inputPassword5" className="form-label">
-              User
+            <label htmlFor="inputPassword5" className="form-label">
+              Prénom
             </label>
             <input
               type="text"
@@ -71,12 +71,12 @@ export default function Login() {
             />
           </div>
           <div>
-            <label for="inputPassword5" className="form-label">
-              Password
+            <label htmlFor="inputPassword4" className="form-label">
+              Tapez votre mot de passe
             </label>
             <input
               type="password"
-              id="inputPassword5"
+              id="inputPassword4"
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="password"
@@ -86,9 +86,11 @@ export default function Login() {
               }}
             />
           </div>
-          <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
-            Login
-          </button>
+          <Link to="/createRental">
+            <button type="input" className="btn btn-primary w-50 mx-auto mt-5">
+              Login
+            </button>
+          </Link>
           <p className="mt-3">
             Pas encore inscrit ? <Link to="/register">cliquez ici</Link>
           </p>
