@@ -52,6 +52,7 @@ class UserManager extends BaseManager
     {
         try
         {
+            
             $query = $this->pdo->prepare("INSERT INTO User (username, password, mail, role) VALUES (:username, :password, :mail, :role)");
             $query->bindValue("username", $user->getUsername(), \PDO::PARAM_STR);
             $query->bindValue("password", $user->getHashedPassword(), \PDO::PARAM_STR);
@@ -64,11 +65,12 @@ class UserManager extends BaseManager
         {
             if($e->getCode() == "23000")
             {
-                throw new \Exception("Email déjà utilisé");
-            }
-            else
-            {
-                throw $e;
+                $errorType = explode('key',$e->errorInfo[2])[1];
+                echo json_encode([
+                    "register" => false,
+                    "clef dupliquee" => $errorType
+                ]);
+                die;
             }
         }
     }

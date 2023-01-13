@@ -46,7 +46,6 @@ class AuthController extends AbstractController
     #[Route('/register', name: "register", methods: ["POST"])]
     public function register($user): void
     {
- 
         if($user->getUsername() != null && $user->passwordHash($user) != null)
         {
             $userManager = new UserManager(new PDOFactory());
@@ -56,7 +55,7 @@ class AuthController extends AbstractController
         }
         else 
         {
-        echo json_encode(["register" => false]);
+        // echo json_encode(["register" => false]);
         }
     }
 } 
