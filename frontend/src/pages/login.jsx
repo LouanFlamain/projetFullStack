@@ -12,6 +12,9 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  var url = new URL(window.location.href);
+  var state = url.searchParams.get("user");
+
   const submit = (event) => {
     const data = {
       username: userLog,
@@ -25,11 +28,12 @@ export default function Login() {
       data: JSON.stringify(data),
     })
       .then(function (response) {
-        console.log(response.data.login);
+        console.log(response.data);
         if (response.data.login === "verify") {
           localStorage.setItem("token", response.data.token);
-          setLogged(true);
+          setLogged(response.data);
           console.log(logged);
+          localStorage.setItem("data", logged);
           navigate("/config");
         }
       })

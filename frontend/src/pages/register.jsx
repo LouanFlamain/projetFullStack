@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 
@@ -10,6 +10,7 @@ export default function Register() {
   const [passwordReg, setPasswordReg] = useState();
   const [verifPasswordReg, setVerifPasswordReg] = useState();
 
+  const navigate = useNavigate();
   const submit = (event) => {
     const data = {
       username: nameReg,
@@ -27,9 +28,11 @@ export default function Register() {
     })
       .then(function (response) {
         console.log(response);
+        navigate("/login");
       })
       .catch(function (error) {
         console.log(error);
+        navigate("/register");
       });
     setNameReg("");
     setEmailReg("");
