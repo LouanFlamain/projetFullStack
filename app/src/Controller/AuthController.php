@@ -16,8 +16,6 @@ class AuthController extends AbstractController
         $userManager = (new UserManager(new PDOFactory()))
         ->getByUsername($user->getUsername());
         $verify = false;
-
-        var_dump($user);
         
         if(password_verify($user->getHashedPassword(), $userManager->getHashedPassword()))
         {
@@ -38,7 +36,6 @@ class AuthController extends AbstractController
             ]);
 
             $responseJson = json_encode($responseData);
-            echo $responseJson;
         }
     
     }
