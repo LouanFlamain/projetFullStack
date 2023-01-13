@@ -8,20 +8,34 @@ class TenantManager extends BaseManager
 {
     public function getById($data)
     {
-        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE user_id = $data");
+        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE rental_id = $data");
         $query->execute();
         $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (! is_iterable($stm)) {
-            return new Tenant($stm);
+        if (count($stm) === 1) {
+            return new Tenant($stm[0]);
         }
 
         $tab = [];
         foreach ($stm as $key => $data){
-            $tab[$key] = new Tenant($data);
+            $tab[$key] = (object) new Tenant($data);
         }
     
         return $tab;
+    }
+
+    public function getByIdToArray($user)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM User WHERE id = :id");
+        $query->bindValue("id", $user, \PDO::PARAM_INT);
+        $query->execute();
+        $data = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if ($data) {
+            return $data;
+        }
+
+        return null;
     }
 
     public function insertById(Tenant $data): void
@@ -44,16 +58,24 @@ class TenantManager extends BaseManager
         $query->execute(); 
     }
 
-    public function updateTenant(Tenant $data)
+    public function updateTenant(Tenant $data, $id)
     {
         $query = $this->pdo->prepare("UPDATE Tenant 
         SET balance = :balance
         WHERE id = :id");
 
         $query->bindValue('balance', $data->getBalance(), \PDO::PARAM_INT);
-        $query->bindValue('id', $data->getId(), \PDO::PARAM_INT);
+        $query->bindValue('id', $id, \PDO::PARAM_INT);
 
         $query->execute(); 
+    }
+    
+    public function deleteTenant($id)
+    {
+        $query = $this->pdo->prepare("DELETE FROM Tenant WHERE id = :id");
+        $query->bindValue('id', $id, \PDO::PARAM_INT);
+        $query->execute();
+
     }
 
 }

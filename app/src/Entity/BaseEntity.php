@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Factory\PDOFactory;
 use App\Traits\Hydrator;
 use App\Manager\UserManager;
+use App\Manager\RentalManager;
 use App\Manager\TenantManager;
 use App\Manager\Invitation;
+use App\Manager\CostManager;
 
 abstract class BaseEntity
 {
@@ -37,19 +39,17 @@ abstract class BaseEntity
         return $this;
     }
 
-    public function belongTo($data)
+    public function hasMany($data, $foreignId)
     {
-        $relation = (new $data(new PDOFactory()))->getById($this->getId());
+        $foreignId = 'get'.ucfirst($foreignId);
+ 
+        $relation = (new $data(new PDOFactory()))->getById($this->$foreignId());
+        $relation->relationship = $this;
 
-        if($relation == new \stdClass()){
-            $this->relationship = $data;
-        } else {
-            $this->relationship = (object)$relation;
-        }
-        return $this;
+        return $relation;
     }
 
-    public function hasMany($data)
+    public function belongTo($data)
     {
         $this->relationship = (new $data(new PDOFactory()))->getById($this->getId());
         return $this;
@@ -73,9 +73,6 @@ abstract class BaseEntity
             Tenant::class => TenantManager::class,
             Invitation::class => InvitationManager::class,
         };
-
-        (new $classNameManager ())->
-        var_dump($classNameManager);die;
-        var_dump(get);die;
+    
     }
 }
