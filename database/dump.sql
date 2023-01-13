@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Rental (
   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   amount INT NOT NULL,
   title VARCHAR(255) NOT NULL,
-  devise VARCHAR(5) NOT NULL,
+  devise VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   user_id INT NOT NULL,
   created_at timestamp NOT NULL,
