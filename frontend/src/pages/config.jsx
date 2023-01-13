@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import ComponentCreateTenantManager from "../component/componentCreateTenant";
 
-export default function CreateRental() {
+export default function UpdateRental() {
   return (
     <>
     <div className="create-wrapper pt-0 p-3">
@@ -11,7 +11,7 @@ export default function CreateRental() {
             Vous êtes identifié comme <em>'Le nom de l'identifié'</em>
           </p>
       {/* vérifier si ce n'est pas méthode POST */}
-      <form method="GET" action="createRental">
+      <form method="GET" action="updateRental">
 
         <div className="p-4 pt-0">
           <div className="form-group row p-2">
@@ -45,12 +45,13 @@ export default function CreateRental() {
 
       </form>
 
-      <div>Ici vient le component "tenantGroup"</div>
+      <h2 className="h4 p-4 mb-0 pb-2">Noms des colocataires :</h2>
+
+      <ComponentCreateTenantManager />
       
       <div className="p-2 bg-primary mt-auto">
-        <Link to="/createTenant">
-          <button type="submit" className="btn text-white" href="CreateTenant">Continuer</button>
-        </Link>
+        {/* update Rental de la BDD */}
+          <button type="submit" className="btn text-white" href="CreateTenant">Sauvegarder</button>
       </div>
    
 
