@@ -30,7 +30,6 @@ class CostController extends AbstractController
     public function updateExistingCost($id, $costs)
     {
         $costManager = new CostManager(new PDOFactory());
-        // $costUpdate  = $costManager->getOneCost($id);
 
         $costManager->updateCost($costs, $id);
     }

@@ -53,7 +53,7 @@ class CostManager extends BaseManager
 
         $tab = [];
         foreach ($stm as $key => $data){
-            $tab[$key] = new Coasts($data);
+            $tab[$key] = new Cost($data);
         }
 
         return (object)$tab;
