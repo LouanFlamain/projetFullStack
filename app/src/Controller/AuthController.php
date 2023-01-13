@@ -14,56 +14,58 @@ class AuthController extends AbstractController
     #[Route('/login', name: "login", methods: ["POST"])]
     public function login()
     {
-        if(!empty($_POST)) {
-            $verify = false;
+        $verify = false;
 
-            $formUsername = $_POST['username'];
-            $formPwd = $_POST['password'];
+        $json = file_get_contents('php://input');
+        $data = (array)json_decode($json);
 
-            $userManager = (new UserManager(new PDOFactory()))
-                ->getByUsername($formUsername);
-
-            // $userManager->getHashedPassword();
-            // var_dump($userManager->getHashedPassword());
-            if(password_verify($formPwd, $userManager->getHashedPassword()))
-            {
-                $verify = true;
-
-                $jwt = JWTHelper::buildJWT($userManager);
-                $decoded = JWTHelper::decodeJWT($jwt);
-
-                setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
-
-                echo($_COOKIE['token']);
-
-                return $this->renderJSON([
-                    'login' => 'verify',
-                    "token" => $jwt,
-                    "decoded" => $decoded,
-                    "user" => [(array)$userManager]
-                ]);
-            }
+        $userManager = (new UserManager(new PDOFactory()))
+        ->getByUsername($data['username']);
         
+        // $userManager->getHashedPassword();
+        // var_dump($userManager->getHashedPassword());
+        if(password_verify($data['password'], $userManager->getHashedPassword()))
+        {
+            $verify = true;
+
+            $jwt = JWTHelper::buildJWT($userManager);
+            $decoded = JWTHelper::decodeJWT($jwt);
+
+            setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
+
+            $responseData = ([
+                'login' => 'verify',
+                "token" => $jwt,
+                "decoded" => $decoded,
+                "user" => [
+                    'username' => $userManager->getUsername(),
+                    'mail' => $userManager->getMail(),
+                    'role' => $userManager->getRole(),
+                    'password' => $userManager->getHashedPassword()
+                ]
+            ]);
+
+            $responseJson = json_encode($responseData);
+            echo $responseJson;
         }
+    
     }
     
 
     #[Route('/register', name: "register", methods: ["POST"])]
     public function register(): void
     {
-        /** @var App\Entity\User $user */
+        $json = file_get_contents('php://input');
+        $data = (array)json_decode($json);
 
-        $user = (new User($_POST))->passwordHash($_POST['password']);
-
-        var_dump($user);
-        // die;
-        
+        $user = (new User($data))->passwordHash($data['password']);
 
         if($user->getUsername() && $user->getHashedPassword()){
             $userManager = new UserManager(new PDOFactory());
             $userManager->insertUser($user);
 
             echo json_encode(["register" => true]);
+            
         }
         else{
             echo json_encode(["register" => false]);

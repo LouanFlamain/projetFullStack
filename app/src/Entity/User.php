@@ -11,7 +11,7 @@ class User extends BaseEntity implements PasswordProtectedInterface
     private string $username;
     private string $password;
     private string $mail;
-    private string $role;
+    private string $role = 'User';
 
     /**
      * @return int 
@@ -83,6 +83,10 @@ class User extends BaseEntity implements PasswordProtectedInterface
     {
         $this->role = "User";
         return $this;
+    }
+    public function getRoles(): string
+    {
+        return $this->role;
     }
 
 

@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-class Cost
+class Cost extends BaseEntity
 {
     private ?int $id;
     private int $credit;
     private int $debit;
     private string $cost_type;
-
     private string $reference;
+    private int $tenant_id;
 
     /*
      * @return int|null
@@ -72,7 +72,7 @@ class Cost
     /*
      * @return string
      */
-    public function getCostType(): string
+    public function getCost_type(): string
     {
         return $this->cost_type;
     }
@@ -80,7 +80,7 @@ class Cost
     /*
      * @param string $cost_type
      */
-    public function setCostType(string $cost_type): Cost
+    public function setCost_type(string $cost_type): Cost
     {
         $this->cost_type = $cost_type;
 
@@ -109,7 +109,7 @@ class Cost
     /*
      * @return int
      */
-    public function getTenantId(): int
+    public function getTenant_id(): int
     {
         return $this->tenant_id;
     }
@@ -117,15 +117,13 @@ class Cost
     /*
      * @param int $tenant_id
      */
-    public function setTenantId(int $tenant_id): Cost
+    public function setTenant_id(int $tenant_id): Cost
     {
         $this->tenant_id = $tenant_id;
 
         return $this;
 
     }
-
- private int $tenant_id;
 
 }
 

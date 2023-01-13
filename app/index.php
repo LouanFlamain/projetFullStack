@@ -3,17 +3,15 @@
 use App\Helpers\Utilitaire;
 use App\Route\Route;
 
-//header("Access-Control-Allow-Origin: http://localhost:3000");
-//header("Access-Control-Allow-Credentials: true");
-//header("Access-Control-Allow-Headers: authorization, content-type");
-//header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: authorization, content-type");
+header("Content-Type: application/json");
 
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") die;
 
 //$json = file_get_contents("php://input");
 //var_dump($json);
-
-
 
 require_once 'vendor/autoload.php';
 
@@ -32,8 +30,8 @@ foreach ($dirs as $dir) {
     $controllers[] = "App\\Controller\\" . pathinfo($controllerDir . DIRECTORY_SEPARATOR . $dir)['filename'];
 }
 //var_dump($_POST);
-if(!empty($_POST)){
-    foreach ($_POST as $key => $post){
+if (!empty($_POST)) {
+    foreach ($_POST as $key => $post) {
         $_POST[$key] = htmlspecialchars($post);
     }
 }
@@ -43,14 +41,14 @@ $routesObj = [];
 foreach ($controllers as $controller) {
     $reflection = new ReflectionClass($controller);
     foreach ($reflection->getMethods() as $method) {
-       foreach ($method->getAttributes() as $attribute) {
-           /** @var Route $route */
-           $route = $attribute->newInstance();
-           $route->setController($controller)
-               ->setAction($method->getName());
+        foreach ($method->getAttributes() as $attribute) {
+            /** @var Route $route */
+            $route = $attribute->newInstance();
+            $route->setController($controller)
+                ->setAction($method->getName());
 
-           $routesObj[] = $route;
-       }
+            $routesObj[] = $route;
+        }
     }
 }
 
@@ -65,11 +63,6 @@ foreach ($routesObj as $route) {
     $action = $route->getAction();
     $params = $route->mergeParams($url);
 
-    echo [new $controlerClassName(),$action](...$params);
+    echo [new $controlerClassName(), $action](...$params);
     exit();
 }
-
-Utilitaire::redirect('posts');
-
-
-die;

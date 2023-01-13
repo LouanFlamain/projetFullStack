@@ -1,9 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 export default function Register() {
+  const [nameReg, setNameReg] = useState();
+  const [emailReg, setEmailReg] = useState();
+  const [tokenReg, setTokenReg] = useState();
+  const [passwordReg, setPasswordReg] = useState();
+  const [verifPasswordReg, setVerifPasswordReg] = useState();
+
   const submit = (event) => {
+    const data = {
+      username: nameReg,
+      password: passwordReg,
+      verifPassword: verifPasswordReg,
+      mail: emailReg,
+      token: tokenReg,
+    };
     event.preventDefault();
+    console.log(data);
+    axios({
+      method: "post",
+      url: "http://localhost:5656/register",
+      data: JSON.stringify(data),
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    setNameReg("");
+    setEmailReg("");
+    setPasswordReg("");
+    setVerifPasswordReg("");
+    setTokenReg("");
   };
   return (
     <div className="p-4">
@@ -19,7 +51,11 @@ export default function Register() {
               id="inputPassword5"
               className="form-control"
               aria-describedby="passwordHelpBlock"
-              name="username"
+              name="name"
+              value={nameReg}
+              onChange={(e) => {
+                setNameReg(e.target.value);
+              }}
             />
           </div>
           <div className="p-2">
@@ -31,7 +67,11 @@ export default function Register() {
               id="inputPassword5"
               className="form-control"
               aria-describedby="passwordHelpBlock"
-              name="username"
+              name="email"
+              value={emailReg}
+              onChange={(e) => {
+                setEmailReg(e.target.value);
+              }}
             />
           </div>
           <div className="p-2">
@@ -43,7 +83,11 @@ export default function Register() {
               id="inputPassword5"
               className="form-control"
               aria-describedby="passwordHelpBlock"
-              name="username"
+              name="token"
+              value={tokenReg}
+              onChange={(e) => {
+                setTokenReg(e.target.value);
+              }}
             />
           </div>
           <div className="p-2">
@@ -56,6 +100,10 @@ export default function Register() {
               name="password"
               className="form-control"
               aria-describedby="passwordHelpBlock"
+              value={passwordReg}
+              onChange={(e) => {
+                setPasswordReg(e.target.value);
+              }}
             />
           </div>
           <div className="p-2">
@@ -65,9 +113,13 @@ export default function Register() {
             <input
               type="password"
               id="inputPassword5"
-              name="retypePassword"
+              name="verifPassword"
               className="form-control"
               aria-describedby="passwordHelpBlock"
+              value={verifPasswordReg}
+              onChange={(e) => {
+                setVerifPasswordReg(e.target.value);
+              }}
             />
           </div>
           <Link to="/depense">

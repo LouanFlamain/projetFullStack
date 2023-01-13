@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+
 
 export default function CreateRental() {
   return (
@@ -18,7 +19,7 @@ export default function CreateRental() {
         <div className="p-4">
           <div className="form-group row p-2">
 
-            <label for="title" className="col-sm-2 col-form-label col-form-label-sm">Nom de la location:</label>
+            <label htmlFor="title" className="col-sm-2 col-form-label col-form-label-sm">Nom de la location:</label>
             
 
             <div className="col-sm-10 ">
@@ -32,7 +33,7 @@ export default function CreateRental() {
 
           <div className="form-group row p-2">
 
-            <label for="description" className="col-sm-2 col-form-label col-form-label-sm">Description:</label>
+            <label htmlFor="description" className="col-sm-2 col-form-label col-form-label-sm">Description:</label>
             
 
             <div className="col-sm-10 ">
@@ -49,7 +50,7 @@ export default function CreateRental() {
 
           <div className="form-group row p-2">
 
-            <label for="rent" className="col-sm-2 col-form-label col-form-label-sm">Montant du loyer:</label>
+            <label htmlFor="rent" className="col-sm-2 col-form-label col-form-label-sm">Montant du loyer:</label>
             
 
             <div className="col-sm-10">
