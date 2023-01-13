@@ -24,6 +24,20 @@ class TenantManager extends BaseManager
         return $tab;
     }
 
+    public function getByIdToArray($user)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM User WHERE id = :id");
+        $query->bindValue("id", $user, \PDO::PARAM_INT);
+        $query->execute();
+        $data = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if ($data) {
+            return $data;
+        }
+
+        return null;
+    }
+
     public function insertById(Tenant $data): void
     {
         $query = $this->pdo->prepare("INSERT INTO Tenant (total_amount,user_id) VALUES (:total_amount, :user_id)");

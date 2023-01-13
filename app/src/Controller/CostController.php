@@ -10,43 +10,28 @@ use App\Route\Route;
 class CostController extends AbstractController
 {
     #[Route('/costs', name:'costs', methods:["POST"])]
-    public function setCost()
+    public function setCost($costs)
     {
-        $json = file_get_contents('php://input');
-        $data = (array)json_decode($json);
-
-        if(!empty($data))
+        if(!empty($costs))
         {
-            $cost = (new Cost($data));
-
             $costManager = (new CostManager(new PDOFactory()));
-            // ->getById($cost);
-
-            var_dump($cost, "////////////////");
         
-            $costManager->insertCost($cost);
+            $costManager->insertCost($costs);
         }
     }
 
     #[Route('/costs/delete/{id}', name:'deleteCosts', methods:['DELETE'])]
     public function deleteExistingCost($id)
     {
-        //todo add role to cookie ??
         $costManager = new CostManager(new PDOFactory());
-        $cost = $costManager->getOneCost($id);
     }
 
     #[Route('/costs/update/{id}', name:'updateCosts', methods:['PATCH'])]
-    public function updateExistingCost($id)
+    public function updateExistingCost($id, $costs)
     {
-        $json = file_get_contents('php://input');
-        $data = (array)json_decode($json);
-
-        $cost = new Cost($data);
-
         $costManager = new CostManager(new PDOFactory());
-        $costUpdate  = $costManager->getOneCost($id);
+        // $costUpdate  = $costManager->getOneCost($id);
 
-        $costManager->updateCost($cost, $id);
+        $costManager->updateCost($costs, $id);
     }
 }
