@@ -39,7 +39,7 @@ export default function Login() {
           setLogged(response.data);
           console.log(logged);
           localStorage.setItem("data", logged);
-          navigate("/config");
+          navigate("/depense");
         }
       })
       .catch(function (error) {
