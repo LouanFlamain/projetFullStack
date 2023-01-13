@@ -8,15 +8,30 @@ class RentalManager extends BaseManager
 {
     public function insertRental(Rental $rental)
     {
-        $query = $this->pdo->prepare("INSERT INTO Rental (amount, title, devise, description, user_id)
-        VALUES (:amount, :title, :devise, :description, :user_id)");
-        $query->bindValue("amount", $rental->getAmount(), \PDO::PARAM_INT);
-        $query->bindValue("title", $rental->getTitle(), \PDO::PARAM_STR);
-        $query->bindValue("devise", $rental->getDevise(), \PDO::PARAM_STR);
-        $query->bindValue("description", $rental->getDescription(), \PDO::PARAM_STR);
-        $query->bindValue("user_id", $rental->getUser_id(), \PDO::PARAM_INT);
-
-        $query->execute();
+        try
+        {
+            $query = $this->pdo->prepare("INSERT INTO Rental (amount, title, devise, description, user_id)
+            VALUES (:amount, :title, :devise, :description, :user_id)");
+            $query->bindValue("amount", $rental->getAmount(), \PDO::PARAM_INT);
+            $query->bindValue("title", $rental->getTitle(), \PDO::PARAM_STR);
+            $query->bindValue("devise", $rental->getDevise(), \PDO::PARAM_STR);
+            $query->bindValue("description", $rental->getDescription(), \PDO::PARAM_STR);
+            $query->bindValue("user_id", $rental->getUser_id(), \PDO::PARAM_INT);
+    
+            $query->execute();
+        }
+        catch(\PDOException $e)
+        {
+            if($e->getCode() == "23000")
+            {
+                $errorType = explode('key',$e->errorInfo[2])[1];
+                echo json_encode([
+                    "register" => false,
+                    "clef dupliquee" => $errorType
+                ]);
+                die;
+            }
+        }
     }
 
     public function updateRental(Rental $data, $id    )
