@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { useContext } from "react";
@@ -17,8 +17,13 @@ export default function Login() {
 
   const submit = (event) => {
     const data = {
-      username: userLog,
-      password: passwordLog,
+      data: {
+        type: "User",
+        attributes: {
+          username: userLog,
+          password: passwordLog,
+        },
+      },
     };
     event.preventDefault();
     console.log(data);
@@ -29,7 +34,7 @@ export default function Login() {
     })
       .then(function (response) {
         console.log(response.data);
-        if (response.data.login === "verify") {
+        if (response.data.login === true) {
           localStorage.setItem("token", response.data.token);
           setLogged(response.data);
           console.log(logged);

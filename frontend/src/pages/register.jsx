@@ -6,39 +6,43 @@ import { useState } from "react";
 export default function Register() {
   const [nameReg, setNameReg] = useState();
   const [emailReg, setEmailReg] = useState();
-  const [tokenReg, setTokenReg] = useState();
   const [passwordReg, setPasswordReg] = useState();
   const [verifPasswordReg, setVerifPasswordReg] = useState();
 
   const navigate = useNavigate();
   const submit = (event) => {
-    const data = {
-      username: nameReg,
-      password: passwordReg,
-      verifPassword: verifPasswordReg,
-      mail: emailReg,
-      token: tokenReg,
-    };
     event.preventDefault();
-    console.log(data);
-    axios({
-      method: "post",
-      url: "http://localhost:5656/register",
-      data: JSON.stringify(data),
-    })
-      .then(function (response) {
-        console.log(response);
-        navigate("/login");
+    if (passwordReg === verifPasswordReg) {
+      const data = {
+        data: {
+          type: "User",
+          attributes: {
+            username: nameReg,
+            password: passwordReg,
+            mail: emailReg,
+          },
+        },
+      };
+      console.log(data);
+      axios({
+        method: "post",
+        url: "http://localhost:5656/register",
+        data: JSON.stringify(data),
       })
-      .catch(function (error) {
-        console.log(error);
-        navigate("/register");
-      });
+        .then(function (response) {
+          navigate("/login");
+        })
+        .catch(function (error) {
+          console.log(error);
+          navigate("/register");
+        });
+    } else {
+      navigate("/register?error=mdp");
+    }
     setNameReg("");
     setEmailReg("");
     setPasswordReg("");
     setVerifPasswordReg("");
-    setTokenReg("");
   };
   return (
     <div className="p-4">
@@ -77,22 +81,7 @@ export default function Register() {
               }}
             />
           </div>
-          <div className="p-2">
-            <label for="inputPassword5" className="form-label">
-              Clé d'identification-tokken-tokken
-            </label>
-            <input
-              type="textrr"
-              id="inputPassword5"
-              className="form-control"
-              aria-describedby="passwordHelpBlock"
-              name="token"
-              value={tokenReg}
-              onChange={(e) => {
-                setTokenReg(e.target.value);
-              }}
-            />
-          </div>
+
           <div className="p-2">
             <label for="inputPassword5" className="form-label">
               Créer un mot de passe
