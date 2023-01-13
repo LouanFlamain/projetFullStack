@@ -4,20 +4,26 @@ import axios from "axios";
 import { useState } from "react";
 
 export default function Register() {
-  const [nameReg, setNameReg] = useState();
-  const [emailReg, setEmailReg] = useState();
-  const [tokenReg, setTokenReg] = useState();
-  const [passwordReg, setPasswordReg] = useState();
-  const [verifPasswordReg, setVerifPasswordReg] = useState();
+  const [nameReg, setNameReg] = useState("");
+  const [emailReg, setEmailReg] = useState("");
+  const [tokenReg, setTokenReg] = useState("");
+  const [passwordReg, setPasswordReg] = useState("");
+  const [verifPasswordReg, setVerifPasswordReg] = useState("");
 
   const navigate = useNavigate();
   const submit = (event) => {
+    event.preventDefault();
     const data = {
-      username: nameReg,
-      password: passwordReg,
-      verifPassword: verifPasswordReg,
-      mail: emailReg,
-      token: tokenReg,
+      "data": {
+        "type" : "User",
+        "attributes" : {
+          username: nameReg,
+          password: passwordReg,
+          verifPassword: verifPasswordReg,
+          mail: emailReg,
+          token: tokenReg,
+        }
+      }
     };
     event.preventDefault();
     console.log(data);
@@ -46,7 +52,7 @@ export default function Register() {
         <h4 className="card-header">S'inscrire</h4>
         <form className="card-body p-5" onSubmit={submit} method="POST">
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword5" className="form-label">
               Prénom
             </label>
             <input
@@ -62,12 +68,12 @@ export default function Register() {
             />
           </div>
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword4" className="form-label">
               email
             </label>
             <input
               type="email"
-              id="inputPassword5"
+              id="inputPassword4"
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="email"
@@ -78,12 +84,12 @@ export default function Register() {
             />
           </div>
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword3" className="form-label">
               Clé d'identification-token
             </label>
             <input
               type="textrr"
-              id="inputPassword5"
+              id="inputPassword3"
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="token"
@@ -94,12 +100,12 @@ export default function Register() {
             />
           </div>
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword2" className="form-label">
               Créer un mot de passe
             </label>
             <input
               type="password"
-              id="inputPassword5"
+              id="inputPassword2"
               name="password"
               className="form-control"
               aria-describedby="passwordHelpBlock"
@@ -110,12 +116,12 @@ export default function Register() {
             />
           </div>
           <div className="p-2">
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword1" className="form-label">
               Retaper votre mot de passe
             </label>
             <input
               type="password"
-              id="inputPassword5"
+              id="inputPassword1"
               name="verifPassword"
               className="form-control"
               aria-describedby="passwordHelpBlock"
@@ -125,11 +131,11 @@ export default function Register() {
               }}
             />
           </div>
-          <Link to="/depense">
-            <button type="input" className="btn btn-primary w-50 mr-100 mt-5">
+
+            <button type="submit" className="btn btn-primary w-50 mr-100 mt-5">
               Valider 
             </button>
-          </Link>
+
           <p className="mt-3">
             Déjà inscrit ? <Link to="/login">cliquez ici</Link>
           </p>

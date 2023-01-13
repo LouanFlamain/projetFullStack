@@ -6,8 +6,8 @@ import { useContext } from "react";
 import { context } from "../context/context";
 
 export default function Login() {
-  const [userLog, setUserLog] = useState();
-  const [passwordLog, setPasswordLog] = useState();
+  const [userLog, setUserLog] = useState("");
+  const [passwordLog, setPasswordLog] = useState("");
   const { logged, setLogged } = useContext(context);
 
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ export default function Login() {
         <h4 className="card-header">Login</h4>
         <form className="card-body p-5" onSubmit={submit} method="POST">
           <div>
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword5" className="form-label">
               Prénom
             </label>
             <input
@@ -66,12 +66,12 @@ export default function Login() {
             />
           </div>
           <div>
-            <label for="inputPassword5" className="form-label">
+            <label htmlFor="inputPassword4" className="form-label">
               Tapez votre mot de passe
             </label>
             <input
               type="password"
-              id="inputPassword5"
+              id="inputPassword4"
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="password"
