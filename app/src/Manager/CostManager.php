@@ -103,13 +103,17 @@ class CostManager extends BaseManager
         $query->execute();
     }
 
-    public function getOneCost(int $id)
+    public function getOneCost(int $id, string $reference)
     {
-        $query = $this->pdo->prepare('SELECT * FROM Costs WHERE id = :id');
+        $query = $this->pdo->prepare('SELECT * FROM Costs 
+        WHERE id = :id
+        AND reference = :reference');
         $query->bindValue('id', $id, \PDO::PARAM_INT);
+        $query->bindValue('reference', $reference, \PDO::PARAM_STR);
         $query->execute();
 
         $data = $query->fetch(\PDO::FETCH_ASSOC);
+        return $data;
     }
 
     public function updateCost(Cost $data, $id)
