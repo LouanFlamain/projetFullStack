@@ -103,7 +103,9 @@ class CostManager extends BaseManager
                 $errorType = explode('key',$e->errorInfo[2])[1];
                 echo json_encode([
                     "add_cost" => $cost,
-                    "clef dupliquee" => $errorType
+                    "clef dupliquee" => $errorType         $query = $this->pdo->prepare("DELETE FROM `Costs` WHERE `reference` = :reference");
+                    $query->bindValue('reference', $reference, \PDO::PARAM_STR);
+                    $query->execute();
                 ]);
                 die;
             }
@@ -112,37 +114,66 @@ class CostManager extends BaseManager
 
     public function deleteCost(Cost $reference): void
     {
-        $query = $this->pdo->prepare("DELETE FROM `Costs` WHERE `reference` = :reference");
-        $query->bindValue('reference', $reference, \PDO::PARAM_STR);
-        $query->execute();
+        try
+        {
+            $cost = true;
+
+            $query = $this->pdo->prepare("DELETE FROM `Costs` WHERE `reference` = :reference");
+            $query->bindValue('reference', $reference, \PDO::PARAM_STR);
+            $query->execute();
+        }
+        catch(\PDOException $e)
+        {
+            $cost = false;
+            echo json_encode([
+                "delete_cost" => $cost
+            ])
+        }
     }
 
     public function getOneCost(int $id, string $reference)
     {
-        $query = $this->pdo->prepare('SELECT * FROM Costs 
-        WHERE id = :id
-        AND reference = :reference');
-        $query->bindValue('id', $id, \PDO::PARAM_INT);
-        $query->bindValue('reference', $reference, \PDO::PARAM_STR);
-        $query->execute();
+        try
+        {     
+            $query = $this->pdo->prepare('SELECT * FROM Costs 
+            WHERE id = :id
+            AND reference = :reference');
+            $query->bindValue('id', $id, \PDO::PARAM_INT);
+            $query->bindValue('reference', $reference, \PDO::PARAM_STR);
+            $query->execute();
+    
+            $data = $query->fetch(\PDO::FETCH_ASSOC);
+            return $data;
+        }
+        catch(\PDOException $e)
+        {
 
-        $data = $query->fetch(\PDO::FETCH_ASSOC);
-        return $data;
+        }
     }
 
     public function updateCost(Cost $data, $id)
     {
-        $query = $this->pdo->prepare("UPDATE Costs 
-        SET credit = :credit, debit = :debit, cost_type = :cost_type, reference = :reference
-        WHERE id = :id");
-
-        $query->bindValue("credit", $data->getCredit(), \PDO::PARAM_INT);
-        $query->bindValue("debit", $data->getDebit(), \PDO::PARAM_INT);
-        $query->bindValue("cost_type", $data->getCost_type(), \PDO::PARAM_STR);
-        $query->bindValue("reference", $data->getReference(), \PDO::PARAM_STR);
-        $query->bindValue("id", $id, \PDO::PARAM_INT);
-
-        $query->execute();
+        try
+        {
+            $query = $this->pdo->prepare("UPDATE Costs 
+            SET credit = :credit, debit = :debit, cost_type = :cost_type, reference = :reference
+            WHERE id = :id");
+    
+            $query->bindValue("credit", $data->getCredit(), \PDO::PARAM_INT);
+            $query->bindValue("debit", $data->getDebit(), \PDO::PARAM_INT);
+            $query->bindValue("cost_type", $data->getCost_type(), \PDO::PARAM_STR);
+            $query->bindValue("reference", $data->getReference(), \PDO::PARAM_STR);
+            $query->bindValue("id", $id, \PDO::PARAM_INT);
+            
+            $query->execute();
+            $update = true;
+        }
+        catch(\PDOException $e)
+        {
+            $update = true;
+            echo json_encode([
+                "update_register" => $update
+            ]);
+        }
     }
-   
 }
