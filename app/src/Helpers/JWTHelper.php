@@ -65,7 +65,7 @@ class JWTHelper
         }
         catch(Exception $e)
         {
-
+            
         }
     }
 }
