@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Factory\PDOFactory;
 use App\Helpers\JWTHelper;
 use App\Manager\UserManager;
@@ -21,13 +20,14 @@ class AuthController extends AbstractController
         {
             $verify = true;
             $jwt = JWTHelper::buildJWT($userManager);
-            $decoded = JWTHelper::decodeJWT($jwt);
+            $decodes = JWTHelper::decodeJWT($jwt);
 
             setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
-
+            
             $responseData = ([
                 'login' => $verify,
                 "token" => $jwt,
+                "decoded"=> $decodes->username,
                 "user" => [
                     'username' => $userManager->getUsername(),
                     'mail' => $userManager->getMail(),
@@ -40,7 +40,6 @@ class AuthController extends AbstractController
              "login" => false
         ]);
     }
-    
 
     #[Route('/register', name: "register", methods: ["POST"])]
     public function register($user): void
@@ -52,9 +51,15 @@ class AuthController extends AbstractController
 
             echo json_encode(["register" => true]);
         }
-        else 
-        {
-        // echo json_encode(["register" => false]);
-        }
+    }
+
+    #[Route('/login/check', name:'loginCheck', methods:['POST'])]
+    public function verifyJWT($user)
+    {
+        $l = $user->getToken();
+        var_dump($l);
+        $token = JWTHelper::decodeJWT($l);
+
+        var_dump($token);
     }
 } 
