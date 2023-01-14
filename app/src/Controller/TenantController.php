@@ -14,6 +14,11 @@ class TenantController extends AbstractController
     {
         $tenantManager = (new TenantManager(new PDOFactory()))
         ->addTenant($tenant);
+        $rqst = true;
+
+        return json_encode([
+            "ajout_tenant" => $rqst
+        ]);
     }
 
     #[Route('/tenant/update/{id}', name:'tenantUpdate', methods:['PATCH'])]

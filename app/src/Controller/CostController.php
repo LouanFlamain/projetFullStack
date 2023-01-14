@@ -23,18 +23,36 @@ class CostController extends AbstractController
     }
 
     #[Route('/costs/delete/{id}', name:'deleteCosts', methods:['DELETE'])]
-    public function deleteExistingCost($id)
+    public function deleteExistingCost(int $id)
     {
         $costManager = new CostManager(new PDOFactory());
     }
 
     #[Route('/costs/update/{id}', name:'updateCosts', methods:['PATCH'])]
-    public function updateExistingCost($id, $costs)
+    public function updateExistingCost(int $id, $costs)
     {
         $costManager = new CostManager(new PDOFactory());
 
         $costManager->updateCost($costs, $id);
 
         echo json_encode(["update costs" => true]);
+    }
+
+    #[Route('/costs/{reference}', name:'costTest', methods:['GET'])]
+    public function test($cost, string $reference)
+    {
+        $costManager = new CostManager(new PDOFactory());
+
+        $costManager->getByReference($reference);
+
+        foreach($cost as $costs){
+            return json_encode([
+                "couts" => $costs 
+            ]);
+        };
+        
+        return json_encode([
+            "couts" => (array)$cost
+        ]);
     }
 }

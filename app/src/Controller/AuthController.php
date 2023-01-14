@@ -20,14 +20,12 @@ class AuthController extends AbstractController
         {
             $verify = true;
             $jwt = JWTHelper::buildJWT($userManager);
-            $decodes = JWTHelper::decodeJWT($jwt);
 
             setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
             
             $responseData = ([
                 'login' => $verify,
                 "token" => $jwt,
-                "decoded"=> $decodes->username,
                 "user" => [
                     'username' => $userManager->getUsername(),
                     'mail' => $userManager->getMail(),
