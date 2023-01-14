@@ -26,21 +26,32 @@ class CostManager extends BaseManager
 
     public function getByReference($data)
     {
-        $query = $this->pdo->prepare("SELECT * FROM Costs
-        WHERE reference = :reference");
-        $query->execute();
-        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+        try
+        {
+            $query = $this->pdo->prepare("SELECT * FROM Costs
+            WHERE reference = :reference");
+            $query->bindValue('reference', $data, \PDO::PARAM_STR);
+            $query->execute();
+            
+            $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+    
+            if (count($stm)) {
+                return new Cost($stm[0]);
+            }
 
-        if (count($stm)) {
-            return new Cost($stm[0]);
+            $tab = [];
+
+            foreach ($stm as $key => $data)
+            {
+                $tab[$key] = new Cost($data);
+            }
+    
+            return (object)$tab;
         }
+        catch(\PDOException $e)
+        {
 
-        $tab = [];
-        foreach ($stm as $key => $data){
-            $tab[$key] = new Cost($data);
         }
-
-        return (object)$tab;
     }
 
     public function getByIdRelationship($data)
@@ -82,14 +93,16 @@ class CostManager extends BaseManager
             $query->bindValue('tenant_id', $data->getTenant_id(), \PDO::PARAM_INT);
     
             $query->execute();
+            return $cost = true;
         }
         catch(\PDOException $e)
         {
             if($e->getCode() == "23000")
             {
+                $cost = false;
                 $errorType = explode('key',$e->errorInfo[2])[1];
                 echo json_encode([
-                    "register" => false,
+                    "add_cost" => $cost,
                     "clef dupliquee" => $errorType
                 ]);
                 die;
