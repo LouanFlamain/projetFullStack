@@ -25,14 +25,19 @@ class JWTHelper
     {
         try 
         {
+            $expired = false;
+            echo json_encode([
+                "expired" => $expired
+            ]);
             return JWT::decode($jwt, new Key("je_suis_presque_impossible_a_casser_:3", "HS256"));
         } 
         catch (\Exception $exception) 
         {
             if($exception->getMessage() == "Expired token")
             {
+                $expired = true;
                 echo json_encode([
-                    "message" => "Token expiré"
+                    "expired" => $expired
                 ]);
                 die;  
             }
