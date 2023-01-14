@@ -103,9 +103,7 @@ class CostManager extends BaseManager
                 $errorType = explode('key',$e->errorInfo[2])[1];
                 echo json_encode([
                     "add_cost" => $cost,
-                    "clef dupliquee" => $errorType         $query = $this->pdo->prepare("DELETE FROM `Costs` WHERE `reference` = :reference");
-                    $query->bindValue('reference', $reference, \PDO::PARAM_STR);
-                    $query->execute();
+                    "clef dupliquee" => $errorType
                 ]);
                 die;
             }
@@ -117,7 +115,6 @@ class CostManager extends BaseManager
         try
         {
             $cost = true;
-
             $query = $this->pdo->prepare("DELETE FROM `Costs` WHERE `reference` = :reference");
             $query->bindValue('reference', $reference, \PDO::PARAM_STR);
             $query->execute();
