@@ -57,9 +57,6 @@ class AuthController extends AbstractController
     public function verifyJWT($user)
     {
         $l = $user->getToken();
-        var_dump($l);
         $token = JWTHelper::decodeJWT($l);
-
-        var_dump($token);
     }
 } 
