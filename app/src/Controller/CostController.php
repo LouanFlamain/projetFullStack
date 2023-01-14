@@ -38,11 +38,11 @@ class CostController extends AbstractController
         echo json_encode(["update costs" => true]);
     }
 
-    #[Route('/cost/{id}/{reference}', name:'costTest', methods:['GET'])]
+    #[Route('/cost/{reference}', name:'costTest', methods:['GET'])]
     public function test($cost, int $id, string $reference)
     {
         $costManager = new CostManager(new PDOFactory());
 
-        $costManager->getOneCost($id, $reference);
+        $costManager->getByReference($id, $reference);
     }
 }

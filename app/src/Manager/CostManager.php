@@ -30,7 +30,8 @@ class CostManager extends BaseManager
         WHERE reference = :reference");
         $query->execute();
         $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
-        if (count($stm) === 1) {
+
+        if (count($stm)) {
             return new Cost($stm[0]);
         }
 
