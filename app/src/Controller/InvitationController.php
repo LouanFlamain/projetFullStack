@@ -14,16 +14,13 @@ use App\Helpers\JWTHelper;
 class InvitationController extends AuthController
 {
     #[Route('/invitation', name: "invitation", methods: ["POST"])]
-    public function SendInvitation ()
+    public function SendInvitation (Invitation $invitation)
     {
-        if (!empty($_POST['mail'])){
-            /** @var App\Entity\Invitation $invitation */
-            $token= JWTHelper::CreateMailToken($_POST);
-            $data = [
-                'token'=> $token,
-                'mail'=>$_POST['mail']
-            ];
-            $invitation= new Invitation($data);
+        if (!empty($invitation)){
+            $token= JWTHelper::CreateMailToken($invitation);
+            $invitation->setToken($token);
+
+
             $invitationManager = (new InvitationManager(new PDOFactory()))
                 ->CreateMailInvitation($invitation);
             (new MailHelper)->MailSender($invitation);

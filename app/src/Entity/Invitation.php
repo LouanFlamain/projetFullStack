@@ -7,7 +7,7 @@ class Invitation extends BaseEntity
     private ?int $id;
     private string $token;
     private string $mail;
-    private int $rental_id = 1;
+    private int $rental_id =1;
 
     /**
      * @return string
