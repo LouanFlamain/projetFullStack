@@ -23,10 +23,19 @@ class JWTHelper
 
     public static function decodeJWT(string $jwt): ?object
     {
-        try {
+        try 
+        {
             return JWT::decode($jwt, new Key("je_suis_presque_impossible_a_casser_:3", "HS256"));
-        } catch (\Exception $exception) {
-            return $exception;
+        } 
+        catch (\Exception $exception) 
+        {
+            if($exception->getMessage() == "Expired token")
+            {
+                echo json_encode([
+                    "message" => "Token expiré"
+                ]);
+                die;  
+            }
         }
     }
 
@@ -49,9 +58,9 @@ class JWTHelper
             $decoded = JWT::decode($token,$key, array('HS256'));
             return true;
         }
-        catch(\Exception $e)
+        catch(Exception $e)
         {
-            return $e;
+
         }
     }
 }
