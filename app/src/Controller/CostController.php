@@ -10,43 +10,49 @@ use App\Route\Route;
 class CostController extends AbstractController
 {
     #[Route('/costs', name:'costs', methods:["POST"])]
-    public function setCost()
+    public function setCost($cost)
     {
-        $json = file_get_contents('php://input');
-        $data = (array)json_decode($json);
-
-        if(!empty($data))
+        if(!empty($cost))
         {
-            $cost = (new Cost($data));
-
             $costManager = (new CostManager(new PDOFactory()));
-            // ->getById($cost);
-
-            var_dump($cost, "////////////////");
         
             $costManager->insertCost($cost);
+
+            echo json_encode(["costs" => true]);
         }
     }
 
     #[Route('/costs/delete/{id}', name:'deleteCosts', methods:['DELETE'])]
-    public function deleteExistingCost($id)
+    public function deleteExistingCost(int $id)
     {
-        //todo add role to cookie ??
         $costManager = new CostManager(new PDOFactory());
-        $cost = $costManager->getOneCost($id);
     }
 
     #[Route('/costs/update/{id}', name:'updateCosts', methods:['PATCH'])]
-    public function updateExistingCost($id)
+    public function updateExistingCost(int $id, $costs)
     {
-        $json = file_get_contents('php://input');
-        $data = (array)json_decode($json);
-
-        $cost = new Cost($data);
-
         $costManager = new CostManager(new PDOFactory());
-        $costUpdate  = $costManager->getOneCost($id);
 
-        $costManager->updateCost($cost, $id);
+        $costManager->updateCost($costs, $id);
+
+        echo json_encode(["update costs" => true]);
+    }
+
+    #[Route('/costs/{reference}', name:'costTest', methods:['GET'])]
+    public function test($cost, string $reference)
+    {
+        $costManager = new CostManager(new PDOFactory());
+
+        $costManager->getByReference($reference);
+
+        foreach($cost as $costs){
+            return json_encode([
+                "couts" => $costs 
+            ]);
+        };
+        
+        return json_encode([
+            "couts" => (array)$cost
+        ]);
     }
 }

@@ -22,10 +22,26 @@ class InvitationManager extends BaseManager
 
     public function CreateMailInvitation(Invitation $data): void
     {
-        $query = $this->pdo->prepare("INSERT INTO Invitation (token,mail, rental_id) VALUES (:token, :mail, :rental_id)");
-        $query->bindValue('token', $data->getToken(), \PDO::PARAM_STR);
-        $query->bindValue('mail', $data->getMail(), \PDO::PARAM_STR);
-        $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_STR);
-        $query->execute();
+        try
+        {
+
+            $query = $this->pdo->prepare("INSERT INTO Invitation (token,mail, rental_id) VALUES (:token, :mail, :rental_id)");
+            $query->bindValue('token', $invitation->getToken(), \PDO::PARAM_STR);
+            $query->bindValue('mail', $invitation->getMail(), \PDO::PARAM_STR);
+            $query->bindValue('rental_id', $invitation->getRental_id(), \PDO::PARAM_STR);
+            $query->execute();
+        }
+        catch(\PDOException $e)
+        {
+            if($e->getCode() == "23000")
+            {
+                throw new \Exception("Mail déja utilisé");
+            }
+            else
+            {
+                throw $e;
+            }
+        }
+        
     }
 }

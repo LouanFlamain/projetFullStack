@@ -1,10 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import params from "../image/params.svg";
 import money from "../image/money.png";
 import balance from "../image/balance.png";
+import { useContext } from "react";
+import { context } from "../context/context";
 
 export default function Header() {
+  const { logged, setLogged } = useContext(context);
+  const navigate = useNavigate();
+
+  const disconnect = () => {
+    setLogged(false);
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <div
       className="d-flex justify-content-between"
@@ -41,7 +51,7 @@ export default function Header() {
         </Link>
       </div>
       <div className="d-flex align-content-center">
-        <button type="button" className="btn btn-link">
+        <button type="button" className="btn btn-link" onClick={disconnect}>
           Disconnect
         </button>
       </div>

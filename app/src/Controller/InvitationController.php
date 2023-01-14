@@ -3,10 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Invitation;
-use App\Entity\User;
 use App\Factory\PDOFactory;
 use App\Helpers\MailHelper;
-use App\Manager\UserManager;
 use App\Manager\InvitationManager;
 use App\Route\Route;
 use App\Helpers\JWTHelper;

@@ -2,64 +2,59 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Factory\PDOFactory;
 use App\Helpers\JWTHelper;
-use App\Helpers\Utilitaire;
 use App\Manager\UserManager;
 use App\Route\Route;
 
 class AuthController extends AbstractController
 {
     #[Route('/login', name: "login", methods: ["POST"])]
-    public function login($data)
+    public function login($user)
     {  
         $userManager = (new UserManager(new PDOFactory()))
-        ->getByUsername($data['username']);
+        ->getByUsername($user->getUsername());
+        $verify = false;
         
-        if(password_verify($data['password'], $userManager->getHashedPassword()))
+        if(password_verify($user->getHashedPassword(), $userManager->getHashedPassword()))
         {
+            $verify = true;
             $jwt = JWTHelper::buildJWT($userManager);
-            $decoded = JWTHelper::decodeJWT($jwt);
 
             setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
-
+            
             $responseData = ([
-                'login' => 'verify',
+                'login' => $verify,
                 "token" => $jwt,
-                "decoded" => $decoded,
                 "user" => [
                     'username' => $userManager->getUsername(),
                     'mail' => $userManager->getMail(),
                     'role' => $userManager->getRole(),
-                    'password' => $userManager->getHashedPassword()
                 ]
             ]);
-
-            $responseJson = json_encode($responseData);
-            echo $responseJson;
+            return $this->renderJSON($responseData);
         }
-    
+         return $this->renderJSON([
+             "login" => false
+        ]);
     }
-    
 
     #[Route('/register', name: "register", methods: ["POST"])]
-    public function register($data): void
+    public function register($user): void
     {
-        if (isset($data['username']) && isset($data['password']))
+        if($user->getUsername() != null && $user->passwordHash($user) != null)
         {
-            $user = (new User($data))->passwordHash($data['password']);
-    
-            if($user->getUsername() != null && $user->getHashedPassword() != null){
-                $userManager = new UserManager(new PDOFactory());
-                $userManager->insertUser($user);
-    
-                echo json_encode(["register" => true]);
-                
-            }
-        }else {
-            echo json_encode(["register" => false]);
+            $userManager = new UserManager(new PDOFactory());
+            $userManager->insertUser($user);
+
+            echo json_encode(["register" => true]);
         }
     }
 
-}
+    #[Route('/login/check', name:'loginCheck', methods:['POST'])]
+    public function verifyJWT($user)
+    {
+        $l = $user->getToken();
+        $token = JWTHelper::decodeJWT($l);
+    }
+} 

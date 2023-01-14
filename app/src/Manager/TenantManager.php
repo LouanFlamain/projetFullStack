@@ -24,6 +24,20 @@ class TenantManager extends BaseManager
         return $tab;
     }
 
+    public function getByIdToArray($user)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM User WHERE id = :id");
+        $query->bindValue("id", $user, \PDO::PARAM_INT);
+        $query->execute();
+        $data = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if ($data) {
+            return $data;
+        }
+
+        return null;
+    }
+
     public function insertById(Tenant $data): void
     {
         $query = $this->pdo->prepare("INSERT INTO Tenant (total_amount,user_id) VALUES (:total_amount, :user_id)");
@@ -34,14 +48,29 @@ class TenantManager extends BaseManager
 
     public function addTenant(Tenant $data)
     {
-        $query = $this->pdo->prepare("INSERT INTO Tenant (balance, user_id, rental_id)
-         VALUES (:balance, :user_id, :rental_id)");
-
-        $query->bindValue('balance', $data->getBalance(), \PDO::PARAM_INT);
-        $query->bindValue('user_id', $data->getUser_id(), \PDO::PARAM_INT);
-        $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_INT);
-
-        $query->execute(); 
+        try 
+        {
+            $query = $this->pdo->prepare("INSERT INTO Tenant (balance, user_id, rental_id)
+             VALUES (:balance, :user_id, :rental_id)");
+    
+            $query->bindValue('balance', $data->getBalance(), \PDO::PARAM_INT);
+            $query->bindValue('user_id', $data->getUser_id(), \PDO::PARAM_INT);
+            $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_INT);
+    
+            $query->execute(); 
+        }
+        catch(\PDOException $e)
+        {
+            if($e->getCode() == "23000")
+            {
+                $errorType = explode('key',$e->errorInfo[2])[1];
+                echo json_encode([
+                    "ajout_tenant" => false,
+                    "clef dupliquee" => $errorType
+                ]);
+                die;
+            }
+        }
     }
 
     public function updateTenant(Tenant $data, $id)
