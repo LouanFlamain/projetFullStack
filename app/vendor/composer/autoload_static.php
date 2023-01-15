@@ -10,6 +10,8 @@ class ComposerStaticInitfaa1fc82cbe91a1b9a6abe03f24d0063
         'P' => 
         array (
             'Psr\\Container\\' => 14,
+            'Predis\\' => 7,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'F' => 
         array (
@@ -25,6 +27,14 @@ class ComposerStaticInitfaa1fc82cbe91a1b9a6abe03f24d0063
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Predis\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/predis/predis/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Firebase\\JWT\\' => 
         array (

@@ -13,6 +13,7 @@ services:
 
   fake_server:
     image: maildev/maildev
+    container_name: mail
     ports:
       - 1080:1080
       - 8025:8025

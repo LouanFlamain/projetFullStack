@@ -141,7 +141,6 @@ class Route
         preg_match("#{$this->path}#", $url, $match);
         array_shift($match);
         $param = array_combine($this->getParams(), $match);
-
         $json = (array)$json['data'];
         $entity = $json['type'];
         $data = (array)$json['attributes'];

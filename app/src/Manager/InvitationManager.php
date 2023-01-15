@@ -20,7 +20,7 @@ class InvitationManager extends BaseManager
         return null;
     }
 
-    public function CreateMailInvitation(Invitation $invitation): void
+    public function CreateMailInvitation(Invitation $data): void
     {
         try
         {
