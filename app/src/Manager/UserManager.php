@@ -52,7 +52,8 @@ class UserManager extends BaseManager
     {
         try
         {
-            $query = $this->pdo->prepare("INSERT INTO User (username, password, mail, role) VALUES (:username, :password, :mail, :role)");
+            $query = $this->pdo->prepare("INSERT INTO User (username, password, mail, role) 
+            VALUES (:username, :password, :mail, :role)");
             $query->bindValue("username", $user->getUsername(), \PDO::PARAM_STR);
             $query->bindValue("password", $user->getHashedPassword(), \PDO::PARAM_STR);
             $query->bindValue("mail", $user->getMail(), \PDO::PARAM_STR);
@@ -77,17 +78,20 @@ class UserManager extends BaseManager
         }
     }
 
-    public function updateUser(User $data, $user_id)
+    public function updateUser(User $data, $id)
     {
         try
         {
             $query = $this->pdo->prepare("UPDATE `User`
             SET role = :role 
-            WHERE user_id = :user_id");
+            WHERE id = :id");
             $query->bindValue("role", $data->getRole(), \PDO::PARAM_STR);
-            $query->bindValue("id", $user_id, \PDO::PARAM_INT);
+            $query->bindValue("id", $id, \PDO::PARAM_INT);
 
             $update = true;
+            echo json_encode([
+                "update"=>$update
+            ]);
         }
         catch(\PDOException $e)
         {

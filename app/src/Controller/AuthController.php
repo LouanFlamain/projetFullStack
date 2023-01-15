@@ -6,8 +6,6 @@ use App\Factory\PDOFactory;
 use App\Helpers\JWTHelper;
 use App\Manager\UserManager;
 use App\Route\Route;
-use App\Manager\InvitationManager;
-use App\Manager\RentalManager;
 
 class AuthController extends AbstractController
 {
@@ -46,6 +44,15 @@ class AuthController extends AbstractController
     {
         if($user->getUsername() != null && $user->passwordHash($user) != null)
         {
+            if($user->getToken() == null)
+            {
+                $user->setRole("Rental");
+            }
+            else
+            {
+                $user->setRole("Tenant");
+            }
+
             $userManager = new UserManager(new PDOFactory());
             $userManager->insertUser($user);
         }
@@ -56,21 +63,5 @@ class AuthController extends AbstractController
     {
         $cookie = $_COOKIE['token'];
         $decodedCookie = JWTHelper::decodeJWT($cookie);
-    }
-
-    #[Route('/getMailToken/{rental_id}', name:'kaka', methods:['GET'])]
-    public function getMailToken($invitation, $user, $rental_id, $user_id)
-    {
-        $mailManager = new InvitationManager(new PDOFactory());
-        $jwtManager = new JWTHelper;
-
-        $mail = $mailManager->getById($rental_id);
-        $mailToken = $mail->getToken();
-        $decodemail = $jwtManager->decodeMailToken($mailToken);
-
-        echo json_encode([
-            "token"=>$mail->getToken(),
-            "decoded"=>$decodemail
-        ]);
     }
 } 
