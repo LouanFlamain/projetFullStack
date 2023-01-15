@@ -26,7 +26,6 @@ class InvitationController extends AuthController
                 "envoie" => true,
                 "invitation" => $invitationManager
             ]);
-
         } else {
             return $this->renderJSON([
                 "envoie" => false
