@@ -36,7 +36,6 @@ class AuthController extends AbstractController
             $responseJson = json_encode($responseData);
             return $responseJson;
         }
-    
     }
 
     #[Route('/register', name: "register", methods: ["POST"])]
@@ -46,8 +45,6 @@ class AuthController extends AbstractController
         {
             $userManager = new UserManager(new PDOFactory());
             $userManager->insertUser($user);
-
-            echo json_encode(["register" => true]);
         }
     }
 

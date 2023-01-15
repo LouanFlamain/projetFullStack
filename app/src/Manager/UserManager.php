@@ -52,7 +52,6 @@ class UserManager extends BaseManager
     {
         try
         {
-            
             $query = $this->pdo->prepare("INSERT INTO User (username, password, mail, role) VALUES (:username, :password, :mail, :role)");
             $query->bindValue("username", $user->getUsername(), \PDO::PARAM_STR);
             $query->bindValue("password", $user->getHashedPassword(), \PDO::PARAM_STR);
@@ -60,6 +59,9 @@ class UserManager extends BaseManager
             $query->bindValue("role", $user->getRole(), \PDO::PARAM_STR);
     
             $query->execute();
+            echo json_encode([
+                "register"=> true
+            ]);
         }
         catch(\PDOException $e)
         {
