@@ -6,29 +6,43 @@ use App\Entity\Invitation;
 
 class InvitationManager extends BaseManager
 {
-    public function getById($data): ?Invitation
+    public function getById(int $rental_id): ?Invitation
     {
-        $query = $this->pdo->prepare("SELECT * FROM Invitation WHERE id = :id");
-        $query->bindValue("id", $data, \PDO::PARAM_INT);
-        $query->execute();
-        $stm = $query->fetch(\PDO::FETCH_ASSOC);
-
-        if ($stm) {
-            return new Invitation($stm);
+        try
+        {
+            $query = $this->pdo->prepare("SELECT * FROM Invitation
+            WHERE rental_id = :rental_id");
+            $query->bindValue("rental_id", $rental_id, \PDO::PARAM_INT);
+            $query->execute();
+            $stm = $query->fetch(\PDO::FETCH_ASSOC);
+    
+            if ($stm) {
+                $payload = true;
+                return new Invitation($stm);
+                echo json_encode([
+                    "get-mail" => $payload,
+                    "token"=>$stm
+                ]);
+            }
         }
-
-        return null;
+        catch(\PDOException $e)
+        {
+            $payload = false;
+            echo json_encode([
+                "get-mail" => $payload,
+                "error" => $e
+            ]); 
+        }
     }
 
     public function CreateMailInvitation(Invitation $data): void
     {
         try
         {
-
             $query = $this->pdo->prepare("INSERT INTO Invitation (token,mail, rental_id) VALUES (:token, :mail, :rental_id)");
-            $query->bindValue('token', $invitation->getToken(), \PDO::PARAM_STR);
-            $query->bindValue('mail', $invitation->getMail(), \PDO::PARAM_STR);
-            $query->bindValue('rental_id', $invitation->getRental_id(), \PDO::PARAM_STR);
+            $query->bindValue('token', $data->getToken(), \PDO::PARAM_STR);
+            $query->bindValue('mail', $data->getMail(), \PDO::PARAM_STR);
+            $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_STR);
             $query->execute();
 
             $invitation = true;
@@ -38,15 +52,7 @@ class InvitationManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            if($e->getCode() == "23000")
-            {
-                throw new \Exception("Mail déja utilisé");
-            }
-            else
-            {
-                throw $e;
-            }
+            echo json_encode($e);
         }
-        
     }
 }
