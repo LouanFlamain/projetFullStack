@@ -16,28 +16,20 @@ class RentalController extends AbstractController
 
         $rentalManager = (new RentalManager(new PDOFactory()))
         ->insertRental($rental);
-
-        echo json_encode(["rental" => true]);
     }
 
     #[Route('/rental/update/{id}', name:'updateRental', methods:['PATCH'])]
     public function updateExistingRental($id, $rental)
     {       
         $rentalManager = new RentalManager(new PDOFactory());
-        $rentalUpdate = $rentalManager->getOneRental($id);
-
         $rentalManager->updateRental($rental, $id);
-        echo json_encode(["update rental" => true]);
     }
 
-    #[Route('/rental/delete/{id}', name: 'deleteRental', methods:['GET'])]
-    public function deleteExistingRental($id)
+    #[Route('/rental/delete/{id}', name: 'deleteRental', methods:['DELETE'])]
+    public function deleteExistingRental(int $id, $rental)
     {
         $rentalManager = new RentalManager(new PDOFactory());
-        $rental = $rentalManager->getOneRental($id);
 
-        $rentalManager->deleteRental($id);
-        echo json_encode(["delete rental" => true]);
-
+        $rentalManager->deleteRental($rental, $id);
     }
 }
