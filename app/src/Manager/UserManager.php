@@ -77,6 +77,28 @@ class UserManager extends BaseManager
         }
     }
 
+    public function updateUser(User $data, $user_id)
+    {
+        try
+        {
+            $query = $this->pdo->prepare("UPDATE `User`
+            SET role = :role 
+            WHERE user_id = :user_id");
+            $query->bindValue("role", $data->getRole(), \PDO::PARAM_STR);
+            $query->bindValue("id", $user_id, \PDO::PARAM_INT);
+
+            $update = true;
+        }
+        catch(\PDOException $e)
+        {
+            $update = false;
+            echo json_encode([
+                "update"=>$update,
+                "erreur"=>$e
+            ]);
+        }
+    }
+
 }
 
 
