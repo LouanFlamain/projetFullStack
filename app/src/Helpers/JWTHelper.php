@@ -15,13 +15,13 @@ class JWTHelper
             "id" => $user->getId(),
             "username" => $user->getUsername(),
             "type" => $user->getRole(),
-            "exp" => (new \DateTime("+ 20 minutes"))->getTimestamp()
+            "exp" => (new \DateTime("+ 120 minutes"))->getTimestamp()
         ];
 
         return JWT::encode($payload, "je_suis_presque_impossible_a_casser_:3", "HS256");
     }
 
-    public static function decodeJWT(string $jwt): ?object
+    public static function decodeJWT(string $jwt)
     {
         try 
         {
@@ -39,7 +39,6 @@ class JWTHelper
                 echo json_encode([
                     "expired" => $expired
                 ]);
-                die;  
             }
         }
     }
@@ -48,11 +47,23 @@ class JWTHelper
     {
         $payload = [
             "mail" => $invitation->getMail(),
-            "exp" => (new \DateTime("+ 20 minutes"))->getTimestamp(),
-
+            "rental_id" => $invitation->getRental_Id(),
+            "exp" => (new \DateTime("+ 120 minutes"))->getTimestamp(),
         ];
         return JWT::encode($payload, "je_suis_presque_impossible_a_casser_:3", "HS256");
+    }
 
+    public static function decodeMailToken(string $token)
+    {
+        try
+        {
+            return JWT::decode($token, new Key("je_suis_presque_impossible_a_casser_:3", "HS256"));
+
+        }
+        catch(Exception $e)
+        {
+            echo $e;
+        }
     }
 
     public static function checkToken(string $token)
