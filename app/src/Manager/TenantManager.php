@@ -56,13 +56,18 @@ class TenantManager extends BaseManager
             $query->bindValue('balance', $data->getBalance(), \PDO::PARAM_INT);
             $query->bindValue('user_id', $data->getUser_id(), \PDO::PARAM_INT);
             $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_INT);
-    
+            
             $query->execute(); 
+            $add_tenant = true;
+            echo json_encode([
+                "ajout_tenanttenant"=>$add_tenant
+            ]);
         }
         catch(\PDOException $e)
         {
             if($e->getCode() == "23000")
             {
+                $add_tenant = false;
                 $errorType = explode('key',$e->errorInfo[2])[1];
                 echo json_encode([
                     "ajout_tenant" => false,
@@ -75,21 +80,48 @@ class TenantManager extends BaseManager
 
     public function updateTenant(Tenant $data, $id)
     {
-        $query = $this->pdo->prepare("UPDATE Tenant 
-        SET balance = :balance
-        WHERE id = :id");
+        try
+        {
+            $query = $this->pdo->prepare("UPDATE Tenant 
+            SET balance = :balance
+            WHERE id = :id");
+    
+            $query->bindValue('balance', $data->getBalance(), \PDO::PARAM_INT);
+            $query->bindValue('id', $id, \PDO::PARAM_INT);
+    
+            $query->execute(); 
 
-        $query->bindValue('balance', $data->getBalance(), \PDO::PARAM_INT);
-        $query->bindValue('id', $id, \PDO::PARAM_INT);
-
-        $query->execute(); 
+        }
+        catch(\PDOException $e)
+        {
+            $update = false;
+            echo json_encode([
+                "error" => $e,
+                "update" => $update
+            ]);
+        }
     }
     
-    public function deleteTenant($id)
+    public function deleteTenant($tenant, $id)
     {
-        $query = $this->pdo->prepare("DELETE FROM Tenant WHERE id = :id");
-        $query->bindValue('id', $id, \PDO::PARAM_INT);
-        $query->execute();
+        try
+        {
+            $query = $this->pdo->prepare("DELETE FROM Tenant WHERE id = :id");
+            $query->bindValue('id', $id, \PDO::PARAM_INT);
+            $query->execute();
+
+            $delete = true;
+            echo json_encode([
+                "delete_tenant" => $delete
+            ]);
+        }
+        catch(\PDOException $e)
+        {
+            $delete = false;
+            echo json_encode([
+                "delete_tenant" => $delete
+            ]);
+        }
 
     }
 
