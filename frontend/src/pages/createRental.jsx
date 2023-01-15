@@ -13,12 +13,11 @@ export default function CreateRental() {
   return (
     <>
     <Header />
-    <div className="create-wrapper p-3">
     <p className="bg-primary p-2 text-white text-end">
           {/* rendre le prénom de l'user.id */}
           Vous êtes identifié comme <em>{logged.username}</em>
-        </p>
-
+    </p>
+    <div className="create-wrapper p-3">
       <p className="h4 p-4 text-primary">Creer la location (Etape 1 sur 2)</p>
       <div>
           <p className="p-2 bg-primary text-white">

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState , useContext } from "react";
 import { Link } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
 import Header from "../component/header";
-import CreateCost from "../component/createCost";
+import { context } from "../context/context";
 
-function AddParticipantModal(props) {
+// Faire des conditions , si cost != "" , afficher en premier la liste des cost (tableau) function RecapCost
+// si cost est vide afficher en premier function CreateCost
+
+function AddParticipant(props) {
   const [show, setShow] = useState(false);
   const submit = (event) => {
     event.preventDefault();
@@ -15,7 +18,11 @@ function AddParticipantModal(props) {
 
   return (
     <>
-      <Button variant="mt-4 pt-4 text-primary" onClick={handleShow}>
+      <p>
+        Pour qui était la dépense : <span class="JS-chooseParticipantVisible" >Détails</span>
+      </p> 
+
+     <Button variant="mt-4 pt-4 text-primary" onClick={handleShow}>
         <u>Ajouter un participant</u>
       </Button>
 
@@ -40,103 +47,105 @@ function AddParticipantModal(props) {
           </Button>
         </Modal.Footer>
       </Modal>
+     
     </>
   );
 }
-export default function Cost() {
+export default function CreateCost() {
   const [show, setShow] = useState(false);
+
+  const { logged, setLogged } = useContext(context);
+  console.log("/depense logged", logged)
+  console.log("/depense logged.username", logged.username)
+  console.log("/depense context", context)
 
   return (
     <>
       <Header />
-      <form className="card-body p-5 card w-50 p-4">
-        <div>
-          <div className="d-flex">
-            <label
-              for="what"
-              className="col-sm-2 col-form-label col-form-label-sm"
-            >
-              Quoi :
-            </label>
-
-            <input
-              type="text"
-              className="form-control form-control-sm" //
-              id="what"
-            />
-
-            <select className="custom-select" id="">
-              <option selected>Dépense</option>
-              <option>Rentrée d'argent</option>
-              <option>Transfert d'argent</option>
-            </select>
-          </div>
-
-          <Link to="/">(Plus d'info)</Link>
-        </div>
-
-        <div className="form-group row p-2">
-          <div className="d-flex">
-            <label
-              for="who paid"
-              className="col-sm-2 col-form-label col-form-label-sm"
-            >
-              Qui a payé :
-            </label>
-            <select className="custom-select" id="">
-              <option>Deva</option>
-              <option>Jessica</option>
-              <option>Rayan</option>
-            </select>
-          </div>
-
-          <div className="d-flex">
-            <label for="date" className="col-sm-2 col-form-label-sm">
-              Date (facultatif) :
-            </label>
-
-            <input
-              type="date"
-              id="date"
-              className="form-control form-control-sm w-25"
-            />
-          </div>
-
-          <div className="d-flex">
-            <label
-              for="amount"
-              className="col-sm-2 col-form-label col-form-label-sm"
-            >
-              Montant :
-            </label>
-
-            <input
-              type="text"
-              className="form-control form-control-sm w-25"
-              id="amount"
-            />
-          </div>
-
+      <p className="bg-primary p-2 text-white text-end">
+            {/* rendre le prénom de l'user.id */}
+            Vous êtes identifié comme <em>{logged.username}</em>
+      </p>
+      <div className="create-wrapper p-3">
+        <form className="p-4">
           <div>
-            <p>
-              Pour qui était la dépense : <Link to="/détails">Détails</Link>
-            </p>
+            <div className="row pb-4">
+              <label
+                for="costNama"
+                className="col-2 form-label"
+              >
+                Nom de la dépense :
+              </label>
+
+              <input
+                type="text"
+                className="col-6" 
+                id="costName"
+              />
+
+              <select className="custom-select  col mx-5" id="CostType">
+                <option selected>type de dépense</option>
+                <option>Rentrée d'argent</option>
+                <option>Transfert d'argent</option>
+              </select>
+            </div>
+            
+            {/* <Link to="/"><span class="text-right">(Plus d'info)</span></Link> */}
           </div>
 
-          <div className="solid">
-            <p></p>
+          <div className="form-group row pb-4">
+            <div className="row pb-4">
+              <label
+                for="who paid"
+                className="col-2 form-label"
+              >
+                Qui a payé :
+              </label>
+              <select className="custom-select col-2 " id="">
+                <option>Deva</option>
+                <option>Jessica</option>
+                <option>Rayan</option>
+              </select>
+            </div>
+
+            <div className="row pb-4">
+              <label for="date" className="col-2 form-label">
+                Date (facultatif) :
+              </label>
+
+              <input
+                type="date"
+                id="date"
+                className="col-2 "
+              />
+            </div>
+
+            <div className="row pb-4">
+              <label
+                for="amount"
+                className="col-2 form-label"
+              >
+                Montant :
+              </label>
+
+              <input
+                type="text"
+                className="col-2"
+                id="amount"
+              />
+            </div>
+
+            <div className="AddParticipantModal pt-5">
+              <AddParticipant show={show} onHide={() => setShow(false)} />
+            </div>
           </div>
-          <div className="AddParticipantModal">
-            <AddParticipantModal show={show} onHide={() => setShow(false)} />
-          </div>
-          <div className="solid">
-            <p></p>
-          </div>
-          <div className="solid">
-            <p></p>
-          </div>
+        </form>
+        <div className="p-2 bg-primary mt-auto">
+            <Link to="/depense">
+                <button type="submit" className="mb-0 text-white btn"><u>Sauvegarder</u></button>
+            </Link>
         </div>
-      </form>
+      </div>
     </>
   );
 }

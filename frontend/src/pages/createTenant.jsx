@@ -15,7 +15,12 @@ export default function CreateTenant() {
   return (
         <>
            <Header />
+           <p className="bg-primary p-2 text-white text-end">
+                {/* rendre le prénom de l'user.id */}
+                Vous êtes identifié comme <em>{logged.username}</em>
+                </p>
             <div className="create-wrapper p-3">
+                
                 <h1 className="h4 p-4 text-primary">Créer un compte pour chaque collocataire (étape 2 sur 2) </h1>
                 <div className="p-2 bg-primary">
                     <p className="mb-0 text-white">Lister les personnes qui participent aux comptes</p>
