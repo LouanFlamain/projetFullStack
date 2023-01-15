@@ -14,7 +14,7 @@ class JWTHelper
         $payload = [
             "id" => $user->getId(),
             "username" => $user->getUsername(),
-            "type" => $user->getRole(),
+            "role" => $user->getRole(),
             "exp" => (new \DateTime("+ 120 minutes"))->getTimestamp()
         ];
 
@@ -57,26 +57,19 @@ class JWTHelper
     {
         try
         {
+            $expired = true;
+            echo json_encode([
+                "expired" => $expired
+            ]);
             return JWT::decode($token, new Key("je_suis_presque_impossible_a_casser_:3", "HS256"));
 
         }
         catch(Exception $e)
         {
-            echo $e;
-        }
-    }
-
-    public static function checkToken(string $token)
-    {
-        try
-        {
-            $key = "je_suis_presque_impossible_a_casser_:3";
-            $decoded = JWT::decode($token,$key, array('HS256'));
-            return true;
-        }
-        catch(Exception $e)
-        {
-            
+            $expired = false;
+            echo json_encode([
+                "expired" => $expired
+            ]);
         }
     }
 }
