@@ -183,3 +183,25 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux,jetbrains+all,visualstudiocode
+
+vendor/
+app/vendor/
+app/vendor/composer/
+app/vendor/autoload.php
+app/vendor/composer/autoload_classmap.php
+app/vendor/composer/autoload_namespaces.php
+app/vendor/autoload.php
+app/vendor/composer/autoload_psr4.php
+app/vendor/composer/autoload_real.php
+app/vendor/composer/autoload_static.php
+app/vendor/composer/ClassLoader.php
+app/vendor/composer/installed.json
+app/vendor/composer/installed.php
+app/vendor/composer/InstalledVersions.php
+app/vendor/composer/LICENSE
+app/vendor/composer/platform_check.php
+app/vendor/composer/autoload_psr4.php
+app/vendor/composer/autoload_static.php
+app/vendor/composer/ClassLoader.php
+app/vendor/composer/installed.json
+app/vendor/composer/installed.php 

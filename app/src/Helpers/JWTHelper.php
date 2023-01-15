@@ -47,7 +47,7 @@ class JWTHelper
     public static function CreateMailToken ($invitation): string
     {
         $payload = [
-            "mail" => $invitation['mail'],
+            "mail" => $invitation->getMail(),
             "exp" => (new \DateTime("+ 20 minutes"))->getTimestamp(),
 
         ];
