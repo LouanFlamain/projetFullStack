@@ -61,7 +61,7 @@ function App() {
             }
           />
           <Route
-            path="/Createrental"
+            path="/createRental"
             element={
               <NeedAuth>
                 <CreateRental />

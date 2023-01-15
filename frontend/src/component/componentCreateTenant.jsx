@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState , useContext } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { context } from "../context/context";
 
 export default function ComponentCreateTenantManager() {
+    const { logged, setLogged } = useContext(context);
+    console.log("page/createRental logged", logged)
     const [show, setShow] = useState(false);
     const submit = (event) => {
         event.preventDefault();
@@ -28,7 +31,7 @@ export default function ComponentCreateTenantManager() {
         <div className="create-tenant__content p-4 mx-auto ">
 
         <div className="d-flex flex-row align-items-center create-tenant__info">
-            <p className="p-2 border border-secondary rounded mb-0 w-25">"le nom du manager"</p>
+            <p className="p-2 border border-secondary rounded mb-0 w-25">{logged.username}</p>
             <p className="mb-0 pl-2 text-primary">(ceci est votre identifiant)</p>
         </div>
         

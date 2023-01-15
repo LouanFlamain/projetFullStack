@@ -48,3 +48,6 @@ CREATE TABLE IF NOT EXISTS Invitation (
   created_at timestamp NOT NULL,
   FOREIGN KEY (rental_id) REFERENCES Rental(id) ON DELETE CASCADE
 );
+
+INSERT INTO `User` ( `username`, `password`, `mail`, `role`) VALUES
+(	'jessica',	'$2y$10$VS61UsBBcpFHKUrE43zux.oOfGYMB75GA1dM.Cmb8ddx0jFMWCvga',	'jessicamariesainte@hotmail.fr',	'Rental');

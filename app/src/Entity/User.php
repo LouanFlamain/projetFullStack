@@ -11,7 +11,7 @@ class User extends BaseEntity implements PasswordProtectedInterface
     private string $username;
     private string $password;
     private string $mail;
-    private string $role = 'User';
+    private string $role;
 
     /**
      * @return int 

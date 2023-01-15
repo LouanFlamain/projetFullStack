@@ -6,13 +6,17 @@ import { context } from "../context/context";
 
 export default function UpdateRental() {
   const { logged, setLogged } = useContext(context);
+  console.log("logged", logged)
+  console.log("logged.username", logged.username)
+  console.log(context)
+
   return (
     <>
       <Header />
       <div className="create-wrapper pt-0 p-3">
         <p className="bg-primary p-2 text-white text-end">
           {/* rendre le prénom de l'user.id */}
-          Vous êtes identifié comme <em>{logged.user.username}</em>
+          Vous êtes identifié comme <em>{logged.username}</em>
         </p>
         {/* vérifier si ce n'est pas méthode POST */}
         <form method="GET" action="updateRental">

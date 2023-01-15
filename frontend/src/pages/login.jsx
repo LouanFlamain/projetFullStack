@@ -9,7 +9,6 @@ export default function Login() {
   const [userLog, setUserLog] = useState();
   const [passwordLog, setPasswordLog] = useState();
   const { logged, setLogged } = useContext(context);
-
   const navigate = useNavigate();
 
   var url = new URL(window.location.href);
@@ -26,18 +25,19 @@ export default function Login() {
       },
     };
     event.preventDefault();
-    console.log(data);
+    console.log("/login data", data);
     axios({
       method: "post",
       url: "http://localhost:5656/login",
       data: JSON.stringify(data),
     })
       .then(function (response) {
-        console.log(response.data);
+        console.log("/login response.data", response.data);
         if (response.data.login === true) {
           localStorage.setItem("token", response.data.token);
-          setLogged(response.data);
-          localStorage.setItem("data", response.user);
+          localStorage.setItem("user", response.data.user);
+          localStorage.setItem("login", response.data.login);
+          setLogged(response.data.user);
           navigate("/config");
         }
       })
