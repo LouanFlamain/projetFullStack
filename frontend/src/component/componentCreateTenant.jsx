@@ -26,6 +26,7 @@ export default function ComponentCreateTenantManager() {
       newParticipants.splice(index, 1);
       setParticipants(newParticipants);
     };
+    console.log("componentcreateRental participant", participants)
 
     return (
         <div className="create-tenant__content p-4 mx-auto ">

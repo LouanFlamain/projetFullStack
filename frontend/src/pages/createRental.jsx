@@ -49,7 +49,7 @@ export default function CreateRental() {
 
             <div className="col-sm-10 ">
 
-            <textarea class="form-control" id="description" rows="3"></textarea>
+            <textarea className="form-control" id="description" rows="3"></textarea>
 
             </div>
 
