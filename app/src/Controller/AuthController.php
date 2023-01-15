@@ -32,10 +32,11 @@ class AuthController extends AbstractController
                     'role' => $userManager->getRole(),
                 ]
             ]);
-                      
-            $responseJson = json_encode($responseData);
-            return $responseJson;
+            return $this->renderJSON($responseData);
         }
+         return $this->renderJSON([
+             "login" => false
+        ]);
     }
 
     #[Route('/register', name: "register", methods: ["POST"])]
@@ -52,9 +53,6 @@ class AuthController extends AbstractController
     public function verifyJWT($user)
     {
         $l = $user->getToken();
-        var_dump($l);
         $token = JWTHelper::decodeJWT($l);
-
-        var_dump($token);
     }
 } 
