@@ -20,7 +20,7 @@ class RentalManager extends BaseManager
     
             $query->execute();
             $rental = true;
-            return json_encode(["rental" => $rental]);
+            echo json_encode(["rental" => $rental]);
         }
         catch(\PDOException $e)
         {
