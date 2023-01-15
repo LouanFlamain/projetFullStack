@@ -30,6 +30,11 @@ class InvitationManager extends BaseManager
             $query->bindValue('mail', $invitation->getMail(), \PDO::PARAM_STR);
             $query->bindValue('rental_id', $invitation->getRental_id(), \PDO::PARAM_STR);
             $query->execute();
+
+            $invitation = true;
+            echo json_encode([
+                "invitation" => $invitation
+            ]);
         }
         catch(\PDOException $e)
         {
