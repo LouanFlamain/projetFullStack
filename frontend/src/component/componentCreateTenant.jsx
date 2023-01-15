@@ -4,7 +4,7 @@ import { context } from "../context/context";
 
 export default function ComponentCreateTenantManager() {
     const { logged, setLogged } = useContext(context);
-    console.log("page/createRental logged", logged)
+    console.log("componentcreateRental logged", logged)
     const [show, setShow] = useState(false);
     const submit = (event) => {
         event.preventDefault();

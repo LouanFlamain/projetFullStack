@@ -28,6 +28,7 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/createRental" element={<CreateRental />} />
           <Route
             path="/config"
             element={
@@ -57,14 +58,6 @@ function App() {
             element={
               <NeedAuth>
                 <CreateTenant />
-              </NeedAuth>
-            }
-          />
-          <Route
-            path="/createRental"
-            element={
-              <NeedAuth>
-                <CreateRental />
               </NeedAuth>
             }
           />

@@ -35,10 +35,15 @@ export default function Login() {
         console.log("/login response.data", response.data);
         if (response.data.login === true) {
           localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", response.data.user);
+          localStorage.setItem("username", response.data.user.username);
+          localStorage.setItem("email", response.data.user.mail);
+          localStorage.setItem("user", response.data.user.role);
           localStorage.setItem("login", response.data.login);
           setLogged(response.data.user);
-          navigate("/config");
+          // rajouter une condition si user.role = rental and rental == "" alors navigate to createRental
+          // rajouter une condition si user.role = rental and rental != "" alors navigate to config
+          // rajouter une condition si user.role = tenant and rental != "" alors navigate to depense
+          navigate("/createRental");
         }
       })
       .catch(function (error) {
