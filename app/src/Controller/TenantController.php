@@ -20,8 +20,6 @@ class TenantController extends AbstractController
     public function updateExistingTenant($id, $tenant)
     {
         $tenantManager = new TenantManager(new PDOFactory());
-    
-        $tenantManager = new TenantManager(new PDOFactory());
 
         $tenantManager->updateTenant($tenant, $id);
     }

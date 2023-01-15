@@ -12,10 +12,20 @@ class RentalController extends AbstractController
     #[Route('/rental', name:'rental', methods:['POST'])]
     public function createRental($rental)
     {
-        $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
-
-        $rentalManager = (new RentalManager(new PDOFactory()))
-        ->insertRental($rental);
+        if(isset($_COOKIE['token']))
+        {
+            $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
+    
+            $rentalManager = (new RentalManager(new PDOFactory()))
+            ->insertRental($rental);
+        }
+        else
+        {
+          echo json_encode([
+            'cookie' => false,
+            'redirect' => "login"
+          ]);
+        }
     }
 
     #[Route('/rental/update/{id}', name:'updateRental', methods:['PATCH'])]
