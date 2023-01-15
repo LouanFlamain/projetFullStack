@@ -5,13 +5,12 @@ import { context } from "../context/context";
 
 export default function NeedAuth(props) {
   const { logged, setLogged } = useContext(context);
-  console.log("needAuth logged", logged)
 
   let location = useLocation();
 
-  if (logged || localStorage.getItem("login")) {
+  if (logged.login) {
     return props.children;
   } else {
-
+    return <Navigate to="/login" state={{ from: location }} />;
   }
 }

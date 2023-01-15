@@ -10,7 +10,9 @@ import { context } from "../context/context";
 export default function Header() {
   const { logged, setLogged } = useContext(context);
   const navigate = useNavigate();
-
+  const test = () => {
+    console.log(JSON.parse(localStorage.getItem("data")).login);
+  };
   const disconnect = () => {
     setLogged(false);
     localStorage.removeItem("token");
@@ -29,7 +31,7 @@ export default function Header() {
         to="/depense"
         className="d-flex justify-content-center align-items-center pl-4 header-btn text-decoration-none"
       >
-        <img width="100%" height="50px" src={colocoLOGO} />
+        <img width="100%" height="50px" src={colocoLOGO} onClick={test} />
       </Link>
 
       <div id="nav-button" className="d-flex">

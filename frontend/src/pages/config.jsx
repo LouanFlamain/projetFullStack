@@ -6,9 +6,9 @@ import { context } from "../context/context";
 
 export default function UpdateRental() {
   const { logged, setLogged } = useContext(context);
-  console.log("/config logged", logged)
-  console.log("/config logged.username", logged.username)
-  console.log("/config", context)
+  console.log("/config logged", logged);
+  console.log("/config logged.username", logged.username);
+  console.log("/config", context);
 
   return (
     <>
