@@ -15,42 +15,35 @@ class CostController extends AbstractController
         if(!empty($cost))
         {
             $costManager = (new CostManager(new PDOFactory()));
-        
             $costManager->insertCost($cost);
-
-            echo json_encode(["costs" => true]);
         }
     }
 
-    #[Route('/costs/delete/{id}', name:'deleteCosts', methods:['DELETE'])]
-    public function deleteExistingCost(int $id)
+    #[Route('/costs/delete/{id}/{reference}', name:'deleteCosts', methods:['DELETE'])]
+    public function deleteExistingCost($cost, $reference, $id)
     {
         $costManager = new CostManager(new PDOFactory());
+        $costManager->deleteCost($cost, $reference, $id);
     }
 
     #[Route('/costs/update/{id}', name:'updateCosts', methods:['PATCH'])]
-    public function updateExistingCost(int $id, $costs)
+    public function updateExistingCost(int $id, $cost)
     {
         $costManager = new CostManager(new PDOFactory());
-
-        $costManager->updateCost($costs, $id);
-
-        echo json_encode(["update costs" => true]);
+        $costManager->updateCost($cost, $id);
     }
 
     #[Route('/costs/{reference}', name:'costTest', methods:['GET'])]
     public function test($cost, string $reference)
     {
         $costManager = new CostManager(new PDOFactory());
-
         $costManager->getByReference($reference);
-
+        
         foreach($cost as $costs){
             return json_encode([
                 "couts" => $costs 
             ]);
         };
-        
         return json_encode([
             "couts" => (array)$cost
         ]);
