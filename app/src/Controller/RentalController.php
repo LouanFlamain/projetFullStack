@@ -18,13 +18,19 @@ class RentalController extends AbstractController
     
             $rentalManager = (new RentalManager(new PDOFactory()))
             ->insertRental($rental);
+
+            $expired = false;
+            echo json_encode([
+                "expired" => $expired
+            ]);
         }
         else
         {
-          echo json_encode([
-            'cookie' => false,
-            'redirect' => "login"
-          ]);
+            $expired = true;
+            echo json_encode([
+                'expired' => $expired,
+                'redirect' => "login"
+            ]);
         }
     }
 
