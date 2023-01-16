@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Manager\TenantManager;
+use App\Traits\PreventEmpty;
 use DateTime;
 
 class Rental extends BaseEntity
 {
+    use PreventEmpty;
+
     private ?int $id = null;
     private int $amount;
     private string $title;

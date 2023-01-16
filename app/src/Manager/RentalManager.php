@@ -66,7 +66,7 @@ class RentalManager extends BaseManager
         }
     }
 
-    public function deleteRental($rental, int $id)
+    public function deleteRental(int $id)
     {
         try
         {
@@ -96,10 +96,19 @@ class RentalManager extends BaseManager
         $query->execute();
         $stm = $query->fetch(\PDO::FETCH_ASSOC);
         return new Rental($stm);
+    }
 
+    public function getUserRental(int $id)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM Rental WHERE user_id = :user_id");
+        $query->bindValue('user_id', $id, \PDO::PARAM_INT);
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+        var_dump($stm);die;
+        return new Rental($stm);
     }
         
-    public function getById($data): null|Rental
+    public function getByIdRelationship($data): null|Rental
     {
         $query = $this->pdo->prepare("SELECT * FROM Rental WHERE user_id = :id");
         $query->bindValue("id", $data, \PDO::PARAM_INT);

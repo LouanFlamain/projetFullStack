@@ -8,7 +8,7 @@ class CostManager extends BaseManager
 {
     public function getById($data)
     {
-        $query = $this->pdo->prepare("SELECT * FROM Costs WHERE user_id = $data");
+        $query = $this->pdo->prepare("SELECT * FROM Costs WHERE id = $data");
         $query->execute();
         $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -26,37 +26,31 @@ class CostManager extends BaseManager
 
     public function getByReference($data)
     {
-        try
-        {
-            $query = $this->pdo->prepare("SELECT * FROM Costs
-            WHERE reference = :reference");
-            $query->bindValue('reference', $data, \PDO::PARAM_STR);
-            $query->execute();
-            
-            $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
-    
-            if (count($stm)) {
-                return new Cost($stm[0]);
-            }
-
-            $tab = [];
-
-            foreach ($stm as $key => $data)
-            {
-                $tab[$key] = new Cost($data);
-            }
-    
-            return (object)$tab;
+        $query = $this->pdo->prepare("SELECT * FROM Costs WHERE reference = :reference and credit = :credit");
+        $query->bindValue('reference', $data->getReference(), \PDO::PARAM_STR);
+        $query->bindValue('credit', 0, \PDO::PARAM_INT);
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+        if (count($stm) === 1) {
+            return new Cost($stm[0]);
         }
-        catch(\PDOException $e)
-        {
 
+        $tab = [];
+        foreach ($stm as $key => $data){
+            $tab[$key] = new Cost($data);
         }
+
+        return (object)$tab;
     }
 
-    public function getByIdRelationship($data)
+    public function getByIdRelationship($data,?string $status)
     {
-        $query = $this->pdo->prepare("SELECT * FROM Costs WHERE tenant_id = $data");
+        if(isset($status)){
+            $sql = "SELECT * FROM Costs WHERE tenant_id = $data and status = 'UNPAID'";
+        } else {
+            $sql = "SELECT * FROM Costs WHERE tenant_id = $data";
+        }
+        $query = $this->pdo->prepare($sql);
         $query->execute();
         $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
         if (count($stm) === 1) {
@@ -73,9 +67,12 @@ class CostManager extends BaseManager
 
     public function insertById(Cost $data): void
     {
-        $query = $this->pdo->prepare("INSERT INTO Costs (amount,costs_type_id) VALUES (:amount, :costs_type_id)");
-        $query->bindValue('amount', $data->getAmount(), \PDO::PARAM_INT);
-        $query->bindValue('user_id', $data->getCostsTypeId(), \PDO::PARAM_INT);
+        $query = $this->pdo->prepare("INSERT INTO Costs (debit, credit, cost_type, reference, tenant_id) VALUES (:debit,:credit, :cost_type,:reference, :tenant_id)");
+        $query->bindValue('debit', $data->getDebit(), \PDO::PARAM_INT);
+        $query->bindValue('credit', $data->getCredit(), \PDO::PARAM_INT);
+        $query->bindValue('cost_type', $data->getCost_Type(), \PDO::PARAM_STR);
+        $query->bindValue('reference', $data->getReference(),\PDO::PARAM_STR);
+        $query->bindValue('tenant_id', $data->getTenant_id(),PDO::PARAM_INT);
         $query->execute();
     }
 
@@ -83,21 +80,35 @@ class CostManager extends BaseManager
     {
         try 
         {
-            $query = $this->pdo->prepare("INSERT INTO Costs (credit, debit, cost_type, reference, tenant_id)
-            VALUES (:credit, :debit, :cost_type, :reference, :tenant_id)");
+            $count = count($data->getRelationships())+ 1;
+            $price = (($data->getDebit() * 100) / $count) * $count;
+            $unique = uniqid();
+            $query = $this->pdo->prepare("INSERT INTO Costs (credit, debit, cost_type, reference, tenant_id, status)
+            VALUES (:credit, :debit, :cost_type, :reference, :tenant_id, :status)");
     
-            $query->bindValue('credit', $data->getCredit(), \PDO::PARAM_INT);
-            $query->bindValue('debit', $data->getDebit(), \PDO::PARAM_INT);
+            $query->bindValue('credit', $data->getCredit(), \PDO::PARAM_STR);
+            $query->bindValue('debit', $price, \PDO::PARAM_INT);
             $query->bindValue('cost_type', $data->getCost_type(), \PDO::PARAM_STR);
-            $query->bindValue('reference', $data->getReference(), \PDO::PARAM_STR);
+            $query->bindValue('reference', $unique, \PDO::PARAM_STR);
             $query->bindValue('tenant_id', $data->getTenant_id(), \PDO::PARAM_INT);
+            $query->bindValue('status', "UNPAID", \PDO::PARAM_STR);
     
             $query->execute();
 
-            $cost = true;
-            echo json_encode([
-                "costs"=>$cost
-            ]);
+            foreach ($data->getRelationships() as $tenant){
+                $query = $this->pdo->prepare("INSERT INTO Costs (credit, debit, cost_type, reference, tenant_id, status)
+            VALUES (:credit, :debit, :cost_type, :reference, :tenant_id, :status)");
+
+                $query->bindValue('credit', $price / $count, \PDO::PARAM_STR);
+                $query->bindValue('debit', 0, \PDO::PARAM_INT);
+                $query->bindValue('cost_type', $data->getCost_type(), \PDO::PARAM_STR);
+                $query->bindValue('reference', $unique, \PDO::PARAM_STR);
+                $query->bindValue('tenant_id', $tenant->tenant_id, \PDO::PARAM_INT);
+                $query->bindValue('status', "UNPAID", \PDO::PARAM_STR);
+
+                $query->execute();
+            }
+
         }
         catch(\PDOException $e)
         {
@@ -153,11 +164,13 @@ class CostManager extends BaseManager
             $query->execute();
     
             $data = $query->fetch(\PDO::FETCH_ASSOC);
-            return $data;
+            return new Cost($data);
         }
         catch(\PDOException $e)
         {
-
+            echo json_encode([
+                "error" => $$e
+            ]);
         }
     }
 
@@ -189,4 +202,28 @@ class CostManager extends BaseManager
             ]);
         }
     }
+
+    public function updateStatusCost(Cost $data, $id)
+    {
+        $query = $this->pdo->prepare("UPDATE Costs SET status = :status WHERE id = :id");
+
+        $query->bindValue("status", $data->getStatus(), \PDO::PARAM_STR);
+
+        $query->bindValue("id", $id, \PDO::PARAM_INT);
+
+        $query->execute();
+    }
+
+    public function selectWhereReference(Cost $data)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM Costs WHERE reference = :reference and credit = :credit");
+
+        $query->bindValue("reference", $data->getReference(), \PDO::PARAM_STR);
+        $query->bindValue("credit", 0, \PDO::PARAM_INT);
+        $query->execute();
+
+        $stm = $query->fetch(\PDO::FETCH_ASSOC);
+        return new Cost($stm);
+    }
+   
 }

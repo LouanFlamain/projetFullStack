@@ -141,14 +141,16 @@ class Route
         preg_match("#{$this->path}#", $url, $match);
         array_shift($match);
         $param = array_combine($this->getParams(), $match);
-        $json = (array)$json['data'];
-        $entity = $json['type'];
-        $data = (array)$json['attributes'];
-        $class = "App\\Entity\\$entity";
 
-        $instanceEntity = new $class($data);
-        $param[strtolower($entity)] = $instanceEntity;
+        if($_SERVER['REQUEST_METHOD'] === "POST"){
+            $json = (array)$json['data'];
+            $entity = $json['type'];
+            $data = (array)$json['attributes'];
+            $class = "App\\Entity\\$entity";
 
+            $instanceEntity = new $class($data);
+            $param[strtolower($entity)] = $instanceEntity;   
+        }
         return $param;
     }
 
