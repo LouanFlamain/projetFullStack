@@ -5,6 +5,7 @@ import { context } from "../context/context";
 
 export default function NeedAuth(props) {
   const { logged, setLogged } = useContext(context);
+  console.log('auth', logged)
 
   let location = useLocation();
 

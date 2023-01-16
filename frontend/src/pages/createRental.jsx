@@ -1,14 +1,13 @@
 import React, { useState , useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../component/header";
 import { context } from "../context/context";
 
 
-export default function CreateRental() {
+export default function CreateRental(props) {
   const { logged, setLogged } = useContext(context);
-  console.log("/createRental logged", logged)
-  console.log("/createRental logged.username", logged.username)
-  console.log("/createRental context", context)
+  console.log('/createrental', logged)
+  const navigate = useNavigate();
 
   return (
     <>
@@ -72,9 +71,7 @@ export default function CreateRental() {
       </form>
       
       <div className="p-2 bg-primary mt-auto">
-        <Link to="/createTenant">
-          <button type="submit" className="btn text-white" href="CreateTenant">Continuer</button>
-        </Link>
+          <button type="submit" className="btn text-white" onClick={() => navigate('/createTenant')}>Continuer</button>
       </div>
     </div>
     
