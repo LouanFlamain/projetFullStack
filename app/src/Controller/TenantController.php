@@ -20,27 +20,23 @@ class TenantController extends AbstractController
     public function updateExistingTenant($id, $tenant)
     {
         $tenantManager = new TenantManager(new PDOFactory());
-        $tenantUpdate = $tenantManager->getByIdToArray($this->getUser()->getId());
-
-        foreach ($tenant as $key => $post)
-        {
-            $method = 'set' . ucfirst($key);
-            if($post != null)
-            {
-                $tenant->$method($post);
-                $true = true;
-            }
-        }
-        $tenantManager = new TenantManager(new PDOFactory());
 
         $tenantManager->updateTenant($tenant, $id);
     }
     
     #[Route('/tenant/delete/{id}', name:'tenantDelete', methods:['DELETE'])]
-    public function deleteExistingTenant($id)
+    public function deleteExistingTenant($tenant, $id)
     {
         $tenantManager = new TenantManager(new PDOFactory());
 
-        $tenantManager->deleteTenant($id);
+        $tenantManager->deleteTenant($tenant, $id);
+    }
+
+    #[Route('/tenant', name:'showBalance', methods:['GET'])]
+    public function showBalance($tenant)
+    {
+        $tenantManager = new TenantManager(new PDOFactory());
+        $tenantManager->getById($tenant);
+        
     }
 }

@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS Tenant (
 );
 
 CREATE TABLE IF NOT EXISTS Costs (
-   id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id        INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
   credit INT NULL,
   debit INT NULL,
   cost_type VARCHAR(50) NOT NULL,
-  reference VARCHAR(15) NOT NULL UNIQUE,
+  reference VARCHAR(15) NOT NULL,
   tenant_id INT NOT NULL,
   created_at timestamp NOT NULL,
   FOREIGN KEY (tenant_id) REFERENCES Tenant(id) ON DELETE CASCADE

@@ -7,7 +7,8 @@ class Invitation extends BaseEntity
     private ?int $id;
     private string $token;
     private string $mail;
-    private int $rental_id = 1;
+    private int $rental_id =1;
+    private ?\DateTime $created_at;
 
     /**
      * @return string
@@ -24,7 +25,6 @@ class Invitation extends BaseEntity
     {
         $this->rental_id = $rental_id;
     }
-    private ?DateTime $created_at;
     
     /**
      * @return int|null
@@ -86,11 +86,11 @@ class Invitation extends BaseEntity
     }
 
     /**
-     * @param DateTime|string|null $created_at
+     * @param \DateTime|string|null $created_at
      */
-    public function setCreated_At(DateTime|string|null $created_at = 'now'): Invitation
+    public function setCreated_At(\DateTime|string|null $created_at = 'now'): Invitation
     {
-        $this->created_at = new DateTime($created_at);
+        $this->created_at = new \DateTime($created_at);
         return $this;
     }
 }

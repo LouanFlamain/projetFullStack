@@ -19,6 +19,8 @@ class RentalManager extends BaseManager
             $query->bindValue("user_id", $rental->getUser_id(), \PDO::PARAM_INT);
     
             $query->execute();
+            $rental = true;
+            echo json_encode(["rental" => $rental]);
         }
         catch(\PDOException $e)
         {
@@ -26,7 +28,7 @@ class RentalManager extends BaseManager
             {
                 $errorType = explode('key',$e->errorInfo[2])[1];
                 echo json_encode([
-                    "register" => false,
+                    "rental" => false,
                     "clef dupliquee" => $errorType
                 ]);
                 die;
@@ -34,26 +36,57 @@ class RentalManager extends BaseManager
         }
     }
 
-    public function updateRental(Rental $data, $id    )
+    public function updateRental(Rental $data, $id)
     {
-        $query = $this->pdo->prepare("UPDATE Rental 
-        SET amount = :amount, title = :title, devise = :devise, description = :description
-        WHERE id = :id");
+        try 
+        {
+            $query = $this->pdo->prepare("UPDATE Rental 
+            SET amount = :amount, title = :title, devise = :devise, description = :description
+            WHERE id = :id");
+    
+            $query->bindValue("amount", $data->getAmount(), \PDO::PARAM_INT);
+            $query->bindValue("title", $data->getTitle(), \PDO::PARAM_STR);
+            $query->bindValue("devise", $data->getDevise(), \PDO::PARAM_STR);
+            $query->bindValue("description", $data->getDescription(), \PDO::PARAM_STR);
+            $query->bindValue("id", $id, \PDO::PARAM_INT);
+    
+            $query->execute();
 
-        $query->bindValue("amount", $data->getAmount(), \PDO::PARAM_INT);
-        $query->bindValue("title", $data->getTitle(), \PDO::PARAM_STR);
-        $query->bindValue("devise", $data->getDevise(), \PDO::PARAM_STR);
-        $query->bindValue("description", $data->getDescription(), \PDO::PARAM_STR);
-        $query->bindValue("id", $id, \PDO::PARAM_INT);
-
-        $query->execute();
+            $update = true;
+            echo json_encode([
+                "update_rental" => $update
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            $update = false;
+            echo json_encode([
+                "update_rental" => $update
+            ]);
+        }
     }
 
-    public function deleteRental(int $id)
+    public function deleteRental($rental, int $id)
     {
-        $query = $this->pdo->prepare("DELETE FROM Rental WHERE id = :id");
-        $query->bindValue("id", $id, \PDO::PARAM_INT);
-        $query->execute();
+        try
+        {
+            $query = $this->pdo->prepare("DELETE FROM Rental WHERE id = :id");
+            $query->bindValue("id", $id, \PDO::PARAM_INT);
+            $query->execute();
+
+            $deleteRental = true;
+            echo json_encode([
+                "delete_rental" => $deleteRental
+            ]);
+        }
+        catch(\PDOException $e)
+        {
+            $deleteRental = false;
+            echo $e;
+            echo json_encode([
+                "delete_rental" => $deleteRental
+            ]);
+        }
     }
 
     public function getOneRental(int $id)

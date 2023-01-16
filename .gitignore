@@ -204,4 +204,4 @@ app/vendor/composer/autoload_psr4.php
 app/vendor/composer/autoload_static.php
 app/vendor/composer/ClassLoader.php
 app/vendor/composer/installed.json
-app/vendor/composer/installed.php
+app/vendor/composer/installed.php 

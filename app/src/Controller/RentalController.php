@@ -12,32 +12,40 @@ class RentalController extends AbstractController
     #[Route('/rental', name:'rental', methods:['POST'])]
     public function createRental($rental)
     {
-        $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
+        if(isset($_COOKIE['token']))
+        {
+            $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
+    
+            $rentalManager = (new RentalManager(new PDOFactory()))
+            ->insertRental($rental);
 
-        $rentalManager = (new RentalManager(new PDOFactory()))
-        ->insertRental($rental);
-
-        echo json_encode(["rental" => true]);
+            $expired = false;
+            echo json_encode([
+                "expired" => $expired
+            ]);
+        }
+        else
+        {
+            $expired = true;
+            echo json_encode([
+                'expired' => $expired,
+                'redirect' => "login"
+            ]);
+        }
     }
 
     #[Route('/rental/update/{id}', name:'updateRental', methods:['PATCH'])]
     public function updateExistingRental($id, $rental)
     {       
         $rentalManager = new RentalManager(new PDOFactory());
-        $rentalUpdate = $rentalManager->getOneRental($id);
-
         $rentalManager->updateRental($rental, $id);
-        echo json_encode(["update rental" => true]);
     }
 
-    #[Route('/rental/delete/{id}', name: 'deleteRental', methods:['GET'])]
-    public function deleteExistingRental($id)
+    #[Route('/rental/delete/{id}', name: 'deleteRental', methods:['DELETE'])]
+    public function deleteExistingRental(int $id, $rental)
     {
         $rentalManager = new RentalManager(new PDOFactory());
-        $rental = $rentalManager->getOneRental($id);
 
-        $rentalManager->deleteRental($id);
-        echo json_encode(["delete rental" => true]);
-
+        $rentalManager->deleteRental($rental, $id);
     }
 }
