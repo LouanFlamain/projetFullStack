@@ -52,12 +52,13 @@ class UserManager extends BaseManager
     {
         try
         {
-            $query = $this->pdo->prepare("INSERT INTO User (username, password, mail, role) 
-            VALUES (:username, :password, :mail, :role)");
+            $query = $this->pdo->prepare("INSERT INTO User (username, password, mail, role, token) 
+            VALUES (:username, :password, :mail, :role, :token)");
             $query->bindValue("username", $user->getUsername(), \PDO::PARAM_STR);
             $query->bindValue("password", $user->getHashedPassword(), \PDO::PARAM_STR);
             $query->bindValue("mail", $user->getMail(), \PDO::PARAM_STR);
             $query->bindValue("role", $user->getRole(), \PDO::PARAM_STR);
+            $query->bindValue("token", $user->getToken(), \PDO::PARAM_STR);
     
             $query->execute();
             echo json_encode([

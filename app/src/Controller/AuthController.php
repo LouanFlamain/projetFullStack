@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Factory\PDOFactory;
 use App\Helpers\JWTHelper;
+use App\Manager\InvitationManager;
 use App\Manager\UserManager;
 use App\Route\Route;
 
@@ -40,8 +41,10 @@ class AuthController extends AbstractController
     }
 
     #[Route('/register', name: "register", methods: ["POST"])]
-    public function register($user): void
+    public function register($user, $invitation): void
     {
+        $invitationManager = new InvitationManager(new PDOFactory());
+
         if($user->getUsername() != null && $user->passwordHash($user) != null)
         {
             if($user->getToken() == null)
@@ -55,6 +58,7 @@ class AuthController extends AbstractController
 
             $userManager = new UserManager(new PDOFactory());
             $userManager->insertUser($user);
+            
         }
     }
 
