@@ -31,4 +31,12 @@ class TenantController extends AbstractController
 
         $tenantManager->deleteTenant($tenant, $id);
     }
+
+    #[Route('/tenant', name:'showBalance', methods:['GET'])]
+    public function showBalance($tenant)
+    {
+        $tenantManager = new TenantManager(new PDOFactory());
+        $tenantManager->getById($tenant);
+        
+    }
 }

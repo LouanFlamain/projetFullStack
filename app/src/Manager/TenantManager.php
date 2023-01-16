@@ -8,20 +8,35 @@ class TenantManager extends BaseManager
 {
     public function getById($data)
     {
-        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE rental_id = $data");
-        $query->execute();
-        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+        try
+        {
 
-        if (count($stm) === 1) {
-            return new Tenant($stm[0]);
-        }
-
-        $tab = [];
-        foreach ($stm as $key => $data){
-            $tab[$key] = (object) new Tenant($data);
-        }
+            $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE rental_id = $data");
+            $query->execute();
+            $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
     
-        return $tab;
+            if (count($stm) === 1) {
+                return new Tenant($stm[0]);
+            }
+    
+            $tab = [];
+            foreach ($stm as $key => $data){
+                $tab[$key] = (object) new Tenant($data);
+            }
+            $fetch = true;
+            echo json_encode([
+                'fetch'=>$fetch
+            ]);
+            return $tab;
+        }
+        catch(\PDOException $e)
+        {
+            $fetch = false;
+            echo json_encode([
+                'fetch' => $fetch,
+                'error' => $e
+            ]);
+        }
     }
 
     public function getByIdToArray($user)
