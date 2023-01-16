@@ -1,9 +1,10 @@
 import React, { useState , useContext } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
 import Header from "../component/header";
 import { context } from "../context/context";
 import axios from "axios";
+
 
 // Faire des conditions , si cost != "" , afficher en premier la liste des cost (tableau) function RecapCost
 // si cost est vide afficher en premier function CreateCost
@@ -61,11 +62,12 @@ function AddParticipant(props) {
   );
 }
 export default function CreateCost(props) {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const {participants, setParticipants} = useContext(context);
 
   const { logged, setLogged } = useContext(context);
-  console.log("/depense logged.username", logged.username)
+
 
   //gestion tableau des dépenses
   const [showModal, setShowModal] = useState(false);
@@ -75,42 +77,38 @@ export default function CreateCost(props) {
   const handleCloseModal = () => {
     setShowModal(false);
   }
-  const [dataCost, setDataCost] = useState([{ 
-    QuiAPaye:"", 
-    Combien:"" ,
-    pourquoi:"", 
-    costType:"", 
-    quand:"", 
-    concerneQui:"" , 
-    pourVous:""} ]);
-  
-  const [selectedCostType, setselectedCostType] = useState('');
-  const [newQuiAPaye, setQuiAPaye] = useState('');
-  const [newCombien, setCombien] = useState('');
-  const [newPourquoi, setPourquoi] = useState('');
-  const [newQuand, setQuand] = useState('');
-  const [newConcerneQui, setConcerneQui] = useState('');
-  const [newPourVous, setPourVous] = useState(''); 
+  const handleRemove = QuiAPaye => {
+    const newDataCost = 
+      [...dataCost];
+      newDataCost.splice(QuiAPaye, 1);
+      setDataCost(newDataCost)
+    };
+
+  const [dataCost, setDataCost] = useState([]);
+  const [costType, setselectedCostType] = useState("Depense");
+  const [QuiAPaye, setQuiAPaye] = useState(`{ logged.username }`);
+  const [Combien, setCombien] = useState();
+  const [pourquoi, setPourquoi] = useState();
+  const [quand, setQuand] = useState();
+  const [concerneQui, setConcerneQui] = useState();
+  const [pourVous, setPourVous] = useState(); 
+
 
 
   const submit = (event) => {
     
     event.preventDefault();
-    setDataCost(
-      [...dataCost, { 
-        [event.target.name]: event.target.value 
-      }]);
-      console.log('submit')
+    setDataCost([...dataCost, { QuiAPaye, Combien, pourquoi, costType, quand, concerneQui, pourVous }]);
       const data = {
         data: {
           type: "Cost",
           attributes: {
-            credit: 0,
-            debit: 0,
-            designation : newPourquoi,
-            cost_type: selectedCostType,
-            username: newQuiAPaye,
-            date: newQuand,
+            credit: Combien,
+            debit: concerneQui,
+            designation : pourquoi,
+            cost_type: costType,
+            username: QuiAPaye,
+            date: quand,
           },
         },
       };
@@ -121,22 +119,23 @@ export default function CreateCost(props) {
         data: JSON.stringify(data),
       })
         .then(function (response) {
-          console.log(response);
+          console.log('response', response);
+          navigate("/depense");
       })
       .catch(error => {
         console.log(error);
       });
-
-    // setDataCost('');
-    // setQuiAPaye('');
-    // setCombien('');
-    // setPourquoi('');
-    // setQuand('');
-    // setConcerneQui('');
-    // setPourVous('');
-    // setselectedCostType('');
+     
+    setDataCost('');
+    setQuiAPaye('');
+    setCombien('');
+    setPourquoi('');
+    setQuand('');
+    setConcerneQui('');
+    setPourVous('');
+    setselectedCostType('');
   };
- console.log('dataCost', dataCost)
+  console.log('dataCost', dataCost)
 
   return (
     <>
@@ -148,9 +147,7 @@ export default function CreateCost(props) {
 
       {showModal && (
             <div>
-            <div className="modal" tabIndex="-1" role="dialog">Contenu du modal</div>
-            <button  className='btn btn-primary' onClick={handleCloseModal}>Fermer le tableau</button>
-            <table className="table">
+            <table className="table p-4">
                 <thead>
                 <tr>
                     <th>Qui a paye ?</th>
@@ -159,7 +156,7 @@ export default function CreateCost(props) {
                     <th>Quel type?</th>
                     <th>Concerne qui ?</th>
                     <th>Quand ?</th>
-                    <th>Pour Vous ?</th>
+                    <th>Ma part ?</th>
                 </tr>
                 
                 </thead>
@@ -174,16 +171,18 @@ export default function CreateCost(props) {
                     <td>{item.concerneQui}</td>
                     <td>{item.quand}</td>
                     <td>{item.pourVous}</td>
-                    <td><button>supprimer</button></td>
+                    <td><button className="btn text-primary" onClick={() => handleRemove(item)}><u>Supprimer</u></button></td>
+
                     </tr>
                 ))}
                 </tbody>
             </table>
+            <button  className='btn btn-primary text-right' onClick={handleCloseModal}>Fermer le tableau</button>
             </div>
             )}
 
       <div className="create-wrapper p-3">
-        <form className="p-4" method="POST">
+        <form className="p-4" onSubmit={submit} method="POST" action="">
           <div>
             <div className="row pb-4">
               <label
@@ -198,18 +197,22 @@ export default function CreateCost(props) {
                 className="col-6" 
                 id="costName"
                 name="pourquoi"
-                value={dataCost.pourquoi}
+                value={pourquoi}
+                onChange={(e) => {
+                  setPourquoi(e.target.value);
+                }}
               />
 
-              <select className="custom-select  col mx-5" 
+              <select className="custom-select col mx-5" 
                 id="CostType" 
                 name="costType"
-                value={dataCost.coastType} 
+                value={costType} 
+                onChange={(e) => {
+                  setselectedCostType(e.target.value);
+                }}
               >
-
-                <option value="Dépense">Dépense</option>
-                <option value="Rentrée d'argent">Rentrée d'argent</option>
-                <option value="Transfert d'argent">Transfert d'argent</option>
+                <option value="Depense">Dépense</option>
+                <option value="Remboursement">Remboursement</option>
               </select>
             </div>
 
@@ -226,9 +229,13 @@ export default function CreateCost(props) {
               <select className="custom-select col-2 " 
                 id="" 
                 name="QuiAPaye"
-                value={dataCost.QuiAPaye} 
+                value={QuiAPaye}
+                onChange={(e) => {
+                  setQuiAPaye(e.target.value);
+                }} 
                 >
-                  <option value={ logged.username }>{logged.username}</option>
+                  <option value="quiPaye">Choisir qui paye</option>
+                  <option value={logged.username}>{logged.username}</option>
                   {participants.map((participant, index) => (
                   <option value={ participant }>{ participant }</option>
                 ))}
@@ -245,7 +252,10 @@ export default function CreateCost(props) {
                 id="date"
                 className="col-2 "
                 name="quand"
-                value={dataCost.quand}
+                value={quand}
+                onChange={(e) => {
+                  setQuand(e.target.value);
+                }}
               />
             </div>
 
@@ -262,7 +272,10 @@ export default function CreateCost(props) {
                 className="col-2"
                 id="amount"
                 name="Combien"
-                value={dataCost.Combien} 
+                value={Combien}
+                onChange={(e) => {
+                  setCombien(e.target.value);
+                }} 
               />
             </div>
 
@@ -272,16 +285,11 @@ export default function CreateCost(props) {
           </div>
        
           <div className="p-2 bg-primary mt-auto">
-              <Link to="/depense">
-                  <button type="submit" className="mb-0 text-white btn" onClick={(e) => {handleOpenModal(); submit(e)}}><u>Sauvegarder</u></button>
+                  <button type="submit" className="mb-0 text-white btn" onClick={(e) => handleOpenModal()}><u>Sauvegarder</u></button>
                   <button className="btn mb-0 text-white"type="button" onClick={handleOpenModal}><u>Voir les depenses</u></button>
-              </Link>
           </div>
         </form>
-
       </div>
-
-      
     </>
   );
 }

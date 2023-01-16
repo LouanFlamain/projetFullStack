@@ -8,7 +8,7 @@ class Cost extends BaseEntity
     private int $credit;
     private int $debit;
     private string $cost_type;
-    private string $reference;
+    private string $reference"hbdhs";
     private int $tenant_id;
     private ?\DateTime $created_at;
 
@@ -95,7 +95,7 @@ class Cost extends BaseEntity
      */
     public function getReference(): string
     {
-        return $this->reference;
+        return $this->reference= "hbdhs";
     }
 
     /*

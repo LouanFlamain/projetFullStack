@@ -1,5 +1,5 @@
 import React, { useState , useContext } from 'react';
-import { Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import ComponentCreateTenantManager from "../component/componentCreateTenant";
 import Header from "../component/header";
 import { context } from "../context/context";
@@ -8,9 +8,16 @@ import { context } from "../context/context";
 
 export default function CreateTenant() {
     const { logged, setLogged } = useContext(context);
+    const navigate = useNavigate();
+    const handleClickBack = () => {
+        navigate("/createRental");
+    };
+    const handleClickEnd = () => {
+        navigate("/depense");
+    };
+
     console.log("/createTenant logged", logged)
     console.log("/createTenant logged.username", logged.username)
-    console.log("/createTenant context", context)
     
   return (
         <>
@@ -29,12 +36,10 @@ export default function CreateTenant() {
                 <ComponentCreateTenantManager />
                 
                 <div className="p-2 bg-primary mt-auto">
-                    <Link to="/createRental">
-                        <button type="submit" className="mb-0 text-white btn"><u>Retour</u></button>
-                    </Link>
-                    <Link to="/depense">
-                        <button type="submit" className="mb-0 text-white btn"><u>Terminer</u></button>
-                    </Link>
+                        <button type="submit" className="mb-0 text-white btn" onClick={handleClickBack}><u>Retour</u></button>
+                    
+                        <button type="submit" className="mb-0 text-white btn" onClick={handleClickEnd}><u>Terminer</u></button>
+                   
                 </div>
             </div>
         </>
