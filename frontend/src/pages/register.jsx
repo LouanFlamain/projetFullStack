@@ -8,6 +8,7 @@ export default function Register() {
   const [emailReg, setEmailReg] = useState();
   const [passwordReg, setPasswordReg] = useState();
   const [verifPasswordReg, setVerifPasswordReg] = useState();
+  const [tokenReg, setTokenReg] = useState();
 
   const navigate = useNavigate();
   const submit = (event) => {
@@ -20,6 +21,7 @@ export default function Register() {
             username: nameReg,
             password: passwordReg,
             mail: emailReg,
+            token: tokenReg,
           },
         },
       };
@@ -47,6 +49,7 @@ export default function Register() {
     setEmailReg("");
     setPasswordReg("");
     setVerifPasswordReg("");
+    setTokenReg("");
   };
   return (
     <div className="p-4">
@@ -82,6 +85,22 @@ export default function Register() {
               value={emailReg}
               onChange={(e) => {
                 setEmailReg(e.target.value);
+              }}
+            />
+          </div>
+          <div className="p-2">
+            <label htmlFor="inputPassword1" className="form-label">
+              Clé d'identification _ TOKEN
+            </label>
+            <input
+              type="password"
+              id="inputPassword1"
+              name="password"
+              className="form-control"
+              aria-describedby="passwordHelpBlock"
+              value={passwordReg}
+              onChange={(e) => {
+                setTokenReg(e.target.value);
               }}
             />
           </div>
