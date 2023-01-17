@@ -7,3 +7,20 @@
   background-color: #d1d1d1;
   cursor: pointer;
 }
+
+.create-wrapper {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+.create-tenant__content{
+  width: 100%;
+}
+.create-tenant__info {
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.create-tenant__form {
+  gap: 1rem;
+}
+

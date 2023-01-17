@@ -1,13 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Header from "./component/header";
-import { context, ContextProvider } from "./context/context";
+import { context } from "./context/context";
 import Config from "./pages/config";
 import Equilibre from "./pages/equilibre";
 import Depense from "./pages/depense";
 import Login from "./pages/login";
 import Register from "./pages/register";
+import CreateTenant from "./pages/createTenant";
+import CreateRental from "./pages/createRental";
 import NeedAuth from "./component/needAuth";
+import Connect from "./component/connect";
 
 function App() {
   const { setLogged, logged } = useContext(context);
@@ -15,8 +17,18 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Routes>
+          <Route
+            path="/"
+            exact
+            element={
+              <Connect>
+                <Depense />
+              </Connect>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/createRental" element={<CreateRental />} />
           <Route
             path="/config"
             element={
@@ -28,7 +40,7 @@ function App() {
           <Route
             path="/depense"
             element={
-              <NeedAuth logged={logged}>
+              <NeedAuth>
                 <Depense />
               </NeedAuth>
             }
@@ -36,8 +48,16 @@ function App() {
           <Route
             path="/equilibre"
             element={
-              <NeedAuth logged={logged}>
+              <NeedAuth>
                 <Equilibre />
+              </NeedAuth>
+            }
+          />
+          <Route
+            path="/createTenant"
+            element={
+              <NeedAuth>
+                <CreateTenant />
               </NeedAuth>
             }
           />

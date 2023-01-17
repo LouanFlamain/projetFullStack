@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { useContext } from "react";
@@ -9,28 +9,41 @@ export default function Login() {
   const [userLog, setUserLog] = useState();
   const [passwordLog, setPasswordLog] = useState();
   const { logged, setLogged } = useContext(context);
-
   const navigate = useNavigate();
+
+  var url = new URL(window.location.href);
+  var state = url.searchParams.get("user");
 
   const submit = (event) => {
     const data = {
-      username: userLog,
-      password: passwordLog,
+      data: {
+        type: "User",
+        attributes: {
+          username: userLog,
+          password: passwordLog,
+        },
+      },
     };
     event.preventDefault();
-    console.log(data);
+    console.log("/login data", data);
     axios({
       method: "post",
       url: "http://localhost:5656/login",
       data: JSON.stringify(data),
     })
       .then(function (response) {
-        console.log(response.data.login);
-        if (response.data.login === "verify") {
+        console.log("/login response.data", response.data);
+        if (response.data.login === true) {
           localStorage.setItem("token", response.data.token);
-          setLogged(true);
-          console.log(logged);
-          navigate("/config");
+          localStorage.setItem("username", response.data.user.username);
+          localStorage.setItem("email", response.data.user.mail);
+          localStorage.setItem("user", response.data.user.role);
+          localStorage.setItem("login", response.data.login);
+          setLogged(response.data.user);
+          // rajouter une condition si user.role = rental and rental == "" alors navigate to createRental
+          // rajouter une condition si user.role = rental and rental != "" alors navigate to config
+          // rajouter une condition si user.role = tenant and rental != "" alors navigate to depense
+          navigate("/createRental");
         }
       })
       .catch(function (error) {
@@ -46,8 +59,8 @@ export default function Login() {
         <h4 className="card-header">Login</h4>
         <form className="card-body p-5" onSubmit={submit} method="POST">
           <div>
-            <label for="inputPassword5" className="form-label">
-              User
+            <label htmlFor="inputPassword5" className="form-label">
+              Prénom
             </label>
             <input
               type="text"
@@ -62,12 +75,12 @@ export default function Login() {
             />
           </div>
           <div>
-            <label for="inputPassword5" className="form-label">
-              Password
+            <label htmlFor="inputPassword4" className="form-label">
+              Tapez votre mot de passe
             </label>
             <input
               type="password"
-              id="inputPassword5"
+              id="inputPassword4"
               className="form-control"
               aria-describedby="passwordHelpBlock"
               name="password"

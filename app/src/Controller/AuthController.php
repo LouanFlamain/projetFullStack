@@ -21,17 +21,17 @@ class AuthController extends AbstractController
             $jwt = JWTHelper::buildJWT($userManager);
 
             setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
-            
-            $responseData = ([
-                'login' => false,
+
+            $responseData = [
+                'login' => true,
                 "token" => $jwt,
                 "user" => [
                     'username' => $userManager->getUsername(),
                     'mail' => $userManager->getMail(),
                     'role' => $userManager->getRole(),
                 ]
-            ]);
-            return json_encode($responseData);
+            ];
+            return $this->renderJSON($responseData);
         }
          return $this->renderJSON([
              "login" => false

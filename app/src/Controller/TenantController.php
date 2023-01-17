@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tenant;
 use App\Factory\PDOFactory;
+use App\Manager\InvitationManager;
 use App\Manager\TenantManager;
 use App\Route\Route;
 
@@ -12,8 +13,12 @@ class TenantController extends AbstractController
     #[Route('/tenant', name:'tenant', methods: ['POST'])]
     public function addTenant($tenant)
     {
-        $tenantManager = (new TenantManager(new PDOFactory()))
-        ->addTenant($tenant);
+        /** @var Tenant $tenant */
+        $tenantManager = (new TenantManager(new PDOFactory()));
+        $invitationManager = (new InvitationManager(new PDOFactory()));
+        $invitation = $invitationManager->getInvitation(($this->getUser())->getMail());
+        $tenant->setRental_id($invitation->getRental_id());
+        $tenantManager->addTenant($tenant);
     }
 
     #[Route('/tenant/update/{id}', name:'tenantUpdate', methods:['PATCH'])]

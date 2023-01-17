@@ -14,7 +14,7 @@ class RentalManager extends BaseManager
             VALUES (:amount, :title, :devise, :description, :user_id)");
             $query->bindValue("amount", $rental->getAmount(), \PDO::PARAM_INT);
             $query->bindValue("title", $rental->getTitle(), \PDO::PARAM_STR);
-            $query->bindValue("devise", $rental->getDevise(), \PDO::PARAM_STR);
+            $query->bindValue("devise", "euros", \PDO::PARAM_STR);
             $query->bindValue("description", $rental->getDescription(), \PDO::PARAM_STR);
             $query->bindValue("user_id", $rental->getUser_id(), \PDO::PARAM_INT);
     
