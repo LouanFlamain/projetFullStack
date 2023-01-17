@@ -35,6 +35,35 @@ class InvitationManager extends BaseManager
         }
     }
 
+    public function getByMail(int $mail): ?Invitation
+    {
+        try
+        {
+            $query = $this->pdo->prepare("SELECT * FROM Invitation
+            WHERE mail = :mail");
+            $query->bindValue("mail", $mail, \PDO::PARAM_INT);
+            $query->execute();
+            $stm = $query->fetch(\PDO::FETCH_ASSOC);
+    
+            if ($stm) {
+                $payload = true;
+                return new Invitation($stm);
+                echo json_encode([
+                    "get-mail" => $payload,
+                    "token"=>$stm
+                ]);
+            }
+        }
+        catch(\PDOException $e)
+        {
+            $payload = false;
+            echo json_encode([
+                "get-mail" => $payload,
+                "error" => $e
+            ]); 
+        }
+    }
+
     public function CreateMailInvitation(Invitation $data): void
     {
         try

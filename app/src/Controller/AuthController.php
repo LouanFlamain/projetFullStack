@@ -41,10 +41,9 @@ class AuthController extends AbstractController
     }
 
     #[Route('/register', name: "register", methods: ["POST"])]
-    public function register($user, $invitation): void
+    public function register($user): void
     {
-        $invitationManager = new InvitationManager(new PDOFactory());
-
+        
         if($user->getUsername() != null && $user->passwordHash($user) != null)
         {
             if($user->getToken() == null)
