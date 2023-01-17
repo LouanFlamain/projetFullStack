@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Invitation;
+use App\Entity\User;
 
 class InvitationManager extends BaseManager
 {
@@ -82,6 +83,27 @@ class InvitationManager extends BaseManager
         catch(\PDOException $e)
         {
             echo json_encode($e);
+        }
+    }
+
+    public function getInvitation(User $user)
+    {
+        try
+        {
+            $query = $this->pdo->prepare("SELECT * FROM Invitation WHERE mail = :mail");
+            $query->bindValue("mail", $user->getMail(), \PDO::PARAM_INT);
+            $query->execute();
+            $data = $query->fetch(\PDO::FETCH_ASSOC);
+
+            return new Invitation($data);
+        }
+        catch(\PDOException $e)
+        {
+            $update = false;
+            echo json_encode([
+                "update"=>$update,
+                "erreur"=>$e
+            ]);
         }
     }
 }
