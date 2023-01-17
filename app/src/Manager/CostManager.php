@@ -72,7 +72,7 @@ class CostManager extends BaseManager
         $query->bindValue('credit', $data->getCredit(), \PDO::PARAM_INT);
         $query->bindValue('cost_type', $data->getCost_Type(), \PDO::PARAM_STR);
         $query->bindValue('reference', $data->getReference(),\PDO::PARAM_STR);
-        $query->bindValue('tenant_id', $data->getTenant_id(),PDO::PARAM_INT);
+        $query->bindValue('tenant_id', $data->getTenant_id(),\PDO::PARAM_INT);
         $query->execute();
     }
 
@@ -107,6 +107,10 @@ class CostManager extends BaseManager
                 $query->bindValue('status', "UNPAID", \PDO::PARAM_STR);
 
                 $query->execute();
+
+                echo json_encode([
+                    "insert_cost_second_step" => true
+                ]);
             }
 
         }
@@ -114,10 +118,9 @@ class CostManager extends BaseManager
         {
             if($e->getCode() == "23000")
             {
-                $cost = false;
                 $errorType = explode('key',$e->errorInfo[2])[1];
                 echo json_encode([
-                    "add_cost" => $cost,
+                    "add_cost" => false,
                     "clef dupliquee" => $errorType
                 ]);
                 die;
@@ -138,16 +141,14 @@ class CostManager extends BaseManager
 
             $query->execute();
 
-            $delete = true;
             echo json_encode([
-                "delete"=>$delete
+                "delete"=>true
             ]);
         }
         catch(\PDOException $e)
         {
-            $cost = false;
             echo json_encode([
-                "delete_cost" => $cost
+                "delete_cost" => false
             ]);
         }
     }
@@ -188,16 +189,15 @@ class CostManager extends BaseManager
             $query->bindValue("id", $id, \PDO::PARAM_INT);
             
             $query->execute();
-            $update = true;
+
             echo json_encode([
-                "update_cost"=>$update
+                "update_cost"=>true
             ]);
         }
         catch(\PDOException $e)
         {
-            $update = false;
             echo json_encode([
-                "update_cost" => $update,
+                "update_cost" => false,
                 "erreur"=>$e
             ]);
         }

@@ -75,9 +75,8 @@ class InvitationManager extends BaseManager
             $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_STR);
             $query->execute();
 
-            $invitation = true;
             echo json_encode([
-                "invitation" => $invitation
+                "invitation" => true
             ]);
         }
         catch(\PDOException $e)
@@ -99,9 +98,8 @@ class InvitationManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            $update = false;
             echo json_encode([
-                "update"=>$update,
+                "update"=> false,
                 "erreur"=>$e
             ]);
         }

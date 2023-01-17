@@ -19,8 +19,7 @@ class RentalManager extends BaseManager
             $query->bindValue("user_id", $rental->getUser_id(), \PDO::PARAM_INT);
     
             $query->execute();
-            $rental = true;
-            echo json_encode(["rental" => $rental]);
+            echo json_encode(["rental" => true]);
         }
         catch(\PDOException $e)
         {
@@ -52,16 +51,14 @@ class RentalManager extends BaseManager
     
             $query->execute();
 
-            $update = true;
             echo json_encode([
-                "update_rental" => $update
+                "update_rental" => true
             ]);
         }
         catch(\Exception $e)
         {
-            $update = false;
             echo json_encode([
-                "update_rental" => $update
+                "update_rental" => false
             ]);
         }
     }
@@ -74,17 +71,15 @@ class RentalManager extends BaseManager
             $query->bindValue("id", $id, \PDO::PARAM_INT);
             $query->execute();
 
-            $deleteRental = true;
             echo json_encode([
-                "delete_rental" => $deleteRental
+                "delete_rental" => true
             ]);
         }
         catch(\PDOException $e)
         {
-            $deleteRental = false;
-            echo $e;
             echo json_encode([
-                "delete_rental" => $deleteRental
+                "delete_rental" => false,
+                "erreur"=> $e
             ]);
         }
     }
