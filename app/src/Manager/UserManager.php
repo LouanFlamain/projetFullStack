@@ -67,6 +67,7 @@ class UserManager extends BaseManager
         }
         catch(\PDOException $e)
         {
+            echo $e;
             if($e->getCode() == "23000")
             {
                 $errorType = explode('key',$e->errorInfo[2])[1];
