@@ -8,6 +8,38 @@ class TenantManager extends BaseManager
 {
     public function getById($data)
     {
+        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE id = $data");
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (count($stm) === 1) {
+            return new Tenant($stm[0]);
+        }
+
+        $tab = [];
+        foreach ($stm as $key => $data){
+            $tab[$key] = (object) new Tenant($data);
+        }
+
+        return $tab;
+    }
+
+    public function getByIdRelationship($data): Tenant|array
+    {
+        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE user_id = $data");
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (count($stm) === 1) {
+            return new Tenant($stm[0]);
+        }
+
+        $tab = [];
+        foreach ($stm as $key => $data){
+            $tab[$key] = (object) new Tenant($data);
+        }
+    
+        return $tab;
         try
         {
 
@@ -117,7 +149,7 @@ class TenantManager extends BaseManager
         }
     }
     
-    public function deleteTenant($tenant, $id)
+    public function deleteTenant($id)
     {
         try
         {
@@ -140,4 +172,20 @@ class TenantManager extends BaseManager
 
     }
 
+    public function getRentalId(Tenant $tenant)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE rental_id = :rental_id");
+        $query->bindValue('rental_id', $tenant->getRental_id(), \PDO::PARAM_INT);
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+        if (count($stm) === 1) {
+            return new Tenant($stm[0]);
+        }
+
+        $tab = [];
+        foreach ($stm as $key => $data){
+            $tab[$key] = (object) new Tenant($data);
+        }
+        return $tab;
+    }
 }

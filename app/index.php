@@ -7,8 +7,8 @@ header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: authorization, content-type");
 header("Content-Type: application/json");
-
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") die;
+if (($_SERVER['REQUEST_URI'] != "/login" && $_SERVER['REQUEST_URI'] != "/register") && empty($_COOKIE)) echo json_encode(["token" => false]);
 
 $json = file_get_contents('php://input');
 $data = (array)json_decode($json);

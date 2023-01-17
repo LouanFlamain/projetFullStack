@@ -10,6 +10,7 @@ use App\Manager\Invitation;
 
 abstract class BaseEntity
 {
+    private static $instances = array();
     use Hydrator;
 
     private object|string|null $relationship;
@@ -17,6 +18,13 @@ abstract class BaseEntity
     public function __construct(array $data = [])
     {
         $this->hydrate($data);
+        self::$instances[] = $this;
+        //var_dump(self::$instances);
+    }
+
+    public static function getInstances()
+    {
+        return self::$instances;
     }
 
     /**
@@ -28,20 +36,20 @@ abstract class BaseEntity
     }
 
     /**
-     * @param object|null $relationship
+     * @param object|string|null $relationship
      * @return $this
      */
-    public function setRelationship(?object $relationship)
+    public function setRelationship(null|object|string $relationship)
     {
         $this->relationship = $relationship;
         return $this;
     }
 
-    public function hasMany($data, $foreignId)
+    public function hasMany($data, $foreignId, $status = null)
     {
         $foreignId = 'get'.ucfirst($foreignId);
  
-        $relation = (new $data(new PDOFactory()))->getById($this->$foreignId());
+        $relation = (new $data(new PDOFactory()))->getByIdRelationship($this->$foreignId(), $status);
         $relation->relationship = $this;
 
         return $relation;

@@ -3,16 +3,19 @@
 namespace App\Entity;
 
 use App\Manager\CostManager;
+use App\Traits\PreventEmpty;
 
 
 class Tenant extends BaseEntity
 {
+    use PreventEmpty;
+
     private ?int $id;
-    private int $balance;
-    private string $user_id;
-    private string $rental_id;
-    private ?\DateTime $created_at;
-    
+    private ?float $balance = null;
+    private ?string $user_id = null;
+    private ?string $rental_id = null;
+    private ?\DateTime $created_at = null;
+
     /**
      * @return int|null
      */
@@ -29,17 +32,17 @@ class Tenant extends BaseEntity
         $this->id = $id;
         return $this;
     }
-    
+
     /**
-     * @return int
+     * @return float|null
      */
-    public function getBalance()
+    public function getBalance(): null|float
     {
         return $this->balance;
     }
 
     /**
-     * @param int $balance
+     * @param float $balance
      */
     public function setBalance($balance)
     {
@@ -98,8 +101,8 @@ class Tenant extends BaseEntity
         return $this;
     }
 
-    public function Cost()
+    public function Cost($status = null)
     {
-        return $this->hasMany(CostManager::class, 'id');
+        return $this->hasMany(CostManager::class, 'id', $status);
     }
 }
