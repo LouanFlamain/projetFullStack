@@ -16,13 +16,11 @@ class RentalController extends AbstractController
         if(isset($_COOKIE['token']))
         {
             $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
-            $rental->setUser_id(($this->getUser())->id);
+            $rental->setUser_id(($this->getUser())->getId());
             $rentalManager = (new RentalManager(new PDOFactory()))
             ->insertRental($rental);
-
-            echo json_encode([
-                "expired" => false
-            ]);
+            $rentalManager['expired'] = false;
+            $this->renderJSON($rentalManager);
         }
         else
         {

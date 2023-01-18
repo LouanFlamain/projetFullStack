@@ -9,8 +9,8 @@ class Invitation extends BaseEntity
     use PreventEmpty;
 
     private ?int $id;
-    private array $token;
-    private array $mail;
+    private string $token;
+    private string $mail;
     private int $rental_id;
     private ?\DateTime $created_at;
     
@@ -32,34 +32,34 @@ class Invitation extends BaseEntity
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getToken(): array
+    public function getToken(): string
     {
         return $this->token;
     }
 
     /**
-     * @param array $token
+     * @param string $token
      */
-    public function setToken(array $token): Invitation
+    public function setToken(string $token): Invitation
     {
         $this->token = $token;
         return $this;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getMail(): array
+    public function getMail(): string
     {
         return $this->mail;
     }
 
     /**
-     * @param array $mail
+     * @param string $mail
      */
-    public function setMail(array $mail): Invitation
+    public function setMail(string $mail): Invitation
     {
         $this->mail = $mail;
         return $this;

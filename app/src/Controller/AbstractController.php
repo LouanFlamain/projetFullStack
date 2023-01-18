@@ -36,11 +36,7 @@ abstract class AbstractController
     public function renderJSON($content)
     {
         header('Content-Type: application/json');
-        $array = [];
-        foreach($content as $key => $data){
-            var_dump($key, $data);
-        }
-        die;
+
         echo json_encode($content, JSON_PRETTY_PRINT);
         exit;
     }

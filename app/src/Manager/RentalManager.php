@@ -19,7 +19,7 @@ class RentalManager extends BaseManager
             $query->bindValue("user_id", $rental->getUser_id(), \PDO::PARAM_INT);
     
             $query->execute();
-            echo json_encode(["rental" => true]);
+            return ["rental" => true];
         }
         catch(\PDOException $e)
         {

@@ -27,11 +27,8 @@ class InvitationController extends AbstractController
             ($invitation)
             ->setRental_Id($rental->getId());
 
-            $token = [];
-            foreach($invitation->getMail() as $key => $mail){
-                $token[$key] = JWTHelper::CreateMailToken($invitation);
-            }
 
+            $token = JWTHelper::CreateMailToken($invitation);
 
             ($invitation)
             ->setToken($token);
