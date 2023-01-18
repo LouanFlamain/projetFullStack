@@ -12,23 +12,22 @@ class RentalController extends AbstractController
     #[Route('/rental', name:'rental', methods:['POST'])]
     public function createRental($rental)
     {
+
         if(isset($_COOKIE['token']))
         {
             $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
-            $rental->setUser_id(($this->getUser())->getId());
+            $rental->setUser_id(($this->getUser())->id);
             $rentalManager = (new RentalManager(new PDOFactory()))
             ->insertRental($rental);
 
-            $expired = false;
             echo json_encode([
-                "expired" => $expired
+                "expired" => false
             ]);
         }
         else
         {
-            $expired = true;
             echo json_encode([
-                'expired' => $expired,
+                'expired' => true,
                 'redirect' => "login"
             ]);
         }

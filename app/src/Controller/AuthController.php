@@ -15,17 +15,15 @@ class AuthController extends AbstractController
     {  
         $userManager = (new UserManager(new PDOFactory()))
         ->getByUsername($user->getUsername());
-        $verify = false;
         
         if(password_verify($user->getHashedPassword(), $userManager->getHashedPassword()))
         {
-            $verify = true;
             $jwt = JWTHelper::buildJWT($userManager);
 
             setcookie('token', $jwt, time()+1800, '/','localhost', false, false);
 
             $responseData = [
-                'login' => $verify,
+                'login' => true,
                 "token" => $jwt,
                 "user" => [
                     'username' => $userManager->getUsername(),

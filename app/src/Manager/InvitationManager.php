@@ -65,19 +65,20 @@ class InvitationManager extends BaseManager
         }
     }
 
-    public function CreateMailInvitation(Invitation $data): void
+    public function CreateMailInvitation(Invitation $invitation): void
     {
         try
         {
-            $query = $this->pdo->prepare("INSERT INTO Invitation (token,mail, rental_id) VALUES (:token, :mail, :rental_id)");
-            $query->bindValue('token', $data->getToken(), \PDO::PARAM_STR);
-            $query->bindValue('mail', $data->getMail(), \PDO::PARAM_STR);
-            $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_STR);
-            $query->execute();
-
-            $invitation = true;
+            foreach($invitation->getMail() as $key => $mail){
+                $token = $invitation->getToken();
+                $query = $this->pdo->prepare("INSERT INTO Invitation (token,mail, rental_id) VALUES (:token, :mail, :rental_id)");
+                $query->bindValue('token', $token[$key], \PDO::PARAM_STR);
+                $query->bindValue('mail', $mail, \PDO::PARAM_STR);
+                $query->bindValue('rental_id', $invitation->getRental_id(), \PDO::PARAM_STR);
+                $query->execute();
+            }
             echo json_encode([
-                "invitation" => $invitation
+                "invitation" => true
             ]);
         }
         catch(\PDOException $e)

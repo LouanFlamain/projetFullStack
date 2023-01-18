@@ -9,7 +9,7 @@ export default function NeedAuth(props) {
 
   let location = useLocation();
 
-  if (logged.login) {
+  if (localStorage.getItem('auth') || logged.login) {
     return props.children;
   } else {
     return <Navigate to="/login" state={{ from: location }} />;

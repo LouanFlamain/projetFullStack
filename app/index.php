@@ -11,7 +11,7 @@ header("Content-Type: application/json");
 if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") die;
 
 $json = file_get_contents('php://input');
-$data = (array)json_decode($json);
+$new = (array)json_decode($json);
 
 require_once 'vendor/autoload.php';
 
@@ -29,10 +29,20 @@ foreach ($dirs as $dir) {
 
     $controllers[] = "App\\Controller\\" . pathinfo($controllerDir . DIRECTORY_SEPARATOR . $dir)['filename'];
 }
+$blabla = (array)$new['data'];
+$test = (array)$blabla['attributes'];
+$data['data'] = $blabla;
+$data['attributes'] = $test;
 
-if(!empty($_POST)){
-    foreach ($_POST as $key => $post){
-        $_POST[$key] = htmlspecialchars($post);
+if(!empty($data['data'])){
+    foreach ($data['data']['attributes'] as $key => $post){
+        if(is_array($post)){
+            foreach($post as $new){
+                $data[$key] = htmlspecialchars($new);
+            }
+        }else {
+            $data[$key] = htmlspecialchars($post);
+        }
     }
 }
 

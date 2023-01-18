@@ -10,7 +10,6 @@ class TenantManager extends BaseManager
     {
         try
         {
-
             $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE rental_id = $data");
             $query->execute();
             $stm = $query->fetchAll(\PDO::FETCH_ASSOC);

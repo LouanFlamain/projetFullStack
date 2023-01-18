@@ -25,20 +25,24 @@ export default function Login() {
       },
     };
     event.preventDefault();
-    console.log("/login data", data);
+    //console.log("/login data", data);
     axios({
       method: "post",
+      mode: 'no-cors',
       url: "http://localhost:5656/login",
       data: JSON.stringify(data),
+      withCredentials: true,
+      credentials: 'same-origin',
     })
       .then(function (response) {
-        console.log("/login response.data", response.data);
+        //console.log("/login response.data", response.data);
         if (response.data.login === true) {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("username", response.data.user.username);
           localStorage.setItem("email", response.data.user.mail);
           localStorage.setItem("user", response.data.user.role);
           localStorage.setItem("login", response.data.login);
+          localStorage.setItem("auth", response.data);
           setLogged(response.data.user);
           // rajouter une condition si user.role = rental and rental == "" alors navigate to createRental
           // rajouter une condition si user.role = rental and rental != "" alors navigate to config
@@ -47,7 +51,7 @@ export default function Login() {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        //console.log(error);
       });
     setUserLog("");
     setPasswordLog("");

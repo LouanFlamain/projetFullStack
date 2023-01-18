@@ -12,7 +12,7 @@ import axios from "axios";
 function AddParticipant(props) {
   const [show, setShow] = useState(false);
   const {participants, setParticipants} = useContext(context);
-  console.log("/depense participants:", participants)
+  //console.log("/depense participants:", participants)
   const submit = (event) => {
     event.preventDefault();
   };
@@ -112,18 +112,18 @@ export default function CreateCost(props) {
           },
         },
       };
-      console.log(data);
+      //console.log(data);
       axios({
         method: "post",
         url: "http://localhost:5656/costs",
         data: JSON.stringify(data),
       })
         .then(function (response) {
-          console.log('response', response);
+          //console.log('response', response);
           navigate("/depense");
       })
       .catch(error => {
-        console.log(error);
+        //console.log(error);
       });
      
     setDataCost('');
@@ -135,7 +135,7 @@ export default function CreateCost(props) {
     setPourVous('');
     setselectedCostType('');
   };
-  console.log('dataCost', dataCost)
+  //console.log('dataCost', dataCost)
 
   return (
     <>

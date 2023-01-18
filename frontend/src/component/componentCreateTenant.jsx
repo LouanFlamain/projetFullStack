@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState , useContext } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { context } from "../context/context";
@@ -6,7 +7,28 @@ export default function ComponentCreateTenantManager() {
     const { logged, setLogged } = useContext(context);
     const [show, setShow] = useState(false);
     const submit = (event) => {
-        event.preventDefault();
+      console.log('test')
+      event.preventDefault();
+        const data = {
+          data: {
+            type: "Invitation",
+            attributes: {
+              mail: participants,
+            },
+          },
+        };
+        //console.log(data);
+        axios({
+          method: "post",
+          url: "http://localhost:5656/invitation",
+          data: JSON.stringify(data),
+          withCredentials: true,
+          credentials: 'same-origin',
+        })
+          .then(function (response) {
+        })
+        .catch(error => {
+        });
       };
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -25,7 +47,7 @@ export default function ComponentCreateTenantManager() {
       newParticipants.splice(index, 1);
       setParticipants(newParticipants);
     };
-    console.log("componentcreateRental participant", participants)
+    //console.log("componentcreateRental participant", participants)
 
     return (
         <div className="create-tenant__content p-4 mx-auto ">
@@ -54,7 +76,7 @@ export default function ComponentCreateTenantManager() {
             <Modal.Title className="text-white">Créer un nouveau colocataire</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={submit} method="POST" action="createTenant">
+            <Form onSubmit={submit} method="POST">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                 <div className="create-tenant__form d-flex flex-row align-items-center">
                   <Form.Label className="mb-0" >Tapez son Email</Form.Label>
@@ -66,7 +88,7 @@ export default function ComponentCreateTenantManager() {
                       value={newParticipant} 
                       onChange={e => setNewParticipant(e.target.value)}
                   />
-                  <button className="btn text-primary" onClick={handleAdd}><u>Ajouter</u></button>
+
                 </div>
               
                 {participants.map((participant, index) => (
@@ -76,14 +98,15 @@ export default function ComponentCreateTenantManager() {
                   </div>
                 ))}
               </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" onClick={() => {
+              <Button variant="primary" type="submit" onClick={() => {
               handleClose({type: "close"})
               }}>
               Valider
             </Button>
+            </Form>
+            <button className="btn text-primary" onClick={handleAdd}><u>Ajouter</u></button>
+          </Modal.Body>
+          <Modal.Footer>
           </Modal.Footer>
         </Modal>
 

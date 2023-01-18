@@ -5,26 +5,10 @@ namespace App\Entity;
 class Invitation extends BaseEntity
 {
     private ?int $id;
-    private string $token;
-    private string $mail;
-    private int $rental_id =1;
+    private array $token;
+    private array $mail;
+    private int $rental_id;
     private ?\DateTime $created_at;
-
-    /**
-     * @return string
-     */
-    public function getRental_Id(): string
-    {
-        return $this->rental_id;
-    }
-
-    /**
-     * @param string $rental_id
-     */
-    public function setRental_Id(string $rental_id): void
-    {
-        $this->rental_id = $rental_id;
-    }
     
     /**
      * @return int|null
@@ -44,36 +28,53 @@ class Invitation extends BaseEntity
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getToken(): string
+    public function getToken(): array
     {
         return $this->token;
     }
 
     /**
-     * @param string $token
+     * @param array $token
      */
-    public function setToken(string $token): Invitation
+    public function setToken(array $token): Invitation
     {
         $this->token = $token;
         return $this;
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getMail(): string
+    public function getMail(): array
     {
         return $this->mail;
     }
 
     /**
-     * @param string $mail
+     * @param array $mail
      */
-    public function setMail(string $mail): Invitation
+    public function setMail(array $mail): Invitation
     {
         $this->mail = $mail;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRental_Id(): string
+    {
+        return $this->rental_id;
+    }
+
+    /**
+     * @param string $rental_id
+     */
+    public function setRental_Id(string $rental_id): Invitation
+    {
+        $this->rental_id = $rental_id;
         return $this;
     }
 

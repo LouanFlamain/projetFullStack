@@ -1,13 +1,43 @@
+import axios from "axios";
 import React, { useState , useContext } from 'react';
-import { Link, useNavigate } from "react-router-dom";
 import Header from "../component/header";
 import { context } from "../context/context";
 
 
 export default function CreateRental(props) {
   const { logged, setLogged } = useContext(context);
-  console.log('/createrental', logged)
-  const navigate = useNavigate();
+ // const {location, setLocation } = useState("");
+  const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState(0);
+  //console.log('/createrental', logged)
+
+  const submit = (event) => {
+    console.log('test')
+    event.preventDefault();
+      const data = {
+        data: {
+          type: "Rental",
+          attributes: {
+            title: location,
+            amount: amount,
+            description: description,
+          },
+        },
+      };
+      //console.log(data);
+      axios({
+        method: "post",
+        url: "http://localhost:5656/rental",
+        data: JSON.stringify(data),
+        withCredentials: true,
+        credentials: 'same-origin',
+      })
+        .then(function (response) {
+      })
+      .catch(error => {
+      });
+  };
 
   return (
     <>
@@ -24,7 +54,7 @@ export default function CreateRental(props) {
           </p>
       </div>
       {/* vérifier si ce n'est pas méthode POST */}
-      <form method="GET" action="createRental">
+      <form method="POST" onSubmit={submit}>
 
         <div className="p-4">
           <div className="form-group row p-2">
@@ -34,7 +64,7 @@ export default function CreateRental(props) {
 
             <div className="col-sm-10 ">
 
-              <input type="text" className="form-control form-control-sm" id="title"/>
+            <input onChange={(e) => {setLocation(e.target.value)}} type="text"  className="form-control form-control-sm" id="title"/>
 
             </div>
 
@@ -48,7 +78,7 @@ export default function CreateRental(props) {
 
             <div className="col-sm-10 ">
 
-            <textarea className="form-control" id="description" rows="3"></textarea>
+            <textarea onChange={(e) => {setDescription(e.target.value)}} className="form-control" id="description" rows="3"></textarea>
 
             </div>
 
@@ -61,18 +91,18 @@ export default function CreateRental(props) {
 
             <div className="col-sm-10">
 
-              <input type="text" className="form-control form-control-sm " id="rent"/>
+            <input onChange={(e) => {setAmount(e.target.value) }} type="text" className="form-control form-control-sm " id="rent"/>
 
             </div>
 
           </div>
         </div>
-
+        <div className="p-2 bg-primary mt-auto">
+            <button type="submit" className="btn text-white">Continuer</button>
+        </div>
       </form>
       
-      <div className="p-2 bg-primary mt-auto">
-          <button type="submit" className="btn text-white" onClick={() => navigate('/createTenant')}>Continuer</button>
-      </div>
+
     </div>
     
     </>
