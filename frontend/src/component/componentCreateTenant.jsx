@@ -7,13 +7,13 @@ export default function ComponentCreateTenantManager() {
     const { logged, setLogged } = useContext(context);
     const [show, setShow] = useState(false);
     const submit = (event) => {
-      console.log('test')
       event.preventDefault();
+      participants.map(function(participant){
         const data = {
           data: {
             type: "Invitation",
             attributes: {
-              mail: participants,
+              mail: participant,
             },
           },
         };
@@ -29,12 +29,16 @@ export default function ComponentCreateTenantManager() {
         })
         .catch(error => {
         });
+        setParticipants([]);
+      })
+      
       };
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [participants, setParticipants] = useState([]);
     const [newParticipant, setNewParticipant] = useState('');
-    const handleAdd = () => { 
+    const handleAdd = (e) => { 
+      e.preventDefault()
       if (!newParticipant) {
         return;
       }else{
@@ -88,7 +92,7 @@ export default function ComponentCreateTenantManager() {
                       value={newParticipant} 
                       onChange={e => setNewParticipant(e.target.value)}
                   />
-
+                  <button className="btn text-primary" onClick={handleAdd}><u>Ajouter</u></button>
                 </div>
               
                 {participants.map((participant, index) => (
@@ -104,7 +108,6 @@ export default function ComponentCreateTenantManager() {
               Valider
             </Button>
             </Form>
-            <button className="btn text-primary" onClick={handleAdd}><u>Ajouter</u></button>
           </Modal.Body>
           <Modal.Footer>
           </Modal.Footer>

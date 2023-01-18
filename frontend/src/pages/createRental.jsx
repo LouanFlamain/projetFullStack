@@ -1,16 +1,17 @@
 import axios from "axios";
 import React, { useState , useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 import Header from "../component/header";
 import { context } from "../context/context";
 
 
 export default function CreateRental(props) {
   const { logged, setLogged } = useContext(context);
- // const {location, setLocation } = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
-  //console.log('/createrental', logged)
+  const navigate = useNavigate();
+
 
   const submit = (event) => {
     console.log('test')
@@ -25,7 +26,6 @@ export default function CreateRental(props) {
           },
         },
       };
-      //console.log(data);
       axios({
         method: "post",
         url: "http://localhost:5656/rental",
@@ -34,6 +34,9 @@ export default function CreateRental(props) {
         credentials: 'same-origin',
       })
         .then(function (response) {
+        if(response.data.rental === true){
+          navigate("/createTenant")
+        } 
       })
       .catch(error => {
       });

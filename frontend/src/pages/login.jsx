@@ -6,8 +6,8 @@ import { useContext } from "react";
 import { context } from "../context/context";
 
 export default function Login() {
-  const [userLog, setUserLog] = useState();
-  const [passwordLog, setPasswordLog] = useState();
+  const [userLog, setUserLog] = useState("");
+  const [passwordLog, setPasswordLog] = useState("");
   const { logged, setLogged } = useContext(context);
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export default function Login() {
       },
     };
     event.preventDefault();
-    //console.log("/login data", data);
+
     axios({
       method: "post",
       mode: 'no-cors',
@@ -35,7 +35,7 @@ export default function Login() {
       credentials: 'same-origin',
     })
       .then(function (response) {
-        //console.log("/login response.data", response.data);
+
         if (response.data.login === true) {
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("username", response.data.user.username);
