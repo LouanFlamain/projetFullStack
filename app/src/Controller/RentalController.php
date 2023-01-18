@@ -12,7 +12,6 @@ class RentalController extends AbstractController
     #[Route('/rental', name:'rental', methods:['POST'])]
     public function createRental($rental)
     {
-
         if(isset($_COOKIE['token']))
         {
             $user_id = JWTHelper::decodeJWT($_COOKIE['token'])->id;
@@ -24,10 +23,7 @@ class RentalController extends AbstractController
         }
         else
         {
-            echo json_encode([
-                'expired' => true,
-                'redirect' => "login"
-            ]);
+            return ['expired' => true];
         }
     }
 

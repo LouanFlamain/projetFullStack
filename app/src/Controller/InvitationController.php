@@ -38,15 +38,6 @@ class InvitationController extends AbstractController
 
             (new MailHelper)->MailSender($invitation);
 
-            return $this->renderJSON([
-                "envoie" => true,
-                "invitation" => $invitationManager
-            ]);
-
-        } else {
-            return $this->renderJSON([
-                "envoie" => false
-            ]);
         }
     }
 }

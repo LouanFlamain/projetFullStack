@@ -33,9 +33,6 @@ class AuthController extends AbstractController
             ];
             echo json_encode($responseData); die;
         }
-         return $this->renderJSON([
-             "login" => false
-        ]);
     }
 
     #[Route('/register', name: "register", methods: ["POST"])]

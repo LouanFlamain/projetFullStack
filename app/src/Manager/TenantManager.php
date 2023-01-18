@@ -61,11 +61,7 @@ class TenantManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            $fetch = false;
-            echo json_encode([
-                'fetch' => false,
-                'error' => $e
-            ]);
+            return ["fetch" => false];
         }
     }
 
@@ -103,19 +99,16 @@ class TenantManager extends BaseManager
             $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_INT);
             
             $query->execute(); 
-            echo json_encode([
-                "ajout_tenanttenant"=>true
-            ]);
+           
+            return ["ajout_tenant" => true];
         }
         catch(\PDOException $e)
         {
             if($e->getCode() == "23000")
             {
                 $errorType = explode('key',$e->errorInfo[2])[1];
-                echo json_encode([
-                    "ajout_tenant" => false,
-                    "clef dupliquee" => $errorType
-                ]);
+            
+                return ["ajout_tenant" => false];
                 die;
             }
         }
@@ -134,17 +127,12 @@ class TenantManager extends BaseManager
     
             $query->execute(); 
 
-            echo json_encode([
-                "update"=>true
-            ]);
+            return ["update" => true];
 
         }
         catch(\PDOException $e)
         {
-            echo json_encode([
-                "error" => $e,
-                "update" => false
-            ]);
+            return ["update" => false];
         }
     }
     
@@ -156,15 +144,12 @@ class TenantManager extends BaseManager
             $query->bindValue('id', $id, \PDO::PARAM_INT);
             $query->execute();
 
-            echo json_encode([
-                "delete_tenant" => true
-            ]);
+        
+            return ["delete_tenant" => true];
         }
         catch(\PDOException $e)
         {
-            echo json_encode([
-                "delete_tenant" => false
-            ]);
+            return ["delete_tenant" => false];
         }
 
     }

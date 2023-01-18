@@ -94,7 +94,7 @@ export default function CreateRental(props) {
 
             <div className="col-sm-10">
 
-            <input onChange={(e) => {setAmount(e.target.value) }} type="text" className="form-control form-control-sm " id="rent"/>
+            <input onChange={(e) => {setAmount(e.target.value) }} type="number" className="form-control form-control-sm " id="rent"/>
 
             </div>
 
