@@ -18,19 +18,17 @@ class InvitationManager extends BaseManager
             $stm = $query->fetch(\PDO::FETCH_ASSOC);
     
             if ($stm) {
-                $payload = true;
                 return new Invitation($stm);
                 echo json_encode([
-                    "get-mail" => $payload,
+                    "get-mail" => true,
                     "token"=>$stm
                 ]);
             }
         }
         catch(\PDOException $e)
         {
-            $payload = false;
             echo json_encode([
-                "get-mail" => $payload,
+                "get-mail" => false,
                 "error" => $e
             ]); 
         }
@@ -47,19 +45,17 @@ class InvitationManager extends BaseManager
             $stm = $query->fetch(\PDO::FETCH_ASSOC);
     
             if ($stm) {
-                $payload = true;
                 return new Invitation($stm);
                 echo json_encode([
-                    "get-mail" => $payload,
+                    "get-mail" => true,
                     "token"=>$stm
                 ]);
             }
         }
         catch(\PDOException $e)
         {
-            $payload = false;
             echo json_encode([
-                "get-mail" => $payload,
+                "get-mail" => false,
                 "error" => $e
             ]); 
         }
@@ -100,9 +96,8 @@ class InvitationManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            $update = false;
             echo json_encode([
-                "update"=>$update,
+                "update"=> false,
                 "erreur"=>$e
             ]);
         }

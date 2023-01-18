@@ -19,8 +19,7 @@ class RentalManager extends BaseManager
             $query->bindValue("user_id", $rental->getUser_id(), \PDO::PARAM_INT);
     
             $query->execute();
-            $rental = true;
-            echo json_encode(["rental" => $rental]);
+            echo json_encode(["rental" => true]);
         }
         catch(\PDOException $e)
         {
@@ -52,21 +51,19 @@ class RentalManager extends BaseManager
     
             $query->execute();
 
-            $update = true;
             echo json_encode([
-                "update_rental" => $update
+                "update_rental" => true
             ]);
         }
         catch(\Exception $e)
         {
-            $update = false;
             echo json_encode([
-                "update_rental" => $update
+                "update_rental" => false
             ]);
         }
     }
 
-    public function deleteRental($rental, int $id)
+    public function deleteRental(int $id)
     {
         try
         {
@@ -74,17 +71,15 @@ class RentalManager extends BaseManager
             $query->bindValue("id", $id, \PDO::PARAM_INT);
             $query->execute();
 
-            $deleteRental = true;
             echo json_encode([
-                "delete_rental" => $deleteRental
+                "delete_rental" => true
             ]);
         }
         catch(\PDOException $e)
         {
-            $deleteRental = false;
-            echo $e;
             echo json_encode([
-                "delete_rental" => $deleteRental
+                "delete_rental" => false,
+                "erreur"=> $e
             ]);
         }
     }
@@ -96,10 +91,19 @@ class RentalManager extends BaseManager
         $query->execute();
         $stm = $query->fetch(\PDO::FETCH_ASSOC);
         return new Rental($stm);
+    }
 
+    public function getUserRental(int $id)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM Rental WHERE user_id = :user_id");
+        $query->bindValue('user_id', $id, \PDO::PARAM_INT);
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+        var_dump($stm);die;
+        return new Rental($stm);
     }
         
-    public function getById($data): null|Rental
+    public function getByIdRelationship($data): null|Rental
     {
         $query = $this->pdo->prepare("SELECT * FROM Rental WHERE user_id = :id");
         $query->bindValue("id", $data, \PDO::PARAM_INT);

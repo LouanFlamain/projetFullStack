@@ -8,6 +8,38 @@ class TenantManager extends BaseManager
 {
     public function getById($data)
     {
+        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE id = $data");
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (count($stm) === 1) {
+            return new Tenant($stm[0]);
+        }
+
+        $tab = [];
+        foreach ($stm as $key => $data){
+            $tab[$key] = (object) new Tenant($data);
+        }
+
+        return $tab;
+    }
+
+    public function getByIdRelationship($data): Tenant|array
+    {
+        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE user_id = $data");
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (count($stm) === 1) {
+            return new Tenant($stm[0]);
+        }
+
+        $tab = [];
+        foreach ($stm as $key => $data){
+            $tab[$key] = (object) new Tenant($data);
+        }
+    
+        return $tab;
         try
         {
             $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE rental_id = $data");
@@ -22,9 +54,8 @@ class TenantManager extends BaseManager
             foreach ($stm as $key => $data){
                 $tab[$key] = (object) new Tenant($data);
             }
-            $fetch = true;
             echo json_encode([
-                'fetch'=>$fetch
+                'fetch'=>true
             ]);
             return $tab;
         }
@@ -32,7 +63,7 @@ class TenantManager extends BaseManager
         {
             $fetch = false;
             echo json_encode([
-                'fetch' => $fetch,
+                'fetch' => false,
                 'error' => $e
             ]);
         }
@@ -72,16 +103,14 @@ class TenantManager extends BaseManager
             $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_INT);
             
             $query->execute(); 
-            $add_tenant = true;
             echo json_encode([
-                "ajout_tenanttenant"=>$add_tenant
+                "ajout_tenanttenant"=>true
             ]);
         }
         catch(\PDOException $e)
         {
             if($e->getCode() == "23000")
             {
-                $add_tenant = false;
                 $errorType = explode('key',$e->errorInfo[2])[1];
                 echo json_encode([
                     "ajout_tenant" => false,
@@ -105,18 +134,21 @@ class TenantManager extends BaseManager
     
             $query->execute(); 
 
+            echo json_encode([
+                "update"=>true
+            ]);
+
         }
         catch(\PDOException $e)
         {
-            $update = false;
             echo json_encode([
                 "error" => $e,
-                "update" => $update
+                "update" => false
             ]);
         }
     }
     
-    public function deleteTenant($tenant, $id)
+    public function deleteTenant($id)
     {
         try
         {
@@ -124,19 +156,33 @@ class TenantManager extends BaseManager
             $query->bindValue('id', $id, \PDO::PARAM_INT);
             $query->execute();
 
-            $delete = true;
             echo json_encode([
-                "delete_tenant" => $delete
+                "delete_tenant" => true
             ]);
         }
         catch(\PDOException $e)
         {
-            $delete = false;
             echo json_encode([
-                "delete_tenant" => $delete
+                "delete_tenant" => false
             ]);
         }
 
     }
 
+    public function getRentalId(Tenant $tenant)
+    {
+        $query = $this->pdo->prepare("SELECT * FROM Tenant WHERE rental_id = :rental_id");
+        $query->bindValue('rental_id', $tenant->getRental_id(), \PDO::PARAM_INT);
+        $query->execute();
+        $stm = $query->fetchAll(\PDO::FETCH_ASSOC);
+        if (count($stm) === 1) {
+            return new Tenant($stm[0]);
+        }
+
+        $tab = [];
+        foreach ($stm as $key => $data){
+            $tab[$key] = (object) new Tenant($data);
+        }
+        return $tab;
+    }
 }

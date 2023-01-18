@@ -2,16 +2,21 @@
 
 namespace App\Entity;
 
+use App\Traits\PreventEmpty;
+
 class Cost extends BaseEntity
 {
+    use PreventEmpty;
+
     private ?int $id;
-    private int $credit;
-    private int $debit;
+    private float $credit;
+    private float $debit;
     private string $cost_type;
     private string $reference"hbdhs";
     private int $tenant_id;
+    private array $relationships;
+    private ?string $status = null;
     private ?\DateTime $created_at;
-
 
     /*
      * @return int|null
@@ -34,17 +39,17 @@ class Cost extends BaseEntity
     }
 
     /*
-     * @return int
+     * @return float
      */
-    public function getCredit(): int
+    public function getCredit(): float
     {
         return $this->credit;
     }
 
     /*
-     * @param int $credit
+     * @param float $credit
      */
-    public function setCredit(int $credit): Cost
+    public function setCredit(float $credit): Cost
     {
         $this->credit = $credit;
 
@@ -53,17 +58,17 @@ class Cost extends BaseEntity
     }
 
     /*
-     * @return int
+     * @return float
      */
-    public function getDebit(): int
+    public function getDebit(): float
     {
         return $this->debit;
     }
 
     /*
-     * @param int $debit
+     * @param float $debit
      */
-    public function setDebit(int $debit): Cost
+    public function setDebit(float $debit): Cost
     {
         $this->debit = $debit;
 
@@ -125,6 +130,39 @@ class Cost extends BaseEntity
 
         return $this;
 
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus(string $status): void
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRelationships(): array
+    {
+        return $this->relationships;
+    }
+
+    /**
+     * @param array $relationships
+     */
+    public function setRelationships(array $relationships): Cost
+    {
+        $this->relationships = $relationships;
+        return $this;
     }
 
     /**

@@ -41,10 +41,10 @@ class RentalController extends AbstractController
     }
 
     #[Route('/rental/delete/{id}', name: 'deleteRental', methods:['DELETE'])]
-    public function deleteExistingRental(int $id, $rental)
+    public function deleteExistingRental(int $id)
     {
         $rentalManager = new RentalManager(new PDOFactory());
 
-        $rentalManager->deleteRental($rental, $id);
+        $rentalManager->deleteRental($id);
     }
 }

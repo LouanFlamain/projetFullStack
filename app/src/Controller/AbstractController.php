@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Helpers\JWTHelper;
 
 abstract class AbstractController
 {
     public function getUser()
     {
-        return JWTHelper::decodeJWT($_COOKIE['token']) ?? null;
+        return new User((array)JWTHelper::decodeJWT($_COOKIE['token']));
     }
 
     public function render(string $view, array $args = [])
@@ -32,14 +33,14 @@ abstract class AbstractController
         return ob_get_clean();
     }
 
-    /**
-     * @param string $file
-     * @return string[]
-     */
-   
     public function renderJSON($content)
     {
         header('Content-Type: application/json');
+        $array = [];
+        foreach($content as $key => $data){
+            var_dump($key, $data);
+        }
+        die;
         echo json_encode($content, JSON_PRETTY_PRINT);
         exit;
     }

@@ -2,8 +2,12 @@
 
 namespace App\Entity;
 
+use App\Traits\PreventEmpty;
+
 class Invitation extends BaseEntity
 {
+    use PreventEmpty;
+
     private ?int $id;
     private array $token;
     private array $mail;

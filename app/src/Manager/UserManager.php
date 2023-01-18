@@ -90,16 +90,14 @@ class UserManager extends BaseManager
             $query->bindValue("role", $data->getRole(), \PDO::PARAM_STR);
             $query->bindValue("id", $id, \PDO::PARAM_INT);
 
-            $update = true;
             echo json_encode([
-                "update"=>$update
+                "update"=>true
             ]);
         }
         catch(\PDOException $e)
         {
-            $update = false;
             echo json_encode([
-                "update"=>$update,
+                "update"=>false,
                 "erreur"=>$e
             ]);
         }
