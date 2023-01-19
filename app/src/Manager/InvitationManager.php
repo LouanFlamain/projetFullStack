@@ -27,10 +27,7 @@ class InvitationManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            echo json_encode([
-                "get-mail" => false,
-                "error" => $e
-            ]); 
+            return ["get-mail" => false];
         }
     }
 
@@ -54,14 +51,11 @@ class InvitationManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            echo json_encode([
-                "get-mail" => false,
-                "error" => $e
-            ]); 
+            return ["get-mail" => false];
         }
     }
 
-    public function CreateMailInvitation(Invitation $invitation): void
+    public function CreateMailInvitation(Invitation $invitation)
     {
         try
         {
@@ -77,7 +71,7 @@ class InvitationManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            echo json_encode($e);
+            return ["invitation" => false];
         }
     }
 
@@ -94,10 +88,8 @@ class InvitationManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            echo json_encode([
-                "update"=> false,
-                "erreur"=>$e
-            ]);
+            return ["update" => false];
+        
         }
     }
 }

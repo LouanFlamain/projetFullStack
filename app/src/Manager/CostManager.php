@@ -108,9 +108,7 @@ class CostManager extends BaseManager
 
                 $query->execute();
 
-                echo json_encode([
-                    "insert_cost_second_step" => true
-                ]);
+                return ["insert_cost" => true];
             }
 
         }
@@ -119,10 +117,7 @@ class CostManager extends BaseManager
             if($e->getCode() == "23000")
             {
                 $errorType = explode('key',$e->errorInfo[2])[1];
-                echo json_encode([
-                    "add_cost" => false,
-                    "clef dupliquee" => $errorType
-                ]);
+                return ["insert_cost" => false];
                 die;
             }
         }
@@ -147,9 +142,7 @@ class CostManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            echo json_encode([
-                "delete_cost" => false
-            ]);
+            return ["delete_cost" => false];
         }
     }
 
@@ -169,9 +162,7 @@ class CostManager extends BaseManager
         }
         catch(\PDOException $e)
         {
-            echo json_encode([
-                "error" => $$e
-            ]);
+            return ["error" => $e];
         }
     }
 
@@ -190,16 +181,11 @@ class CostManager extends BaseManager
             
             $query->execute();
 
-            echo json_encode([
-                "update_cost"=>true
-            ]);
+            return ["update_cost" => true];
         }
         catch(\PDOException $e)
         {
-            echo json_encode([
-                "update_cost" => false,
-                "erreur"=>$e
-            ]);
+            return ["update_cost" => false];
         }
     }
 

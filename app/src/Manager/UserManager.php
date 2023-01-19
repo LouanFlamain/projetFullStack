@@ -61,20 +61,16 @@ class UserManager extends BaseManager
             $query->bindValue("token", $user->getToken(), \PDO::PARAM_STR);
     
             $query->execute();
-            echo json_encode([
-                "register"=> true
-            ]);
+          
+            return ["register" => true];
         }
         catch(\PDOException $e)
         {
             echo $e;
+            return ["register" => false];
             if($e->getCode() == "23000")
             {
-                $errorType = explode('key',$e->errorInfo[2])[1];
-                echo json_encode([
-                    "register" => false,
-                    "clef dupliquee" => $errorType
-                ]);
+                return ["register" => false];
                 die;
             }
         }
@@ -90,16 +86,12 @@ class UserManager extends BaseManager
             $query->bindValue("role", $data->getRole(), \PDO::PARAM_STR);
             $query->bindValue("id", $id, \PDO::PARAM_INT);
 
-            echo json_encode([
-                "update"=>true
-            ]);
+    
+            return ["update" => true];
         }
         catch(\PDOException $e)
         {
-            echo json_encode([
-                "update"=>false,
-                "erreur"=>$e
-            ]);
+            return ["update" => false];
         }
     }
 

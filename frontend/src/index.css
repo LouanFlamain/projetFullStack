@@ -23,4 +23,8 @@
 .create-tenant__form {
   gap: 1rem;
 }
+p.p-2.border.border-secondary.rounded.mb-0.w-25 {
+  max-width: fit-content !important;
+  min-width: fit-content !important;
+}
 
