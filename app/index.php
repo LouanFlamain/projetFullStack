@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") die;
 if (($_SERVER['REQUEST_URI'] != "/login" && $_SERVER['REQUEST_URI'] != "/register") && empty($_COOKIE)) echo json_encode(["token" => false]);
 
 $json = file_get_contents('php://input');
-$new = (array)json_decode($json);
+$data = (array)json_decode($json);
 
 require_once 'vendor/autoload.php';
 
@@ -29,22 +29,25 @@ foreach ($dirs as $dir) {
 
     $controllers[] = "App\\Controller\\" . pathinfo($controllerDir . DIRECTORY_SEPARATOR . $dir)['filename'];
 }
-$blabla = (array)$new['data'];
-$test = (array)$blabla['attributes'];
-$data['data'] = $blabla;
-$data['attributes'] = $test;
+if($_SERVER['REQUEST_METHOD'] != "GET"){
+    $blabla = (array)$data['data'];
+    $test = (array)$blabla['attributes'];
+    $data['data'] = $blabla;
+    $data['attributes'] = $test;
 
-if(!empty($data['data'])){
-    foreach ($data['data']['attributes'] as $key => $post){
-        if(is_array($post)){
-            foreach($post as $new){
-                $data[$key] = htmlspecialchars($new);
+    if(!empty($data['data'])){
+        foreach ($data['data']['attributes'] as $key => $post){
+            if(is_array($post)){
+                foreach($post as $new){
+                    $data[$key] = htmlspecialchars($new);
+                }
+            }else {
+                $data[$key] = htmlspecialchars($post);
             }
-        }else {
-            $data[$key] = htmlspecialchars($post);
         }
-    }
+    }  
 }
+
 
 $routesObj = [];
 

@@ -65,14 +65,12 @@ class InvitationManager extends BaseManager
     {
         try
         {
-            foreach($invitation->getMail() as $key => $mail){
-                $token = $invitation->getToken();
-                $query = $this->pdo->prepare("INSERT INTO Invitation (token,mail, rental_id) VALUES (:token, :mail, :rental_id)");
-                $query->bindValue('token', $token[$key], \PDO::PARAM_STR);
-                $query->bindValue('mail', $mail, \PDO::PARAM_STR);
-                $query->bindValue('rental_id', $invitation->getRental_id(), \PDO::PARAM_STR);
-                $query->execute();
-            }
+            $query = $this->pdo->prepare("INSERT INTO Invitation (token,mail, rental_id) VALUES (:token, :mail, :rental_id)");
+            $query->bindValue('token', $invitation->getToken(), \PDO::PARAM_STR);
+            $query->bindValue('mail', $invitation->getMail(), \PDO::PARAM_STR);
+            $query->bindValue('rental_id', $invitation->getRental_id(), \PDO::PARAM_STR);
+            $query->execute();
+                
             echo json_encode([
                 "invitation" => true
             ]);

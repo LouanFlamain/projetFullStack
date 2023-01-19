@@ -6,6 +6,7 @@ use App\Entity\Tenant;
 use App\Factory\PDOFactory;
 use App\Manager\InvitationManager;
 use App\Manager\TenantManager;
+use App\Manager\UserManager;
 use App\Route\Route;
 
 class TenantController extends AbstractController
@@ -37,7 +38,7 @@ class TenantController extends AbstractController
         $tenantManager->deleteTenant($id);
     }
 
-    #[Route('/tenant', name:'showBalance', methods:['GET'])]
+    #[Route('/tenant/id', name:'showBalance', methods:['GET'])]
     public function showBalance($tenant)
     {
         $tenantManager = new TenantManager(new PDOFactory());
@@ -59,6 +60,7 @@ class TenantController extends AbstractController
                     "balance" => (string)$data->getBalance(),
                     "user_id" => (string)$data->getUser_id(),
                     "rental_id" => (string)$data->getRental_id(),
+                    "username" => ((new UserManager(new PDOFactory()))->getById($data->getUser_id()))->getUsername(),
                 ];
             }
         }

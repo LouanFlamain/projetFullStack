@@ -86,12 +86,12 @@ export default function CreateCost(props) {
 
   const [dataCost, setDataCost] = useState([]);
   const [costType, setselectedCostType] = useState("Depense");
-  const [QuiAPaye, setQuiAPaye] = useState(`{ logged.username }`);
+  const [QuiAPaye, setQuiAPaye] = useState([]);
   const [Combien, setCombien] = useState();
   const [pourquoi, setPourquoi] = useState();
   const [quand, setQuand] = useState();
   const [concerneQui, setConcerneQui] = useState();
-  const [pourVous, setPourVous] = useState(); 
+  const [pourVous, setPourVous] = useState();
 
 
 
@@ -136,6 +136,27 @@ export default function CreateCost(props) {
     setselectedCostType('');
   };
   //console.log('dataCost', dataCost)
+  let bool = true
+  console.log("1")
+  if(bool){
+    console.log("2")
+
+    axios({
+    method: "GET",
+    url: "http://localhost:5656/tenant",
+    withCredentials: true,
+    credentials: 'same-origin',
+  })
+    .then(function (response) {
+      //console.log('response', response);
+      
+  })
+  .catch(error => {
+    //console.log(error);
+  });
+  bool = false
+  }
+
 
   return (
     <>
