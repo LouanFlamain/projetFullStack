@@ -32,7 +32,8 @@ export default function Register() {
         data: JSON.stringify(data),
       })
         .then(function (response) {
-          if (response.register) {
+          console.log(response);
+          if (response.data.register) {
             navigate("/login");
           } else {
             return;

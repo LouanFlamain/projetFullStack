@@ -62,7 +62,9 @@ class UserManager extends BaseManager
     
             $query->execute();
           
-            return ["register" => true];
+            echo json_encode([
+                "register" => true
+            ]);
         }
         catch(\PDOException $e)
         {

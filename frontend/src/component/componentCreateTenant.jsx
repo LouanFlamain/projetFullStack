@@ -42,6 +42,7 @@ export default function ComponentCreateTenantManager() {
       if (!newParticipant) {
         return;
       }else{
+        console.log(newParticipant)
       setParticipants([...participants, newParticipant]);
       setNewParticipant('');}
     };

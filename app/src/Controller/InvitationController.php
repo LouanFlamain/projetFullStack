@@ -20,7 +20,7 @@ class InvitationController extends AbstractController
         if (!empty($invitation)){
 
             $userManager = (new UserManager(new PDOFactory()))
-            ->getById(($this->getUser())->id);
+            ->getById(($this->getUser())->getId());
             
             $rental = $userManager->Rental();
 
