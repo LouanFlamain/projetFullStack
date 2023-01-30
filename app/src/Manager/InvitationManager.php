@@ -80,10 +80,10 @@ class InvitationManager extends BaseManager
         try
         {
             $query = $this->pdo->prepare("SELECT * FROM Invitation WHERE mail = :mail");
-            $query->bindValue("mail", $user->getMail(), \PDO::PARAM_INT);
+            $query->bindValue("mail", $user->getMail(), \PDO::PARAM_STR);
             $query->execute();
             $data = $query->fetch(\PDO::FETCH_ASSOC);
-
+            
             return new Invitation($data);
         }
         catch(\PDOException $e)

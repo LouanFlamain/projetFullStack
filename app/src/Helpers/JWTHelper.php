@@ -17,6 +17,7 @@ class JWTHelper
         $payload = [
             "id" => $user->getId(),
             "username" => $user->getUsername(),
+            "mail" => $user->getMail(),
             "role" => $user->getRole(),
             "exp" => (new \DateTime("+ 120 minutes"))->getTimestamp()
         ];

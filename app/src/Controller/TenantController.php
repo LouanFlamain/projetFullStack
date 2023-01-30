@@ -13,13 +13,22 @@ class TenantController extends AbstractController
 {
     #[Route('/tenant', name:'tenant', methods: ['POST'])]
     public function addTenant($tenant)
-    {
+    {  
         /** @var Tenant $tenant */
+
+        if($this->getUser()->getRole() === 'Tenant'){
+            $invitationManager = (new InvitationManager(new PDOFactory()));
+            $rentalId = $invitationManager->getInvitation($this->getUser())->getRental_id();
+        } else {
+            $rentalId = $this->getUser()->Rental()->getId();
+        }
+        $tenant->setRental_id($rentalId);
+        $tenant->setUser_id($$this->getUser()->getId());
+        
         $tenantManager = (new TenantManager(new PDOFactory()));
-        $invitationManager = (new InvitationManager(new PDOFactory()));
-        $invitation = $invitationManager->getInvitation(($this->getUser())->getMail());
-        $tenant->setRental_id($invitation->getRental_id());
-        $tenantManager->addTenant($tenant);
+        $tenantResource = $tenantManager->addTenant($tenant);
+
+        echo json_encode($tenantResource);
     }
 
     #[Route('/tenant/update/{id}', name:'tenantUpdate', methods:['PATCH'])]

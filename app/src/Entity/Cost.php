@@ -12,7 +12,7 @@ class Cost extends BaseEntity
     private float $credit;
     private float $debit;
     private string $cost_type;
-    private string $reference"hbdhs";
+    private string $reference;
     private int $tenant_id;
     private array $relationships;
     private ?string $status = null;

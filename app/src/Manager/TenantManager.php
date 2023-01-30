@@ -99,7 +99,7 @@ class TenantManager extends BaseManager
             $query->bindValue('rental_id', $data->getRental_id(), \PDO::PARAM_INT);
             
             $query->execute(); 
-           
+
             return ["ajout_tenant" => true];
         }
         catch(\PDOException $e)
@@ -108,8 +108,10 @@ class TenantManager extends BaseManager
             {
                 $errorType = explode('key',$e->errorInfo[2])[1];
             
-                return ["ajout_tenant" => false];
-                die;
+                return [
+                    "ajout_tenant" => false,
+                    "error" => $errorType,
+                ];
             }
         }
     }
