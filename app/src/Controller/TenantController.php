@@ -24,7 +24,8 @@ class TenantController extends AbstractController
         }
         $tenant->setRental_id($rentalId);
         $tenant->setUser_id($$this->getUser()->getId());
-        
+        $tenant->setBalance(0);
+
         $tenantManager = (new TenantManager(new PDOFactory()));
         $tenantResource = $tenantManager->addTenant($tenant);
 
